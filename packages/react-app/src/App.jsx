@@ -59,7 +59,7 @@ const { ethers } = require("ethers");
 const DEBUG = true;
 const NETWORKCHECK = true;
 
-const targetNetworkString = "optimism" // <------ change this as you deploy do other networks
+const targetNetworkString = "rinkeby" // <------ change this as you deploy do other networks
 
 const web3Modal = Web3ModalSetup();
 
