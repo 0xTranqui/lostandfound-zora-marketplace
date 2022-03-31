@@ -1,11 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Switch } from "antd";
+import { Button, Card, List, Spin, Popover, Form, Switch, Input } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { useDebounce } from "../hooks";
 import { ethers } from "ethers";
 import { useEventListener } from "eth-hooks/events/useEventListener";
+
+//========== ZORA IMPORTS
+import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
+import { IERC721__factory } from "@zoralabs/v3/dist/typechain/factories/IERC721__factory";
+import { IERC20__factory } from "@zoralabs/v3/dist/typechain/factories/IERC20__factory";
+import { ZoraModuleManager__factory } from "@zoralabs/v3/dist/typechain/factories/ZoraModuleManager__factory";
+import { AsksV11__factory } from "@zoralabs/v3/dist/typechain/factories/AsksV11__factory";
+
+
 
 function OldEnglish({
   readContracts,
@@ -20,6 +29,7 @@ function OldEnglish({
   oldEnglishContract,
   balance,
   startBlock,
+  zmmContract
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
   const [loadingOldEnglish, setLoadingOldEnglish] = useState(true);
@@ -132,6 +142,13 @@ function OldEnglish({
               },
             ]}
           >
+
+
+
+            <Input placeholder={"Token ID # of NFT to List"}/>
+            <Input placeholder={"List Price (in ETH)"}/>
+            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
+            <Input placeholder={"Finder's Fee %"}/>
             <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
           </Form.Item>
 
@@ -179,6 +196,10 @@ function OldEnglish({
               },
             ]}
           >
+            <Input placeholder={"Token ID # of NFT to List"}/>
+            <Input placeholder={"List Price (in ETH)"}/>
+            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
+            <Input placeholder={"Finder's Fee %"}/>
             <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
           </Form.Item>
 
@@ -200,6 +221,222 @@ function OldEnglish({
     });
   }
 
+  //=====MY CUSTOM FUNCTIONALITY
+
+  const [zoraCreateAskForm] = Form.useForm();
+  const createAsk = id => {
+    const [createAsk, setCreateAsk] = useState(false);
+
+    return (
+      <div>
+        <Form
+          form={zoraCreateAskForm}
+          layout={"inline"}
+          name="Create Ask"
+          initialValues={{ tokenId: id }}
+          onFinish={async values => {
+            setCreateAsk(true);
+            try {
+              const txCur = await tx(writeContracts[oldEnglishContract]["pour"](id, values["to"]));
+              await txCur.wait();
+              updateOneOldEnglish(id);
+              setCreateAsk(false);
+            } catch (e) {
+              console.log("pour failed", e);
+              setCreateAsk(false);
+            }
+          }}
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            name="to"
+            rules={[
+              {
+                required: true,
+                message: "Who's getting a pour?",
+              },
+            ]}
+          >
+            <Input placeholder={"Token ID # of NFT to List"}/>
+            <Input placeholder={"List Price (in ETH)"}/>
+            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
+            <Input placeholder={"Finder's Fee %"}/>
+            <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={createAsk}>
+              Create Ask
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    );
+  };
+
+  const [zoraUpdateAskForm] = Form.useForm();
+  const updateAsk = id => {
+    const [updateAsk, setUpdateAsk] = useState(false);
+
+    return (
+      <div>
+        <Form
+          form={zoraUpdateAskForm}
+          layout={"inline"}
+          name="Update Ask"
+          initialValues={{ tokenId: id }}
+          onFinish={async values => {
+            setUpdateAsk(true);
+            try {
+              const txCur = await tx(writeContracts[oldEnglishContract]["pour"](id, values["to"]));
+              await txCur.wait();
+              updateOneOldEnglish(id);
+              setUpdateAsk(false);
+            } catch (e) {
+              console.log("pour failed", e);
+              setUpdateAsk(false);
+            }
+          }}
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            name="to"
+            rules={[
+              {
+                required: true,
+                message: "Who's getting a pour?",
+              },
+            ]}
+          >
+            <Input placeholder={"Token ID # of NFT to List"}/>
+            <Input placeholder={"List Price (in ETH)"}/>
+            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
+            <Input placeholder={"Finder's Fee %"}/>
+            <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={updateAsk}>
+              Update Ask
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    );
+  };
+
+  const [zoraCancelAskForm] = Form.useForm();
+  const cancelAsk = id => {
+    const [cancelAsk, setCancelAask] = useState(false);
+
+    return (
+      <div>
+        <Form
+          form={zoraCancelAskForm}
+          layout={"inline"}
+          name="Update Ask"
+          initialValues={{ tokenId: id }}
+          onFinish={async values => {
+            setCancelAsk(true);
+            try {
+              const txCur = await tx(writeContracts[oldEnglishContract]["pour"](id, values["to"]));
+              await txCur.wait();
+              updateOneOldEnglish(id);
+              setCancelAsk(false);
+            } catch (e) {
+              console.log("pour failed", e);
+              setCancelAsk(false);
+            }
+          }}
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            name="to"
+            rules={[
+              {
+                required: true,
+                message: "Who's getting a pour?",
+              },
+            ]}
+          >
+            <Input placeholder={"Token ID # of NFT to List"}/>
+            <Input placeholder={"List Price (in ETH)"}/>
+            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
+            <Input placeholder={"Finder's Fee %"}/>
+            <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={cancelAsk}>
+              Cancel Ask
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    );
+  };
+
+  const [zoraFillAskForm] = Form.useForm();
+  const fillAsk = id => {
+    const [fillAsk, setFillAsk] = useState(false);
+
+    return (
+      <div>
+        <Form
+          form={zoraFillAskForm}
+          layout={"inline"}
+          name="Update Ask"
+          initialValues={{ tokenId: id }}
+          onFinish={async values => {
+            setFillAsk(true);
+            try {
+              const txCur = await tx(writeContracts[oldEnglishContract]["pour"](id, values["to"]));
+              await txCur.wait();
+              updateOneOldEnglish(id);
+              setFillAsk(false);
+            } catch (e) {
+              console.log("pour failed", e);
+              setFillAsk(false);
+            }
+          }}
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            name="to"
+            rules={[
+              {
+                required: true,
+                message: "Who's getting a pour?",
+              },
+            ]}
+          >
+            <Input placeholder={"Token ID # of NFT to List"}/>
+            <Input placeholder={"List Price (in ETH)"}/>
+            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
+            <Input placeholder={"Finder's Fee %"}/>
+            <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={fillAsk}>
+              Fill Ask
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    );
+  };
+
+// Imports + declartions for ZORA Approval Contracts
+  const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
+  const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
+  const asksModuleV1_1Address = mainnetZoraAddresses.AsksV1_1;
+  const oldEnglishContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9";
+  const lostandfoundContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01";
+
+
+
+
   return (
     <div style={{ width: "auto", margin: "auto", paddingBottom: 25, minHeight: 800 }}>
       {false ? (
@@ -213,6 +450,42 @@ function OldEnglish({
               }}
             >
               Refresh
+            </Button>
+            <Button
+              type="primary"
+              onClick={async () => {
+                console.log("Clicked ERC721Transfer Button");
+                try {
+                  const txCur = await tx(writeContracts[oldEnglishContract].setApprovalForAll(
+                    "0x029AA5a949C9C90916729D50537062cb73b5Ac92",
+                    false
+                  ));
+                  await txCur.wait();
+                  updateOneOldEnglish();
+                } catch (e) {
+                  console.log("ERC721Transfer HelperApproval Failed", e);
+                }
+              }}
+            >            
+              APPROVE ERC721 TRANSFER HELPER
+            </Button>
+            <Button
+              type="primary"
+              onClick={async () => {
+                console.log("Clicked ZMM Button");
+                try {
+                  const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
+                    "0xA98D3729265C88c5b3f861a0c501622750fF4806",
+                    true
+                  ));
+                  await txCur.wait();
+                  updateOneOldEnglish();
+                } catch (e) {
+                  console.log("ZORA Module Manager Approval Failed", e);
+                }
+              }}
+            >      
+              APPROVE ZORA MODULE MANAGER
             </Button>
             <Switch
               disabled={loadingOldEnglish}
@@ -294,6 +567,7 @@ function OldEnglish({
                       <>
                         {item.attributes[0].value < 13 ? (
                           <>
+                            {/*
                             <Button
                               type="primary"
                               onClick={async () => {
@@ -316,6 +590,39 @@ function OldEnglish({
                             >
                               <Button type="primary">Pour</Button>
                             </Popover>
+                            */}
+                            <Popover
+                              content={() => {
+                                return createAsk(id);
+                              }}
+                              title="Create Ask"
+                            >
+                              <Button type="primary">List</Button>
+                            </Popover>
+                            <Popover
+                              content={() => {
+                                return createAsk(id);
+                              }}
+                              title="Update Ask"
+                            >
+                              <Button type="primary">Update</Button>
+                            </Popover>
+                            <Popover
+                              content={() => {
+                                return cancelAsk(id);
+                              }}
+                              title="Cancel Ask"
+                            >
+                              <Button type="primary">Cancel</Button>
+                            </Popover>
+                            <Popover
+                              content={() => {
+                                return fillAsk(id);
+                              }}
+                              title="Fill Ask"
+                            >
+                              <Button type="primary">Buy</Button>
+                            </Popover>
                           </>
                         ) : (
                           <Button
@@ -333,6 +640,7 @@ function OldEnglish({
                             Recycle
                           </Button>
                         )}
+                        {/*
                         <Button
                           type="primary"
                           onClick={async () => {
@@ -355,6 +663,7 @@ function OldEnglish({
                         >
                           <Button type="primary">Pass it!</Button>
                         </Popover>
+                        */}
                       </>
                     )}
                   </Card>

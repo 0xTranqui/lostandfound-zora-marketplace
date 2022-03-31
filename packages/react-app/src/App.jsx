@@ -33,6 +33,10 @@ import { Home, ExampleUI, Hints, Subgraph } from "./views";
 import { OldEnglish, Drinks } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
+// my custom imports
+import Web3Modal from 'web3modal';
+import { getMainnetSdk } from '@dethcrypto/eth-sdk-client'
+
 const { ethers } = require("ethers");
 /*
     Welcome to 🏗 scaffold-eth !
@@ -72,6 +76,7 @@ const providers = [
 
 function App(props) {
   const oldEnglishContract = "EightPack";
+  const zmmContract = "zoraModuleManager";
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
 
@@ -154,6 +159,20 @@ function App(props) {
 
   const totalSupply = useContractReader(readContracts, oldEnglishContract, "totalSupply");
   const limit = useContractReader(readContracts, oldEnglishContract, "limit");
+
+  //======= bringing in external ZORA contracts
+  
+   const zoraERC721TransferHelper = useContractLoader(mainnetProvider, contractConfig);
+  
+  const erc721TransferHelperApproved = useContractReader(
+    readContracts,
+    oldEnglishContract,
+    "isApprovedForAll",
+    [
+      "0x153D2A196dc8f1F6b9Aa87241864B3e4d4FEc170",
+      "0x029AA5a949C9C90916729D50537062cb73b5Ac92"
+    ]
+  );
 
   // keep track of a variable from the contract in the local React state:
   const balance = useContractReader(readContracts, oldEnglishContract, "balanceOf", [address]);
@@ -293,6 +312,7 @@ function App(props) {
               address={address}
               DEBUG={DEBUG}
               oldEnglishContract={oldEnglishContract}
+              zmmContract={zmmContract}
               balance={balance}
               startBlock={startBlock}
             />
