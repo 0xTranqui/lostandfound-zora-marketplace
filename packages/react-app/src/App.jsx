@@ -33,8 +33,7 @@ import { Home, ExampleUI, Hints, Subgraph } from "./views";
 import { OldEnglish, Drinks } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
-// my custom imports
-import Web3Modal from 'web3modal';
+//====MY CUSTOM IMPORTS
 import { getMainnetSdk } from '@dethcrypto/eth-sdk-client'
 
 const { ethers } = require("ethers");
@@ -76,7 +75,13 @@ const providers = [
 
 function App(props) {
   const oldEnglishContract = "EightPack";
+
+  //======my custom additions
+  const zoraTransferHelperContract = "zoraTransferHelper";
   const zmmContract = "zoraModuleManager";
+  const zoraAsksContract = "zoraAsksV1_1Module";
+  const lostandfoundNFTContract = "lostandFoundContract";
+
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
 
@@ -312,7 +317,10 @@ function App(props) {
               address={address}
               DEBUG={DEBUG}
               oldEnglishContract={oldEnglishContract}
+              zoraTransferHelperContract={zoraTransferHelperContract}
               zmmContract={zmmContract}
+              zoraAsksContract={zoraAsksContract}
+              lostandfoundNFTContract={lostandfoundNFTContract}
               balance={balance}
               startBlock={startBlock}
             />

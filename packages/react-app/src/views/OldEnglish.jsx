@@ -7,14 +7,9 @@ import { useDebounce } from "../hooks";
 import { ethers } from "ethers";
 import { useEventListener } from "eth-hooks/events/useEventListener";
 
-//========== ZORA IMPORTS
+//==========my custom import
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
-import { IERC721__factory } from "@zoralabs/v3/dist/typechain/factories/IERC721__factory";
-import { IERC20__factory } from "@zoralabs/v3/dist/typechain/factories/IERC20__factory";
-import { ZoraModuleManager__factory } from "@zoralabs/v3/dist/typechain/factories/ZoraModuleManager__factory";
-import { AsksV11__factory } from "@zoralabs/v3/dist/typechain/factories/AsksV11__factory";
-
-
+//==========my custom import
 
 function OldEnglish({
   readContracts,
@@ -29,12 +24,29 @@ function OldEnglish({
   oldEnglishContract,
   balance,
   startBlock,
-  zmmContract
+  ///=======my custom imports
+  zoraTransferHelperContract,
+  zmmContract,
+  zoraAsksContract,
+  lostandfoundNFTContract
+  ///=======my custom imports
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
   const [loadingOldEnglish, setLoadingOldEnglish] = useState(true);
   const perPage = 12;
   const [page, setPage] = useState(0);
+
+  //====ZORA APP + LOST AND FOUND NFT STATE SETTING
+  const [zoraFormInput, zoraUpdateFormInput] = useState({ _tokenId: '', _askPrice: '', _sellerFundsRecipient: '', _findersFeeBps: ''  });
+  const [erc721FormInput, erc721UpdateFormInput] = useState({ _numberOfTokens: '' });
+  //====ZORA APP STATE SETTING
+
+
+  //===custom functionality to retrieve state of Asks for each NFT
+  /*
+  const fetchAsksAndUpdate = async id => {
+  
+  */
 
   const fetchMetadataAndUpdate = async id => {
     try {
@@ -142,13 +154,6 @@ function OldEnglish({
               },
             ]}
           >
-
-
-
-            <Input placeholder={"Token ID # of NFT to List"}/>
-            <Input placeholder={"List Price (in ETH)"}/>
-            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
-            <Input placeholder={"Finder's Fee %"}/>
             <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
           </Form.Item>
 
@@ -196,10 +201,6 @@ function OldEnglish({
               },
             ]}
           >
-            <Input placeholder={"Token ID # of NFT to List"}/>
-            <Input placeholder={"List Price (in ETH)"}/>
-            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
-            <Input placeholder={"Finder's Fee %"}/>
             <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
           </Form.Item>
 
@@ -221,51 +222,62 @@ function OldEnglish({
     });
   }
 
-  //=====MY CUSTOM FUNCTIONALITY
+  //=====MY CUSTOM FUNCTIONALITY====
 
-  const [zoraCreateAskForm] = Form.useForm();
+  //=======ZORA createAsk flow========
+  //const askPrice = ethers.utils.parseUnits(zoraFormInput._askPrice, 'ether'); // Input should be in ETH here 
+  const tokenId = zoraFormInput._tokenId;
+  const sellerRecipientAddress = zoraFormInput._sellerFundsRecipient; // Owner of the assets
+  // ^hardcode this to signer.address(this) to simplify? ??
+  const findersFeeBps = zoraFormInput._findersFeeBps; // 2% Finders Fee (in BPS)
+  
+  const [zoraForm] = Form.useForm();
   const createAsk = id => {
-    const [createAsk, setCreateAsk] = useState(false);
+    // const [createAsk, setCreateAsk] = useState(false);
 
     return (
       <div>
         <Form
-          form={zoraCreateAskForm}
+          form={zoraForm}
           layout={"inline"}
           name="Create Ask"
-          initialValues={{ tokenId: id }}
+          initialValues={{ _tokenId: '', _askPrice: '', _sellerFundsRecipient: '', _findersFeeBps: '' }}
           onFinish={async values => {
-            setCreateAsk(true);
+            // setCreateAsk(true);
             try {
-              const txCur = await tx(writeContracts[oldEnglishContract]["pour"](id, values["to"]));
+              const txCur = await tx(writeContracts[zoraAsksContract].["pour"](id, values["to"]));
               await txCur.wait();
               updateOneOldEnglish(id);
-              setCreateAsk(false);
+              // setCreateAsk(false);
             } catch (e) {
-              console.log("pour failed", e);
-              setCreateAsk(false);
+              console.log("Create Ask failed", e);
+              // setCreateAsk(false);
             }
           }}
           onFinishFailed={onFinishFailed}
         >
-          <Form.Item
-            name="to"
-            rules={[
-              {
-                required: true,
-                message: "Who's getting a pour?",
-              },
-            ]}
-          >
-            <Input placeholder={"Token ID # of NFT to List"}/>
-            <Input placeholder={"List Price (in ETH)"}/>
-            <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
-            <Input placeholder={"Finder's Fee %"}/>
-            <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
+          <Form.Item>
+            <Input
+            placeholder={"Token ID # of NFT to List"}
+            onChange={e => zoraUpdateFormInput({ ...zoraFormInput, _tokenId: e.target.value })}
+            />
+            <Input
+            placeholder={"List Price (in ETH)"}
+            onChange={e => zoraUpdateFormInput({ ...zoraFormInput, _askPrice: e.target.value })}
+            />
+            <Input
+            placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}
+            ensProvider={mainnetProvider}
+            onChange={e => zoraUpdateFormInput({ ...zoraFormInput, _sellerFundsRecipient: e.target.value })}            
+            />
+            <Input
+            placeholder={"Finder's Fee %"}
+            onChange={e => zoraUpdateFormInput({ ...zoraFormInput, _findersFeeBps: (e.target.value * 100) })}      
+            />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={createAsk}>
+            <Button type="primary" htmlType="submit">
               Create Ask
             </Button>
           </Form.Item>
@@ -308,7 +320,10 @@ function OldEnglish({
               },
             ]}
           >
-            <Input placeholder={"Token ID # of NFT to List"}/>
+            <Input
+            placeholder={"Token ID # of NFT to List"}
+            
+            />
             <Input placeholder={"List Price (in ETH)"}/>
             <Input placeholder={"Wallet Address to receive funds from sale (full address not ENS name)"}/>
             <Input placeholder={"Finder's Fee %"}/>
@@ -457,8 +472,8 @@ function OldEnglish({
                 console.log("Clicked ERC721Transfer Button");
                 try {
                   const txCur = await tx(writeContracts[oldEnglishContract].setApprovalForAll(
-                    "0x029AA5a949C9C90916729D50537062cb73b5Ac92",
-                    false
+                    "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
+                    true
                   ));
                   await txCur.wait();
                   updateOneOldEnglish();
@@ -475,7 +490,7 @@ function OldEnglish({
                 console.log("Clicked ZMM Button");
                 try {
                   const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
-                    "0xA98D3729265C88c5b3f861a0c501622750fF4806",
+                    "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
                     true
                   ));
                   await txCur.wait();
@@ -567,7 +582,6 @@ function OldEnglish({
                       <>
                         {item.attributes[0].value < 13 ? (
                           <>
-                            {/*
                             <Button
                               type="primary"
                               onClick={async () => {
@@ -590,10 +604,16 @@ function OldEnglish({
                             >
                               <Button type="primary">Pour</Button>
                             </Popover>
-                            */}
                             <Popover
                               content={() => {
-                                return createAsk(id);
+                                return createAsk(
+                                  oldEnglishContract,
+                                  tokenId,
+                                  //askPrice,
+                                  "0x0000000000000000000000000000000000000000",
+                                  sellerRecipientAddress,
+                                  findersFeeBps                                                                
+                                );
                               }}
                               title="Create Ask"
                             >
@@ -601,7 +621,7 @@ function OldEnglish({
                             </Popover>
                             <Popover
                               content={() => {
-                                return createAsk(id);
+                                return updateAsk(id);
                               }}
                               title="Update Ask"
                             >
@@ -640,7 +660,6 @@ function OldEnglish({
                             Recycle
                           </Button>
                         )}
-                        {/*
                         <Button
                           type="primary"
                           onClick={async () => {
@@ -663,7 +682,6 @@ function OldEnglish({
                         >
                           <Button type="primary">Pass it!</Button>
                         </Popover>
-                        */}
                       </>
                     )}
                   </Card>
