@@ -35,6 +35,7 @@ import { useStaticJsonRPC } from "./hooks";
 
 //====MY CUSTOM IMPORTS
 import { getMainnetSdk } from '@dethcrypto/eth-sdk-client'
+//====MY CUSTOM IMPORTS
 
 const { ethers } = require("ethers");
 /*
@@ -81,6 +82,7 @@ function App(props) {
   const zmmContract = "zoraModuleManager";
   const zoraAsksContract = "zoraAsksV1_1Module";
   const lostandfoundNFTContract = "lostandFoundContract";
+  //======my custom additions
 
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
