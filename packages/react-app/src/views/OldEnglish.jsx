@@ -28,7 +28,8 @@ function OldEnglish({
   zoraTransferHelperContract,
   zmmContract,
   zoraAsksContract,
-  lostandfoundNFTContract
+  lostandfoundNFTContract,
+  zoraSeller
   ///=======my custom imports
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
@@ -36,26 +37,116 @@ function OldEnglish({
   const perPage = 12;
   const [page, setPage] = useState(0);
 
+  //====my custom state
+  
+  const [allActiveAsks, setAllActiveAsks] = useState({});
+  const [loadingActiveAsks, setLoadingActiveAsks] = useState(true);
+  
+  
   //====my custom addition
   const nftContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9"; //oldenglish
-
-
-
-  //===MY SOON TO BE ADDED custom functionality to retrieve state of Asks for each NFT
-  /*
-  const fetchAsksAndUpdate = async id => {
   
-  */
+  ///this allows you to query the current ask for any given NFt. if no current ask, seller = 0 address
+  //const seller = useContractReader(readContracts, zoraAsksContract, "askForNFT", [nftContractAddress, 3]);
+  //const seller2 = readContracts()
+  //const specificSeller = seller["seller"];
+  //===MY SOON TO BE ADDED custom functionality to retrieve state of Asks for each NFT
+    
+  
+  const fetchActiveAsksAndUpdate = async id => {
+    try {
+      const seller = await readContracts[zoraAsksContract].askForNFT(nftContractAddress, id);
 
+      try {
+        const specificSeller = seller["seller"];
+        //const listPrice = seller["askPrice"];
+        const askUpdate = {};
+        askUpdate[id] = { id: id, askData: seller, ...specificSeller };
+
+        setAllActiveAsks( i => ({ ...i, ...askUpdate }));
+      } catch (e) {
+        console.log(e);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  
+
+  
+  const updateAllAsks = async id => {
+    if (readContracts[oldEnglishContract] && totalSupply) {
+      setLoadingActiveAsks(true);
+      let askSupply = totalSupply.toNumber();
+
+      let askList = Array(askSupply).fill(0);
+
+      askList.forEach((_, i) => {
+        let tokenId = i + 1; //might need to change this to just i for LF contract
+        if (tokenId <= askSupply - page * perPage && tokenId >= askSupply - page * perPage - perPage) {
+          fetchActiveAsksAndUpdate(tokenId);
+        } else if (!allActiveAsks[tokenId]) {
+          const simpleAskUpdate = {};
+          simpleAskUpdate[tokenId] = { id: tokenId };
+          setAllActiveAsks(i => ({ ...i, ...simpleAskUpdate }));
+        }
+      });
+
+      setLoadingActiveAsks(false);
+    }
+    console.log('AllAsksvibes'); // can delete this, just in for testing refresh button
+  };
+  
+  const updateYourAsk = async () => { //===might take this out as LF contract doesn't have tokenOfOwnerByIndex
+    for (let tokenIndex = 0; tokenIndex < balance; tokenIndex++) {
+      try {
+        const tokenId = await readContracts[oldEnglishContract].tokenOfOwnerByIndex(address, tokenIndex);
+        fetchActiveAsksAndUpdate(tokenId);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+
+  const updateOneAsk = async id => {
+    if (readContracts[oldEnglishContract] && totalSupply) {
+      fetchActiveAsksAndUpdate(id);
+    }
+  };
+
+  useEffect(() => { // this is the useeffect for the Ask functionality
+    if (totalSupply && totalSupply.toNumber() > 0) updateAllAsks();
+  }, [readContracts[oldEnglishContract], (totalSupply || "0").toString(), page]);
+
+  let filteredAsks = Object.values(allActiveAsks).sort((a, b) => b.id - a.id);
+  const [myAsks, setMyAsks] = useState(false);
+  if (myAsks == true && address && filteredAsks) {
+    filteredAsks = filteredAsks.filter(function (el) {
+      return el.owner == address.toLowerCase();
+    });
+  }
+  
   const fetchMetadataAndUpdate = async id => {
     try {
       const tokenURI = await readContracts[oldEnglishContract].tokenURI(id);
       const jsonManifestString = atob(tokenURI.substring(29));
 
+      //extra
+      const seller = await readContracts[zoraAsksContract].askForNFT(nftContractAddress, id);
+
       try {
         const jsonManifest = JSON.parse(jsonManifestString);
+
+        //extra
+        const specificSeller = await seller["seller"];
+        // const currentListPrice = await seller["askPrice"];
+        //extra
+
         const collectibleUpdate = {};
-        collectibleUpdate[id] = { id: id, uri: tokenURI, ...jsonManifest };
+
+        //extra, added askData here and also ...specificSelelr
+        collectibleUpdate[id] = { id: id, uri: tokenURI, askSeller: seller, ...jsonManifest, ...specificSeller };
 
         setAllOldEnglish(i => ({ ...i, ...collectibleUpdate }));
       } catch (e) {
@@ -65,6 +156,7 @@ function OldEnglish({
       console.log(e);
     }
   };
+
 
   const updateAllOldEnglish = async () => {
     if (readContracts[oldEnglishContract] && totalSupply /*&& totalSupply <= receives.length*/) {
@@ -86,6 +178,7 @@ function OldEnglish({
 
       setLoadingOldEnglish(false);
     }
+    console.log('AllOldEnglishvibes'); // can delete this, just in for testing refresh button
   };
 
   const updateYourOldEnglish = async () => {
@@ -246,6 +339,8 @@ function OldEnglish({
           onFinish={async values => {
             setListing(true);
             try {
+              console.log("test");
+              console.log(zoraSeller);
               const txCur = await tx(writeContracts[zoraAsksContract].createAsk(
                 nftContractAddress,
                 id,
@@ -511,7 +606,10 @@ function OldEnglish({
           <div style={{ marginBottom: 5 }}>
             <Button
               onClick={() => {
-                return updateAllOldEnglish();
+                {
+                  updateAllOldEnglish(),
+                  updateAllAsks();
+                }
               }}
             >
               Refresh
@@ -589,8 +687,7 @@ function OldEnglish({
             loading={loadingOldEnglish}
             dataSource={filteredOEs ? filteredOEs : []}
             renderItem={item => {
-              const id = item.id;
-
+              const id = item.id;              
               return (
                 <List.Item key={id}>
                   <Card
@@ -626,6 +723,15 @@ function OldEnglish({
                           blockExplorer={blockExplorer}
                           fontSize={16}
                         />
+                        <div>
+                        Seller = {item.askSeller.seller.substring(0, 5) + '...' +item.askSeller.seller.substring(37, 42) }                           
+                        </div>
+                        <div>                        
+                        List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH              
+                        </div>
+                        <div>
+                        Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
+                        </div>
                       </div>
                     )}
                     {address && item.owner == address.toLowerCase() ? (
@@ -657,14 +763,21 @@ function OldEnglish({
                           </Popover>
                         </>
                       ) : (
-                        <Popover
-                        content={() => {
-                          return fillAsk(id);
-                        }}
-                        title="Fill Ask"
-                      >
-                        <Button type="primary">Buy</Button>
-                      </Popover>
+                      <>
+                        {"fam" != "0x0000000000000000000000000000000000000000" ? (
+                            <Popover
+                              content={() => {                                
+                                return fillAsk(id);
+                              }}
+                              title="Fill Ask"
+                            >
+                              <Button type="primary">Buy</Button>
+                            </Popover>
+                          ) : ( 
+                            <div>~ No Active Listing ~</div>
+                        )}
+                        
+                      </>
                     )}
                   </Card>
                 </List.Item>

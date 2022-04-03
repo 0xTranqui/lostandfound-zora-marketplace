@@ -167,9 +167,14 @@ function App(props) {
   const totalSupply = useContractReader(readContracts, oldEnglishContract, "totalSupply");
   const limit = useContractReader(readContracts, oldEnglishContract, "limit");
 
+  // ****** my custom functionality
+  //const seller = useContractReader(readContracts, zoraAsksContract, "askForNFT", [oldEnglishContract, 0]);
+  //const specificSeller = seller['seller'];
+
+
   //======= bringing in external ZORA contracts
   
-   const zoraERC721TransferHelper = useContractLoader(mainnetProvider, contractConfig);
+  const zoraERC721TransferHelper = useContractLoader(mainnetProvider, contractConfig);
   
   const erc721TransferHelperApproved = useContractReader(
     readContracts,
@@ -185,6 +190,13 @@ function App(props) {
   const balance = useContractReader(readContracts, oldEnglishContract, "balanceOf", [address]);
 
   const buzzBalance = useContractReader(readContracts, "Buzz", "balanceOf", [address]);
+
+  //====CUSTOM UPDATE
+  const zoraSeller = useContractReader(readContracts, zoraAsksContract, "askForNFT", ["0x03D6563e2047534993069F242181B207f80C5dD9", 3]);
+  //const zoraSpecificSeller = zoraSeller["seller"];
+  //====CUSTOM UPDATE
+
+
   //
   // 🧠 This effect will update OldEnglishs by polling when your balance changes
   //
@@ -323,6 +335,7 @@ function App(props) {
               zmmContract={zmmContract}
               zoraAsksContract={zoraAsksContract}
               lostandfoundNFTContract={lostandfoundNFTContract}
+              zoraSeller={zoraSeller}
               balance={balance}
               startBlock={startBlock}
             />
