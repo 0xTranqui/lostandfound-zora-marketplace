@@ -4,7 +4,7 @@ import { Button, Card, List, Spin, Popover, Form, Switch, Input, Radio, Select, 
 import { RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { useDebounce } from "../hooks";
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import { useEventListener } from "eth-hooks/events/useEventListener";
 
 //==========my custom import
@@ -59,7 +59,7 @@ function OldEnglish({
         const collectibleUpdate = {};
 
         //===CUSTOM UPDATE, added askSeller: seller as a key:value pair
-        collectibleUpdate[id] = { id: id, uri: tokenURI, askSeller: seller, ...jsonManifest, ...specificSeller };
+        collectibleUpdate[id] = { id: id, uri: tokenURI, askSeller: seller, ...jsonManifest};
 
         setAllOldEnglish(i => ({ ...i, ...collectibleUpdate }));
       } catch (e) {
@@ -432,7 +432,7 @@ function OldEnglish({
           name="fill ask "
           initialValues={{ 
             tokenId: id,
-            fillPrice: '',
+            //fillPrice: '',
             finderAddress: '',
             //value: (fillPrice * (10**18)).toString()
           }}
@@ -443,10 +443,9 @@ function OldEnglish({
                 nftContractAddress,
                 id,
                 "0x0000000000000000000000000000000000000000", // 0 address for ETH sale               
-                ethers.utils.parseUnits(values['fillPrice'], 'ether'),
+                BigNumber.from(allOldEnglish[id].askSeller.askPrice).toString(),
                 values['finderAddress'],
-                { value: (values['fillPrice'] * (10 ** 18)).toString() }
-                //values['value']
+                { value: BigNumber.from(allOldEnglish[id].askSeller.askPrice).toString() }
               ));
               await txCur.wait();
               updateOneOldEnglish(id);
@@ -458,6 +457,7 @@ function OldEnglish({
           }}
           onFinishFailed={onFinishFailed}
         >            
+          {/*
           <Form.Item
             name="fillPrice"
             rules={[
@@ -470,7 +470,8 @@ function OldEnglish({
             <Input
             placeholder={"Purchase Price (ETH): "}
             />
-          </Form.Item>         
+          </Form.Item>   
+          */}      
           <Form.Item
             name="finderAddress"
             rules={[
@@ -634,9 +635,6 @@ function OldEnglish({
                           blockExplorer={blockExplorer}
                           fontSize={16}
                         />
-                        <div>
-                        Seller = {item.askSeller.seller.substring(0, 5) + '...' +item.askSeller.seller.substring(37, 42) }                           
-                        </div>
                         <div>                        
                         List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH              
                         </div>
@@ -647,14 +645,20 @@ function OldEnglish({
                     )}
                     {address && item.owner == address.toLowerCase() ? (
                         <>
-                          <Popover
-                            content={() => {
-                              return createAsk(id);
-                            }}                            
-                            title="Create Ask"
-                          >
-                            <Button type="primary">List</Button>
-                          </Popover>
+                          {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? (
+                              
+                              <Popover
+                                content={() => {                                                        
+                                  return createAsk(id);
+                                }}
+                                title="Create Ask"
+                              >
+                                <div>~~ UNLISTED ~~</div>
+                                <Button type="primary">List</Button>
+                              </Popover>
+                            ) : ( 
+                              <div>~~ ACTIVE LISTING ~~</div>
+                            )}
                           <Popover
                             content={() => {
                               return updateAskPrice(id);
@@ -675,17 +679,18 @@ function OldEnglish({
                         </>
                       ) : (
                       <>
-                        {"fam" != "0x0000000000000000000000000000000000000000" ? (
+                        {item.askSeller.seller != "0x0000000000000000000000000000000000000000" ? (
                             <Popover
-                              content={() => {                                
+                              content={() => {                                                        
                                 return fillAsk(id);
                               }}
                               title="Fill Ask"
                             >
+                              <div>~~ ACTIVE LISTING ~~</div>
                               <Button type="primary">Buy</Button>
                             </Popover>
                           ) : ( 
-                            <div>~ No Active Listing ~</div>
+                            <div>~~ UNLISTED ~~</div>
                         )}
                         
                       </>
