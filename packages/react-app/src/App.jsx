@@ -178,11 +178,21 @@ function App(props) {
   
   const erc721TransferHelperApproved = useContractReader(
     readContracts,
-    oldEnglishContract,
+    oldEnglishContract, //====***needs to be changed to eventual contract address
     "isApprovedForAll",
     [
-      "0x153D2A196dc8f1F6b9Aa87241864B3e4d4FEc170",
-      "0x029AA5a949C9C90916729D50537062cb73b5Ac92"
+      address, //current signer
+      "0x029AA5a949C9C90916729D50537062cb73b5Ac92" //current rinkeby OE NFT contract
+    ]
+  );
+
+  const zoraModuleManagerApproved = useContractReader(
+    readContracts,
+    zmmContract,
+    "isModuleApproved",
+    [
+      address, //current signer 
+      "0xA98D3729265C88c5b3f861a0c501622750fF4806" ///zora ask module
     ]
   );
 
@@ -190,12 +200,6 @@ function App(props) {
   const balance = useContractReader(readContracts, oldEnglishContract, "balanceOf", [address]);
 
   const buzzBalance = useContractReader(readContracts, "Buzz", "balanceOf", [address]);
-
-  //====CUSTOM UPDATE
-  const zoraSeller = useContractReader(readContracts, zoraAsksContract, "askForNFT", ["0x03D6563e2047534993069F242181B207f80C5dD9", 3]);
-  //const zoraSpecificSeller = zoraSeller["seller"];
-  //====CUSTOM UPDATE
-
 
   //
   // 🧠 This effect will update OldEnglishs by polling when your balance changes
@@ -335,7 +339,8 @@ function App(props) {
               zmmContract={zmmContract}
               zoraAsksContract={zoraAsksContract}
               lostandfoundNFTContract={lostandfoundNFTContract}
-              zoraSeller={zoraSeller}
+              erc721TransferHelperApproved={erc721TransferHelperApproved}
+              zoraModuleManagerApproved={zoraModuleManagerApproved}
               balance={balance}
               startBlock={startBlock}
             />

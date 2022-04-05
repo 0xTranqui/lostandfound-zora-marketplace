@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Switch, Input, Radio, Select, Cascader, DatePicker, InputNumber, TreeSelect } from "antd";
+import { Button, Card, List, Spin, Popover, Form, Switch, Input, Radio, Space, Select, Cascader, DatePicker, InputNumber, TreeSelect } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { useDebounce } from "../hooks";
@@ -28,14 +28,50 @@ function OldEnglish({
   zoraTransferHelperContract,
   zmmContract,
   zoraAsksContract,
-  lostandfoundNFTContract
+  lostandfoundNFTContract,
+  erc721TransferHelperApproved,
+  zoraModuleManagerApproved
   ///=======my custom imports
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
   const [loadingOldEnglish, setLoadingOldEnglish] = useState(true);
   const perPage = 12;
   const [page, setPage] = useState(0);
+
+  //===CUSTOM STATE SETTING TO HANDLE FINDERS FEE INPUT LOGIC
+  const [createFinderIsDisabled, setCreateFinderIsDisabled] = useState(true);
   
+  const createHandleClickFalse = () => {
+    setCreateFinderIsDisabled(false)
+  };
+
+  const createHandleClickTrue = () => {
+    setCreateFinderIsDisabled(true)
+  };
+
+  const [fillFinderIsDisabled, setFillFinderIsDisabled] = useState(true);
+  
+  const fillHandleClickFalse = () => {
+    setFillFinderIsDisabled(false)
+  };
+
+  const fillHandleClickTrue = () => {
+    setFillFinderIsDisabled(true)
+  };
+
+  {/*
+  state = { value: 1 };
+
+  finderChecker = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      value: e.target.value,
+    });
+  }
+
+  const { value } = this.state;
+*/}
+
   //====my custom addition
   const nftContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9"; //oldenglish
   
@@ -305,9 +341,16 @@ function OldEnglish({
               },
             ]}
           >
-            <Input
-            placeholder={"Finders Fee BPS in %"}
-            />
+            <div>
+              <Radio.Group>
+                <Radio onClick={createHandleClickFalse} value={""}>Add Finder's Fee</Radio>                
+                <Radio onClick={createHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>No Finder's Fee</Radio>
+              </Radio.Group>
+              <Input
+              placeholder={"Finders Fee BPS in %"}
+              disabled={createFinderIsDisabled}
+              />
+            </div>
           </Form.Item>          
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={listing}>
@@ -438,6 +481,7 @@ function OldEnglish({
           }}
           onFinish={async values => {
             setFill(true);
+            console.log(zoraModuleManagerApproved);
             try {
               const txCur = await tx(writeContracts[zoraAsksContract].fillAsk(
                 nftContractAddress,
@@ -456,34 +500,26 @@ function OldEnglish({
             }
           }}
           onFinishFailed={onFinishFailed}
-        >            
-          {/*
-          <Form.Item
-            name="fillPrice"
-            rules={[
-              {
-                required: true,
-                message: "How much are you purchasing this NFT for??",
-              },
-            ]}
-          >
-            <Input
-            placeholder={"Purchase Price (ETH): "}
-            />
-          </Form.Item>   
-          */}      
+        >                
           <Form.Item
             name="finderAddress"
             rules={[
               {
-                required: false,
+                required: true,
                 message: "Who helped facilitate this sale",
               },
             ]}
           >
-            <Input
-            placeholder={"Finder address (Full Wallet Address):"}
-            />
+            <div>
+              <Radio.Group>
+                <Radio onClick={fillHandleClickFalse} value={""}>Reward the Finder</Radio>                
+                <Radio onClick={fillHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>No Finder Involved</Radio>
+              </Radio.Group>
+              <Input
+                placeholder={"Finder Wallet Address"}
+                disabled={fillFinderIsDisabled}
+              />
+            </div>
           </Form.Item>        
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={fill}>
@@ -517,51 +553,54 @@ function OldEnglish({
         <div>
           <div style={{ marginBottom: 5 }}>
             <Button
-              onClick={() => {
-                {
-                  updateAllOldEnglish(),
-                  updateAllAsks();
-                }
-              }}
             >
               Refresh
             </Button>
-            <Button
-              type="primary"
-              onClick={async () => {
-                console.log("Clicked ERC721Transfer Button");
-                try {
-                  const txCur = await tx(writeContracts[oldEnglishContract].setApprovalForAll(
-                    "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
-                    true
-                  ));
-                  await txCur.wait();
-                  updateOneOldEnglish();
-                } catch (e) {
-                  console.log("ERC721Transfer HelperApproval Failed", e);
-                }
-              }}
-            >            
-              APPROVE ERC721 TRANSFER HELPER
-            </Button>
-            <Button
-              type="primary"
-              onClick={async () => {
-                console.log("Clicked ZMM Button");
-                try {
-                  const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
-                    "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
-                    true
-                  ));
-                  await txCur.wait();
-                  updateOneOldEnglish();
-                } catch (e) {
-                  console.log("ZORA Module Manager Approval Failed", e);
-                }
-              }}
-            >      
-              APPROVE ZORA MODULE MANAGER
-            </Button>
+            {erc721TransferHelperApproved == true ? (
+                <div>ERC721 Transfer Helper Approved ✅  </div>
+              ) : (
+              <Button
+                type="primary"
+                onClick={async () => {
+                  console.log("Clicked ERC721Transfer Button");
+                  //console.log(readContracts[oldEnglishContract].name)
+                  try {
+                    const txCur = await tx(writeContracts[oldEnglishContract].setApprovalForAll(
+                      "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
+                      true
+                    ));
+                    await txCur.wait();
+                    updateOneOldEnglish();
+                  } catch (e) {
+                    console.log("ERC721Transfer HelperApproval Failed", e);
+                  }
+                }}
+              >            
+                APPROVE ERC721 TRANSFER HELPER
+              </Button>
+            )}
+            {zoraModuleManagerApproved == true ? (
+                <div>ZORA Module Manager Approved ✅  </div>              
+              ) : (
+              <Button
+                type="primary"
+                onClick={async () => {
+                  console.log("Clicked ZMM Button");
+                  try {
+                    const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
+                      "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
+                      true
+                    ));
+                    await txCur.wait();
+                    updateOneOldEnglish();
+                  } catch (e) {
+                    console.log("ZORA Module Manager Approval Failed", e);
+                  }
+                }}
+              >      
+                APPROVE ZORA MODULE MANAGER
+              </Button>
+              )}
             <Switch
               disabled={loadingOldEnglish}
               style={{ marginLeft: 5 }}
@@ -635,62 +674,84 @@ function OldEnglish({
                           blockExplorer={blockExplorer}
                           fontSize={16}
                         />
+                        {/*
                         <div>                        
-                        List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH              
+                        v1 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH              
                         </div>
                         <div>
-                        Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
+                        v1 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
                         </div>
+                        */}
                       </div>
                     )}
-                    {address && item.owner == address.toLowerCase() ? (
+                    {address && item.owner == address.toLowerCase() ? ( /// logic asking if you are the owner
                         <>
-                          {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? (
-                              
+                          {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? ( /// logic asking what to do if you are the owner and ask does NOT exist
                               <Popover
                                 content={() => {                                                        
                                   return createAsk(id);
                                 }}
                                 title="Create Ask"
                               >
-                                <div>~~ UNLISTED ~~</div>
+                                <div>** UNLISTED **</div>
                                 <Button type="primary">List</Button>
                               </Popover>
-                            ) : ( 
-                              <div>~~ ACTIVE LISTING ~~</div>
+                            ) : ( ///logic asking if you are the owner and the ask DOES exist
+                              <div>
+                                <div>
+                                  ** ACTIVE LISTING **
+                                </div>
+                                <div>                        
+                                  v2 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
+                                </div>
+                                <div>
+                                  v2 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
+                                </div>                                   
+                                <Popover
+                                  content={() => {                                                        
+                                    return updateAskPrice(id);
+                                  }}
+                                  title="Update Ask"
+                                >
+
+                                  <Button type="primary">Update Listing</Button>
+                                </Popover>
+                                <Popover
+                                  content={() => {                                                        
+                                    return cancelAsk(id);
+                                  }}
+                                  title="Cancel Ask"
+                                >
+
+                                  <Button type="primary">Cancel Listing</Button>
+                                </Popover>                                
+                              </div>
                             )}
-                          <Popover
-                            content={() => {
-                              return updateAskPrice(id);
-                            }}
-                            title="Update Listing Price"
-                          >
-                            <Button type="primary">Update Listing</Button>
-                          </Popover>
-                          <Popover
-                            content={() => {
-                              return cancelAsk(id);
-                            }}
-                            title="Cancel Listing"
-                          >
-                            <Button type="primary"
-                            >Cancel Listing</Button>
-                          </Popover>
                         </>
-                      ) : (
+                      ) : ( /// logic asking what to do if not the owner
                       <>
-                        {item.askSeller.seller != "0x0000000000000000000000000000000000000000" ? (
+                        {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? (  ///logic asking what to do if not owner and ask does NOT exist
+                            <div>
+                              ** UNLISTED **
+                            </div>                            
+                          ) : ( 
                             <Popover
                               content={() => {                                                        
                                 return fillAsk(id);
                               }}
                               title="Fill Ask"
                             >
-                              <div>~~ ACTIVE LISTING ~~</div>
+                              <div>
+                              ** ACTIVE LISTING **
+                              </div>
+                              <div>                        
+                              v2 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
+                              </div>
+                              <div>
+                              v2 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
+                              </div>   
                               <Button type="primary">Buy</Button>
                             </Popover>
-                          ) : ( 
-                            <div>~~ UNLISTED ~~</div>
                         )}
                         
                       </>
