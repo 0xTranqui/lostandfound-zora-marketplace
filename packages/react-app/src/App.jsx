@@ -1,4 +1,4 @@
-import { Alert, Button, Col, Menu, Row, notification } from "antd";
+import { Alert, Button, Col, Menu, Row, Input, notification } from "antd";
 import "antd/dist/antd.css";
 import {
   useBalance,
@@ -35,6 +35,7 @@ import { useStaticJsonRPC } from "./hooks";
 
 //====MY CUSTOM IMPORTS
 import { getMainnetSdk } from '@dethcrypto/eth-sdk-client'
+import { Price } from "@uniswap/sdk";
 //====MY CUSTOM IMPORTS
 
 const { ethers } = require("ethers");
@@ -82,6 +83,7 @@ function App(props) {
   const zmmContract = "zoraModuleManager";
   const zoraAsksContract = "zoraAsksV1_1Module";
   const lostandfoundNFTContract = "lostandFoundContract";
+
   //======my custom additions
 
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
@@ -163,14 +165,14 @@ function App(props) {
   const mainnetContracts = useContractLoader(mainnetProvider, contractConfig);
 
   const priceToMint = useContractReader(readContracts, oldEnglishContract, "price");
-
   
   const limit = useContractReader(readContracts, oldEnglishContract, "limit");
 
   // ****** my custom functionality
-  const mintPrice = useContractReader(readContracts, lostandfoundNFTContract, "PRICE")
+  const priceOfMint = useContractReader(readContracts, lostandfoundNFTContract, "PRICE");
   const totalSupply = useContractReader(readContracts, lostandfoundNFTContract, "totalSupply");
   const maxSupply =  useContractReader(readContracts, lostandfoundNFTContract, "MAX_SUPPLY");
+  
   
 
   //======= bringing in external ZORA contracts
@@ -254,8 +256,13 @@ function App(props) {
 
   const faucetAvailable = localProvider && localProvider.connection && targetNetwork.name.indexOf("local") !== -1;
 
-  //****** ERC721 Minting Functionality *********
-
+  //****** ERC721 Minting Functionality ********* 
+  /*
+  const [mintForm] = Form.useForm();
+  const mint = () => {
+    const [mintQuantity, setMintQuantity] = useState(0);
+  }
+  */
 
 
   return (
@@ -270,12 +277,48 @@ function App(props) {
         logoutOfWeb3Modal={logoutOfWeb3Modal}
       />
 
+      {/*
       <div style={{ maxWidth: 820, margin: "auto", marginTop: 12, paddingBottom: 32 }}>
         <div style={{ fontSize: 16, marginTop: 32 }}>
-          {/*}<h2>{`Get yourself an oe40 `}</h2>*/}
+          {/*}<h2>{`Get yourself an oe40 `}</h2>
           <p>Take a sip. Wrap it up. Pour one out. </p>
         </div>
-
+        
+        <Form
+          form={mintForm}
+          layout={"inline"}
+          name="mint"
+          >
+          <Input
+          placeholder={"How Many NFTs Do you Want to Mint? Max = 2: "}
+          //onChange={e => setMintQuantity({ ...mintQuantity, _numberOfTokens: e.target.value })}    
+          />
+          <Button
+            type="primary"
+            size="large"
+            loading={minting}
+            onClick={async () => {
+              setMinting(true);
+              const pricePerMint = await readContracts[lostandfoundNFTContract].PRICE();
+              try {
+                const txCur = await tx(writeContracts[lostandfoundNFTContract].mint( mintQuantity, { value: (pricePerMint * mintQuantity) }));
+                await txCur.wait();
+                setMinting(false);
+                notification.open({
+                  message: "🍻 Minted an LF 🍻",
+                  description: "Sip, wrap, pour and recycle!",
+                });
+              } catch (e) {
+                console.log("mint failed", e);
+                setMinting(false);
+              }
+            }}
+            disabled={maxSupply && totalSupply && maxSupply.lt(totalSupply)}
+          >
+            V2 MINT {mintQuantity} for Ξ{(priceOfMint && (+ethers.utils.formatEther(priceOfMint)).toFixed(4)) * mintQuantity}
+          </Button>
+        </Form>      
+          
         <Button
           type="primary"
           size="large"
@@ -313,6 +356,7 @@ function App(props) {
           buzzBalance ? ethers.utils.formatEther(buzzBalance) : "..."
         }`}</h2>
       </div>
+      */}
 
       <Menu style={{ textAlign: "center" }} selectedKeys={[location.pathname]} mode="horizontal">
         <Menu.Item key="/">
@@ -346,6 +390,7 @@ function App(props) {
               lostandfoundNFTContract={lostandfoundNFTContract}
               erc721TransferHelperApproved={erc721TransferHelperApproved}
               zoraModuleManagerApproved={zoraModuleManagerApproved}
+              priceOfMint={priceOfMint}
               balance={balance}
               startBlock={startBlock}
             />

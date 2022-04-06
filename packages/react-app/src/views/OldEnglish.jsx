@@ -30,7 +30,8 @@ function OldEnglish({
   zoraAsksContract,
   lostandfoundNFTContract,
   erc721TransferHelperApproved,
-  zoraModuleManagerApproved
+  zoraModuleManagerApproved,
+  priceOfMint
   ///=======my custom imports
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
@@ -276,7 +277,7 @@ function OldEnglish({
     );
   };
 
-  let filteredOEs = Object.values(allOldEnglish).sort((a, b) => b.id - a.id);
+  let filteredOEs = Object.values(allOldEnglish).sort((a, b) => b.askSeller.askPrice - a.askSeller.askPrice);
   const [mine, setMine] = useState(false);
   if (mine == true && address && filteredOEs) {
     filteredOEs = filteredOEs.filter(function (el) {
@@ -335,6 +336,7 @@ function OldEnglish({
           >
             <Input
             placeholder={"Listing Price (ETH): "}
+            addonAfter={"ETH"}
             />
           </Form.Item>         
           <Form.Item
@@ -366,6 +368,7 @@ function OldEnglish({
               </Radio.Group>
               <Input
               placeholder={"Finders Fee BPS in %"}
+              addonAfter={"%"}
               disabled={createFinderIsDisabled}
               />
             </div>
@@ -425,6 +428,7 @@ function OldEnglish({
           >
             <Input
             placeholder={"Updated Listing Price (ETH): "}
+            addonAfter={"ETH"}
             />
           </Form.Item>                
           <Form.Item>
@@ -482,6 +486,7 @@ function OldEnglish({
   const [fillAskForm] = Form.useForm();
   const fillAsk = id => {
     const [fill, setFill] = useState(false);
+    const mintPrice = readContracts[lostandfoundNFTContract].PRICE()
 
     //0x153D2A196dc8f1F6b9Aa87241864B3e4d4FEc170
 
@@ -499,7 +504,8 @@ function OldEnglish({
           }}
           onFinish={async values => {
             setFill(true);
-            console.log(zoraModuleManagerApproved);
+            console.log(mintPrice);
+            //console.log(zoraModuleManagerApproved);
             try {
               const txCur = await tx(writeContracts[zoraAsksContract].fillAsk(
                 nftContractAddress,
@@ -547,7 +553,58 @@ function OldEnglish({
         </Form>
       </div>
     );
-  };  
+  };
+  
+  //=====MINT FORM
+  const [mintForm] = Form.useForm();
+
+  const mintNFT = () => {
+    const [mint, setMint] = useState(false);
+
+    return (
+      <div>
+        <Form
+          form={mintForm}
+          layout={"inline"}
+          name="mint"
+          initialValues={{
+            numberOfTokens: '',
+          }}
+          onFinish={async values => {
+            setMint(true);
+
+            try {
+              const txCur = await tx(writeContracts[lostandfoundNFTContract].mint(
+                values["numberOfTokens"],
+                { value: (priceOfMint * values["numberOfTokens"]).toString() }//* values["numberOfTokens"] ) }
+              ));
+              await txCur.wait();
+              setMint(false);
+            } catch(e) {
+              console.log("mint failed", e);
+              setMint(false);
+            }
+          }}
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            name="numberOfTokens"
+            rules={[
+              {
+                required: true,
+                message: "How Many NFTs Do You Want To Mint?"
+              },
+            ]}
+          >
+            <Input placeholder={"Limit 2"} />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" style={{ backgroundColor: "red", border: "black"}} htmlType="submit" loading={mint}>MINTYY :)</Button>
+          </Form.Item>
+        </Form>
+      </div>
+    );
+  };
 
   return (
     <div style={{ width: "auto", margin: "auto", paddingBottom: 25, minHeight: 800 }}>
@@ -555,6 +612,18 @@ function OldEnglish({
         <Spin style={{ marginTop: 100 }} />
       ) : (
         <div>
+          <Popover
+          content={() => {
+            return mintNFT();
+          }}
+          title="mintNFT"
+          >
+            <Button type="primary" style={{ backgroundColor: "red", border: "black", marginBottom: 25 }}>MINT NFT!!</Button>
+          </Popover>
+          {/*
+          <Input style={{ width: "150px", marginBottom: 25 }} placeholder={" Limit = 2 "}/>
+          <Button type="primary" style={{ backgroundColor: "red", border: "black"}}>MINT :)</Button>
+        */}
           <div style={{ marginBottom: 5 }}>
             <Button
             >
