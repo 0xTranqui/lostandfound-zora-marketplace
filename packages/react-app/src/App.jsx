@@ -6,7 +6,7 @@ import {
   useContractReader,
   useGasPrice,
   useOnBlock,
-  useUserProviderAndSigner,
+  useUserProviderAndSigner
 } from "eth-hooks";
 import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
@@ -164,13 +164,14 @@ function App(props) {
 
   const priceToMint = useContractReader(readContracts, oldEnglishContract, "price");
 
-  const totalSupply = useContractReader(readContracts, oldEnglishContract, "totalSupply");
+  
   const limit = useContractReader(readContracts, oldEnglishContract, "limit");
 
   // ****** my custom functionality
-  //const seller = useContractReader(readContracts, zoraAsksContract, "askForNFT", [oldEnglishContract, 0]);
-  //const specificSeller = seller['seller'];
-
+  const mintPrice = useContractReader(readContracts, lostandfoundNFTContract, "PRICE")
+  const totalSupply = useContractReader(readContracts, lostandfoundNFTContract, "totalSupply");
+  const maxSupply =  useContractReader(readContracts, lostandfoundNFTContract, "MAX_SUPPLY");
+  
 
   //======= bringing in external ZORA contracts
   
@@ -178,7 +179,7 @@ function App(props) {
   
   const erc721TransferHelperApproved = useContractReader(
     readContracts,
-    oldEnglishContract, //====***needs to be changed to eventual contract address
+    lostandfoundNFTContract, //====***needs to be changed to eventual contract address
     "isApprovedForAll",
     [
       address, //current signer
@@ -252,6 +253,10 @@ function App(props) {
   }, [loadWeb3Modal]);
 
   const faucetAvailable = localProvider && localProvider.connection && targetNetwork.name.indexOf("local") !== -1;
+
+  //****** ERC721 Minting Functionality *********
+
+
 
   return (
     <div className="App">

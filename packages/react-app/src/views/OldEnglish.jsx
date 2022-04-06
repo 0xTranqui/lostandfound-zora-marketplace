@@ -73,7 +73,14 @@ function OldEnglish({
 */}
 
   //====my custom addition
-  const nftContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9"; //oldenglish
+  const nftContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
+  // Imports + declartions for ZORA Approval Contracts
+  const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
+  const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
+  const asksModuleV1_1Address = mainnetZoraAddresses.AsksV1_1;
+  const oldEnglishContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9";
+  const lostandfoundContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01";
+
   
   ///this allows you to query the current ask for any given NFt. if no current ask, seller = 0 address
   //const seller = useContractReader(readContracts, zoraAsksContract, "askForNFT", [nftContractAddress, 3]);
@@ -83,19 +90,30 @@ function OldEnglish({
   
   const fetchMetadataAndUpdate = async id => {
     try {
-      const tokenURI = await readContracts[oldEnglishContract].tokenURI(id);
-      const jsonManifestString = atob(tokenURI.substring(29));
+      const tokenURI = await readContracts[lostandfoundNFTContract].tokenURI(id);
+      const nftMetadataURL = "https://ipfs.io/ipfs/" + tokenURI.substring(7); // previous function atob(tokenURI.substring(29));
+      const nftMetadataFetch = await fetch(nftMetadataURL); 
 
       //===CUSTOM UPDATE
       const seller = await readContracts[zoraAsksContract].askForNFT(nftContractAddress, id);
+      
+      const ownerAddress = await readContracts[lostandfoundNFTContract].ownerOf(id);
+      const ownerAddressCleaned = ownerAddress.toString().toLowerCase();
+
+      //const ownerAddressStringLowerCase = ownerAddress.toLowerCase();
+
+      //const ownerAddressString = ownerAddress.toString().toLowerCase();      //console.log(ownerAddress);
+     // console.log(ownerAddressString);
+      //console.log(ownerAddressStringLowerCase);
       //===CUSTOM UPDATE
 
       try {
-        const jsonManifest = JSON.parse(jsonManifestString);
+        const nftMetadataObject = await nftMetadataFetch.json();// JSON.parse(jsonManifestString);
+        //const nftMetadataObjectFixed = nftMetadataObject.item.imag
         const collectibleUpdate = {};
 
         //===CUSTOM UPDATE, added askSeller: seller as a key:value pair
-        collectibleUpdate[id] = { id: id, uri: tokenURI, askSeller: seller, ...jsonManifest};
+        collectibleUpdate[id] = { id: id, uri: tokenURI, askSeller: seller, nftOwner: ownerAddressCleaned, ...nftMetadataObject};
 
         setAllOldEnglish(i => ({ ...i, ...collectibleUpdate }));
       } catch (e) {
@@ -108,14 +126,14 @@ function OldEnglish({
 
 
   const updateAllOldEnglish = async () => {
-    if (readContracts[oldEnglishContract] && totalSupply /*&& totalSupply <= receives.length*/) {
+    if (readContracts[lostandfoundNFTContract] && totalSupply /*&& totalSupply <= receives.length*/) {
       setLoadingOldEnglish(true);
       let numberSupply = totalSupply.toNumber();
 
       let tokenList = Array(numberSupply).fill(0);
 
       tokenList.forEach((_, i) => {
-        let tokenId = i + 1;
+        let tokenId = i; //used to be i + 1 for OE
         if (tokenId <= numberSupply - page * perPage && tokenId >= numberSupply - page * perPage - perPage) {
           fetchMetadataAndUpdate(tokenId);
         } else if (!allOldEnglish[tokenId]) {
@@ -142,14 +160,14 @@ function OldEnglish({
   };
 
   const updateOneOldEnglish = async id => {
-    if (readContracts[oldEnglishContract] && totalSupply) {
+    if (readContracts[lostandfoundNFTContract] && totalSupply) {
       fetchMetadataAndUpdate(id);
     }
   };
 
   useEffect(() => {
     if (totalSupply && totalSupply.toNumber() > 0) updateAllOldEnglish();
-  }, [readContracts[oldEnglishContract], (totalSupply || "0").toString(), page]);
+  }, [readContracts[lostandfoundNFTContract], (totalSupply || "0").toString(), page]);
 
   const onFinishFailed = errorInfo => {
     console.log("Failed:", errorInfo);
@@ -495,7 +513,7 @@ function OldEnglish({
               updateOneOldEnglish(id);
               setFill(false);
             } catch (e) {
-              console.log("fill sk failed", e);
+              console.log("fill ask failed", e);
               setFill(false);
             }
           }}
@@ -531,20 +549,6 @@ function OldEnglish({
     );
   };  
 
-  
-
-
-
-// Imports + declartions for ZORA Approval Contracts
-  const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
-  const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
-  const asksModuleV1_1Address = mainnetZoraAddresses.AsksV1_1;
-  const oldEnglishContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9";
-  const lostandfoundContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01";
-
-
-
-
   return (
     <div style={{ width: "auto", margin: "auto", paddingBottom: 25, minHeight: 800 }}>
       {false ? (
@@ -557,7 +561,7 @@ function OldEnglish({
               Refresh
             </Button>
             {erc721TransferHelperApproved == true ? (
-                <div>ERC721 Transfer Helper Approved ✅  </div>
+                <div>ERC721 Transfer Helper Approved ✅ </div>
               ) : (
               <Button
                 type="primary"
@@ -565,7 +569,7 @@ function OldEnglish({
                   console.log("Clicked ERC721Transfer Button");
                   //console.log(readContracts[oldEnglishContract].name)
                   try {
-                    const txCur = await tx(writeContracts[oldEnglishContract].setApprovalForAll(
+                    const txCur = await tx(writeContracts[lostandfoundNFTContract].setApprovalForAll(
                       "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
                       true
                     ));
@@ -580,7 +584,7 @@ function OldEnglish({
               </Button>
             )}
             {zoraModuleManagerApproved == true ? (
-                <div>ZORA Module Manager Approved ✅  </div>              
+                <div>ZORA Asks V1.1 Module Approved ✅ </div>              
               ) : (
               <Button
                 type="primary"
@@ -638,7 +642,12 @@ function OldEnglish({
             loading={loadingOldEnglish}
             dataSource={filteredOEs ? filteredOEs : []}
             renderItem={item => {
-              const id = item.id;              
+              const id = item.id;
+              const imageWithGateway = "https://ipfs.io/ipfs/" + item.image.substring(7);
+
+              //console.log(item.owner);
+              //const nftOwner = await readContracts[lostandfoundNFTContract].ownerOf(id);
+              //console.log(nftOwner);       
               return (
                 <List.Item key={id}>
                   <Card
@@ -657,19 +666,19 @@ function OldEnglish({
                   >
                     <a
                       href={`${blockExplorer}token/${
-                        readContracts[oldEnglishContract] && readContracts[oldEnglishContract].address
+                        readContracts[lostandfoundNFTContract] && readContracts[lostandfoundNFTContract].address
                       }?a=${id}`}
                       target="_blank"
                     >
-                      <img src={item.image && item.image} alt={"OldEnglish #" + id} width="100" />
+                      <img src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="100" />
                     </a>
-                    {item.owner &&
-                    item.owner.toLowerCase() == readContracts[oldEnglishContract].address.toLowerCase() ? (
+                    {
+                    item.nftOwner == readContracts[lostandfoundNFTContract].address.toLowerCase() ? (
                       <div>{item.description}</div>
                     ) : (
                       <div>
                         <Address
-                          address={item.owner}
+                          address={item.nftOwner}
                           ensProvider={mainnetProvider}
                           blockExplorer={blockExplorer}
                           fontSize={16}
@@ -684,7 +693,7 @@ function OldEnglish({
                         */}
                       </div>
                     )}
-                    {address && item.owner == address.toLowerCase() ? ( /// logic asking if you are the owner
+                    { item.nftOwner == address.toLowerCase() ? ( /// logic asking if you are the owner
                         <>
                           {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? ( /// logic asking what to do if you are the owner and ask does NOT exist
                               <Popover
