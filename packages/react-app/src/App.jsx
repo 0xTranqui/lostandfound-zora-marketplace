@@ -30,12 +30,12 @@ import externalContracts from "./contracts/external_contracts";
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
 import { Home, ExampleUI, Hints, Subgraph } from "./views";
-import { OldEnglish, Drinks } from "./views";
+import { OldEnglish, Drinks, Mint, About } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 //====MY CUSTOM IMPORTS
 import { getMainnetSdk } from '@dethcrypto/eth-sdk-client'
-import { Price } from "@uniswap/sdk";
+//import { Price } from "@uniswap/sdk";
 //====MY CUSTOM IMPORTS
 
 const { ethers } = require("ethers");
@@ -277,7 +277,7 @@ function App(props) {
         logoutOfWeb3Modal={logoutOfWeb3Modal}
       />
 
-      {/*
+      {/* commenting out the previous mint flow from OE40 messaging/branding
       <div style={{ maxWidth: 820, margin: "auto", marginTop: 12, paddingBottom: 32 }}>
         <div style={{ fontSize: 16, marginTop: 32 }}>
           {/*}<h2>{`Get yourself an oe40 `}</h2>
@@ -368,6 +368,12 @@ function App(props) {
         <Menu.Item key="/debug">
           <Link to="/debug">Contracts</Link>
         </Menu.Item>
+        <Menu.Item key="/mint">
+          <Link to="/mint">Mint</Link>
+        </Menu.Item>
+        <Menu.Item key="/about">
+          <Link to="/about">About</Link>
+        </Menu.Item>        
       </Menu>
 
       <Switch>
@@ -440,6 +446,42 @@ function App(props) {
             contractConfig={contractConfig}
           />
         </Route>
+        <Route exact path="/mint">
+          <div style={{ fontSize: 16, marginTop: 32 }}>
+            <Mint
+              readContracts={readContracts}
+              mainnetProvider={mainnetProvider}
+              blockExplorer={blockExplorer}
+              totalSupply={totalSupply}
+              writeContracts={writeContracts}
+              localProvider={localProvider}
+              tx={tx}
+              address={address}
+              DEBUG={DEBUG}
+              oldEnglishContract={oldEnglishContract}
+              startBlock={startBlock}
+              priceOfMint={priceOfMint}              
+              lostandfoundNFTContract={lostandfoundNFTContract}
+            />
+          </div>
+        </Route>     
+        <Route exact path="/about">
+          <div style={{ fontSize: 16, marginTop: 32 }}>
+            <About
+              readContracts={readContracts}
+              mainnetProvider={mainnetProvider}
+              blockExplorer={blockExplorer}
+              totalSupply={totalSupply}
+              writeContracts={writeContracts}
+              localProvider={localProvider}
+              tx={tx}
+              address={address}
+              DEBUG={DEBUG}
+              oldEnglishContract={oldEnglishContract}
+              startBlock={startBlock}
+            />
+          </div>
+        </Route>               
       </Switch>
 
       <ThemeSwitch />

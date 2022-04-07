@@ -281,7 +281,7 @@ function OldEnglish({
   const [mine, setMine] = useState(false);
   if (mine == true && address && filteredOEs) {
     filteredOEs = filteredOEs.filter(function (el) {
-      return el.owner == address.toLowerCase();
+      return el.nftOwner == address.toLowerCase();
     });
   }
 
@@ -486,9 +486,6 @@ function OldEnglish({
   const [fillAskForm] = Form.useForm();
   const fillAsk = id => {
     const [fill, setFill] = useState(false);
-    const mintPrice = readContracts[lostandfoundNFTContract].PRICE()
-
-    //0x153D2A196dc8f1F6b9Aa87241864B3e4d4FEc170
 
     return (
       <div>
@@ -504,8 +501,6 @@ function OldEnglish({
           }}
           onFinish={async values => {
             setFill(true);
-            console.log(mintPrice);
-            //console.log(zoraModuleManagerApproved);
             try {
               const txCur = await tx(writeContracts[zoraAsksContract].fillAsk(
                 nftContractAddress,
@@ -626,8 +621,11 @@ function OldEnglish({
         */}
           <div style={{ marginBottom: 5 }}>
             <Button
+              onClick={() => {
+                return updateAllOldEnglish();
+              }}              
             >
-              Refresh
+              Refresh              
             </Button>
             {erc721TransferHelperApproved == true ? (
                 <div>ERC721 Transfer Helper Approved ✅ </div>
