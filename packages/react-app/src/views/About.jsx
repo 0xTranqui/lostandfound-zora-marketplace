@@ -25,13 +25,13 @@ function OldEnglish({
    return (
       <div style={{ margin: "auto", paddingBottom: 32 }}>
          <div>
-         WHAT IS THIS SITE?
+         WHAT IS THIS SITE ?
          </div>
          <div>
-         WHO IS DANNY DIAMONDS?
+         WHO IS DANNY DIAMONDS ?
          </div>
          <div>
-         WHO IS TRANQUI.ETH
+         WHO IS TRANQUI.ETH ?
          </div>
          <div>
          HOW TO MAKE YOUR OWN MARKETPLACE
