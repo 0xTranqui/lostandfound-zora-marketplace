@@ -34,7 +34,6 @@ import { OldEnglish, Drinks, Mint, About } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 //====MY CUSTOM IMPORTS
-import { getMainnetSdk } from '@dethcrypto/eth-sdk-client'
 //import { Price } from "@uniswap/sdk";
 //====MY CUSTOM IMPORTS
 
