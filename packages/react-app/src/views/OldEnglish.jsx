@@ -31,6 +31,7 @@ function OldEnglish({
   lostandfoundNFTContract,
   erc721TransferHelperApproved,
   zoraModuleManagerApproved,
+  maxSupply
   ///=======my custom imports
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
@@ -579,7 +580,7 @@ function OldEnglish({
               <div style={{marginLeft: 10, marginRight: 10 }}>ERC721 Transfer Helper Approved ✅ </div>
               ) : (
               <Button
-                style= {{marginLeft: 10, marginRight: 10 }}
+                style= {{marginLeft: 10, marginRight: 10, backgroundColor: "purple", color: "black", border: "black", fontSize:"1.25rem", fontWeight: "5rem"  }}
                 type="primary"
                 onClick={async () => {
                   console.log("Clicked ERC721Transfer Button");
@@ -607,7 +608,7 @@ function OldEnglish({
                 </div>              
               ) : (
                 <Button
-                  style={{marginLeft: 5, marginRight: 10 }}
+                  style={{marginLeft: 5, marginRight: 10, backgroundColor: "purple", color: "black", border: "black", fontSize: "1.25rem" }}
                   type="primary"
                   onClick={async () => {
                     console.log("Clicked ZMM Button");
@@ -658,7 +659,7 @@ function OldEnglish({
                 console.log(currentPage);
               },
               showTotal: (total, range) =>
-                `${range[0]}-${range[1]} of ${mine ? filteredOEs.length : totalSupply} items`,
+                `${range[0]}-${range[1]} of ${mine ? filteredOEs.length : maxSupply} items`,
             }}
             loading={loadingOldEnglish}
             dataSource={filteredOEs ? filteredOEs : []}

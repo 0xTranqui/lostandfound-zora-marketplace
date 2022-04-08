@@ -404,6 +404,7 @@ function App(props) {
               erc721TransferHelperApproved={erc721TransferHelperApproved}
               zoraModuleManagerApproved={zoraModuleManagerApproved}
               priceOfMint={priceOfMint}
+              maxSupply={maxSupply}
               balance={balance}
               startBlock={startBlock}
             />
@@ -460,6 +461,7 @@ function App(props) {
               mainnetProvider={mainnetProvider}
               blockExplorer={blockExplorer}
               totalSupply={totalSupply}
+              maxSupply={maxSupply}
               writeContracts={writeContracts}
               localProvider={localProvider}
               tx={tx}
@@ -479,6 +481,7 @@ function App(props) {
               mainnetProvider={mainnetProvider}
               blockExplorer={blockExplorer}
               totalSupply={totalSupply}
+              maxSupply={maxSupply}
               writeContracts={writeContracts}
               localProvider={localProvider}
               tx={tx}
