@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, List, Spin, Popover, Form, Switch, Input, Radio, Space, Select, Cascader, DatePicker, InputNumber, TreeSelect } from "antd";
-import { RedoOutlined } from "@ant-design/icons";
+import { BorderBottomOutlined, RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { useDebounce } from "../hooks";
 import { ethers, BigNumber } from "ethers";
@@ -556,12 +556,14 @@ function OldEnglish({
       ) : (
         <div>
           <div>
-            <h1>
-              Lost & FOUND
-            </h1>
+            <div style={{ fontSize: "4rem", marginBotton: 0, padding: 0 }}>
+              LOST & FOUND
+            </div>
           </div>
-          <div style={{ marginBottom: 5 }}>
-            TOOL BAR  :
+          <div style={{ fontSize: "2rem" }}>
+            <div>
+              Approve Marketplace Contracts  :
+            </div>
 
             {/* commenting out refresh button 
             <Button
@@ -640,11 +642,11 @@ function OldEnglish({
             grid={{
               gutter: 16,
               xs: 1,
-              sm: 2,
-              md: 4,
-              lg: 4,
-              xl: 6,
-              xxl: 4,
+              sm: 1,
+              md: 3,
+              lg: 3,
+              xl: 3,
+              xxl: 3,
             }}
             locale={{ emptyText: `waiting for OEs...` }}
             pagination={{
@@ -672,7 +674,7 @@ function OldEnglish({
                   <Card
                     title={
                       <div>
-                        <span style={{ fontSize: 18, marginRight: 8 }}>{item.name ? item.name : `OE #${id}`}</span>
+                        <span style={{ fontSize: 18, marginRight: 8 }}>{item.name ? item.name + `  -  LF #${id}` : `LF #${id}`}</span>
                         <Button
                           shape="circle"
                           onClick={() => {
@@ -689,7 +691,7 @@ function OldEnglish({
                       }?a=${id}`}
                       target="_blank"
                     >
-                      <img src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="100" />
+                      <img src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="300" />
                     </a>
                     {
                     item.nftOwner == readContracts[lostandfoundNFTContract].address.toLowerCase() ? (
