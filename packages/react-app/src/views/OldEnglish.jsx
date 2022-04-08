@@ -557,13 +557,13 @@ function OldEnglish({
       ) : (
         <div>
           <div>
-            <div style={{ fontSize: "4rem", marginBotton: 0, padding: 0 }}>
+            <div style={{ fontSize: "4rem", marginBotton: 0, padding: 0, color: "#3EB489" }}>
               LOST & FOUND
             </div>
           </div>
-          <div style={{ fontSize: "2rem" }}>
+          <div style={{ fontSize: "2rem", color: "#2c75ff" }}>
             <div>
-              Approve Marketplace Contracts  :
+              Please Approve Marketplace Contracts  :
             </div>
 
             {/* commenting out refresh button 
@@ -577,10 +577,10 @@ function OldEnglish({
             */}
 
             {erc721TransferHelperApproved == true ? (
-              <div style={{marginLeft: 10, marginRight: 10 }}>ERC721 Transfer Helper Approved ✅ </div>
+              <div style={{marginLeft: 10, marginRight: 10, color: "blue" }}>ERC721 Transfer Helper Approved ✅ </div>
               ) : (
               <Button
-                style= {{marginLeft: 10, marginRight: 10, backgroundColor: "purple", color: "black", border: "black", fontSize:"1.25rem", fontWeight: "5rem"  }}
+                style= {{marginLeft: 10, marginRight: 10, backgroundColor: "purple", color: "#f4ff00", border: "#f4ff00", fontSize:"1.25rem", fontWeight: "5rem"  }}
                 type="primary"
                 onClick={async () => {
                   console.log("Clicked ERC721Transfer Button");
@@ -608,7 +608,7 @@ function OldEnglish({
                 </div>              
               ) : (
                 <Button
-                  style={{marginLeft: 5, marginRight: 10, backgroundColor: "purple", color: "black", border: "black", fontSize: "1.25rem" }}
+                  style={{marginLeft: 5, marginRight: 10, backgroundColor: "purple", color: "#f4ff00", border: "#f4ff00", fontSize: "1.25rem" }}
                   type="primary"
                   onClick={async () => {
                     console.log("Clicked ZMM Button");
@@ -673,6 +673,7 @@ function OldEnglish({
               return (
                 <List.Item key={id}>
                   <Card
+                    style={{ height: "600px" }}
                     title={
                       <div>
                         <span style={{ fontSize: 18, marginRight: 8 }}>{item.name ? item.name + `  -  LF #${id}` : `LF #${id}`}</span>
@@ -692,7 +693,7 @@ function OldEnglish({
                       }?a=${id}`}
                       target="_blank"
                     >
-                      <img src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="300" />
+                      <img src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="90%" />
                     </a>
                     {
                     item.nftOwner == readContracts[lostandfoundNFTContract].address.toLowerCase() ? (
