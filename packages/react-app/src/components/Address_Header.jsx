@@ -33,7 +33,7 @@ const { Text } = Typography;
 
 const blockExplorerLink = (address, blockExplorer) => `${blockExplorer || "https://etherscan.io/"}address/${address}`;
 
-export default function Address(props) {
+export default function Address_Header(props) {
   const { currentTheme } = useThemeSwitcher();
   const address = props.value || props.address;
   const ens = useLookupAddress(props.ensProvider, address);
@@ -75,8 +75,8 @@ export default function Address(props) {
 
   return (
     <span>
-      <span style={{ verticalAlign: "middle" }}>
-        Owner: 
+      <span style={{ verticalAlign: "middle", color: "pink" }}>
+        Current Wallet: 
       </span>
       <span style={{ verticalAlign: "middle", paddingLeft: 5, fontSize: props.fontSize ? props.fontSize : 28 }}>
         {props.onChange ? (
@@ -93,7 +93,7 @@ export default function Address(props) {
         ) : (
           <Text copyable={{ text: address }}>
             <a
-              style={{ color: currentTheme === "light" ? "#222222" : "#ddd" }}
+              style={{ color: currentTheme === "light" ? "#222222" : "yellow" }}
               target="_blank"
               href={etherscanLink}
               rel="noopener noreferrer"

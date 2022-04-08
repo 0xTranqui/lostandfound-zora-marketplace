@@ -5,6 +5,10 @@ import Address from "./Address";
 import Balance from "./Balance";
 import Wallet from "./Wallet";
 
+
+import Address_Header from "./Address_Header";
+
+
 /*
   ~ What it does? ~
 
@@ -60,11 +64,13 @@ export default function Account({
       ) : (
         <span>
           {address ? (
-            <Address address={address} ensProvider={mainnetProvider} blockExplorer={blockExplorer} />
+            <Address_Header address={address} ensProvider={mainnetProvider} blockExplorer={blockExplorer} />
           ) : (
             "Connecting..."
           )}
           <Balance address={address} provider={localProvider} price={price} />
+            
+          {/*
           <Wallet
             address={address}
             provider={localProvider}
@@ -73,13 +79,15 @@ export default function Account({
             price={price}
             color={currentTheme === "light" ? "#1890ff" : "#2caad9"}
           />
+          */}
+
         </span>
       )}
       {web3Modal &&
         (web3Modal?.cachedProvider ? (
           <Button
             key="logoutbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4 }}
+            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, borderColor: "red" }}
             shape="round"
             size="large"
             onClick={logoutOfWeb3Modal}
@@ -89,7 +97,7 @@ export default function Account({
         ) : (
           <Button
             key="loginbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4 }}
+            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, borderColor: "green" }}
             shape="round"
             size="large"
             /* type={minimized ? "default" : "primary"}     too many people just defaulting to MM and having a bad time */

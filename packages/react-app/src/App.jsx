@@ -267,7 +267,11 @@ function App(props) {
   return (
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
+      
+      {/* stripping header
       <Header />
+      */}
+
       <NetworkDisplay
         NETWORKCHECK={NETWORKCHECK}
         localChainId={localChainId}
@@ -357,16 +361,20 @@ function App(props) {
       </div>
       */}
 
-      <Menu style={{ textAlign: "center" }} selectedKeys={[location.pathname]} mode="horizontal">
+      <Menu style={{ textAlign: "start",  }} selectedKeys={[location.pathname]} mode="horizontal">
         <Menu.Item key="/">
-          <Link to="/">Gallery</Link>
+          <Link to="/">Marketplace</Link>
         </Menu.Item>
+
+        {/*
         <Menu.Item key="/activity">
           <Link to="/activity">Activity</Link>
         </Menu.Item>
         <Menu.Item key="/debug">
           <Link to="/debug">Contracts</Link>
         </Menu.Item>
+        */}
+
         <Menu.Item key="/mint">
           <Link to="/mint">Mint</Link>
         </Menu.Item>

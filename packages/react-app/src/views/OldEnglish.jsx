@@ -31,7 +31,6 @@ function OldEnglish({
   lostandfoundNFTContract,
   erc721TransferHelperApproved,
   zoraModuleManagerApproved,
-  priceOfMint
   ///=======my custom imports
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
@@ -549,57 +548,6 @@ function OldEnglish({
       </div>
     );
   };
-  
-  //=====MINT FORM
-  const [mintForm] = Form.useForm();
-
-  const mintNFT = () => {
-    const [mint, setMint] = useState(false);
-
-    return (
-      <div>
-        <Form
-          form={mintForm}
-          layout={"inline"}
-          name="mint"
-          initialValues={{
-            numberOfTokens: '',
-          }}
-          onFinish={async values => {
-            setMint(true);
-
-            try {
-              const txCur = await tx(writeContracts[lostandfoundNFTContract].mint(
-                values["numberOfTokens"],
-                { value: (priceOfMint * values["numberOfTokens"]).toString() }//* values["numberOfTokens"] ) }
-              ));
-              await txCur.wait();
-              setMint(false);
-            } catch(e) {
-              console.log("mint failed", e);
-              setMint(false);
-            }
-          }}
-          onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            name="numberOfTokens"
-            rules={[
-              {
-                required: true,
-                message: "How Many NFTs Do You Want To Mint?"
-              },
-            ]}
-          >
-            <Input placeholder={"Limit 2"} />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" style={{ backgroundColor: "red", border: "black"}} htmlType="submit" loading={mint}>MINTYY :)</Button>
-          </Form.Item>
-        </Form>
-      </div>
-    );
-  };
 
   return (
     <div style={{ width: "auto", margin: "auto", paddingBottom: 25, minHeight: 800 }}>
@@ -607,19 +555,15 @@ function OldEnglish({
         <Spin style={{ marginTop: 100 }} />
       ) : (
         <div>
-          <Popover
-          content={() => {
-            return mintNFT();
-          }}
-          title="mintNFT"
-          >
-            <Button type="primary" style={{ backgroundColor: "red", border: "black", marginBottom: 25 }}>MINT NFT!!</Button>
-          </Popover>
-          {/*
-          <Input style={{ width: "150px", marginBottom: 25 }} placeholder={" Limit = 2 "}/>
-          <Button type="primary" style={{ backgroundColor: "red", border: "black"}}>MINT :)</Button>
-        */}
+          <div>
+            <h1>
+              Lost & FOUND
+            </h1>
+          </div>
           <div style={{ marginBottom: 5 }}>
+            TOOL BAR  :
+
+            {/* commenting out refresh button 
             <Button
               onClick={() => {
                 return updateAllOldEnglish();
@@ -627,10 +571,13 @@ function OldEnglish({
             >
               Refresh              
             </Button>
+            */}
+
             {erc721TransferHelperApproved == true ? (
-                <div>ERC721 Transfer Helper Approved ✅ </div>
+              <div style={{marginLeft: 10, marginRight: 10 }}>ERC721 Transfer Helper Approved ✅ </div>
               ) : (
               <Button
+                style= {{marginLeft: 10, marginRight: 10 }}
                 type="primary"
                 onClick={async () => {
                   console.log("Clicked ERC721Transfer Button");
@@ -649,28 +596,33 @@ function OldEnglish({
               >            
                 APPROVE ERC721 TRANSFER HELPER
               </Button>
-            )}
-            {zoraModuleManagerApproved == true ? (
-                <div>ZORA Asks V1.1 Module Approved ✅ </div>              
+              )}
+              {zoraModuleManagerApproved == true ? (
+                <div
+                style={{marginLeft: 10, marginRight: 10 }}
+                >
+                ZORA Asks V1.1 Module Approved ✅ 
+                </div>              
               ) : (
-              <Button
-                type="primary"
-                onClick={async () => {
-                  console.log("Clicked ZMM Button");
-                  try {
-                    const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
-                      "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
-                      true
-                    ));
-                    await txCur.wait();
-                    updateOneOldEnglish();
-                  } catch (e) {
-                    console.log("ZORA Module Manager Approval Failed", e);
-                  }
-                }}
-              >      
-                APPROVE ZORA MODULE MANAGER
-              </Button>
+                <Button
+                  style={{marginLeft: 5, marginRight: 10 }}
+                  type="primary"
+                  onClick={async () => {
+                    console.log("Clicked ZMM Button");
+                    try {
+                      const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
+                        "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
+                        true
+                      ));
+                      await txCur.wait();
+                      updateOneOldEnglish();
+                    } catch (e) {
+                      console.log("ZORA Module Manager Approval Failed", e);
+                    }
+                  }}
+                >      
+                  APPROVE ZORA MODULE MANAGER
+                </Button>
               )}
             <Switch
               disabled={loadingOldEnglish}
@@ -680,8 +632,8 @@ function OldEnglish({
                 setMine(!mine);
                 updateYourOldEnglish();
               }}
-              checkedChildren="mine"
-              unCheckedChildren="all"
+              checkedChildren="MY COLLECTION"
+              unCheckedChildren="FULL COLLECTION"
             />
           </div>
           <List
