@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, List, Spin, Popover, Form, Switch, Input, Radio, Space, Select, Cascader, DatePicker, InputNumber, TreeSelect } from "antd";
-import { BorderBottomOutlined, RedoOutlined } from "@ant-design/icons";
+import { BorderBottomOutlined, PicCenterOutlined, RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { useDebounce } from "../hooks";
 import { ethers, BigNumber } from "ethers";
@@ -552,15 +552,107 @@ function OldEnglish({
     );
   };
 
+  //===marketpalce approval <a href="https://zine.zora.co/zora-v3"></a>
+
+  const marketplaceManager = () => {
+    return (
+      <div className="approvalPopOverManager">
+        <div className="pleaseApprovePopover">
+        Lost & Found marketplace is built on top of the ZORA Marketplace Protocol. In order to interact with the protocol, please sign the following approvals to allow it to interact with your assets : {/* ↓ ↓ */}
+        </div>
+
+        {/* commenting out refresh button 
+        <Button
+          onClick={() => {
+            return updateAllOldEnglish();
+          }}              
+        >
+          Refresh              
+        </Button>
+        */}
+
+        {erc721TransferHelperApproved == true ? (
+          <div
+            className="erc721ApprovedPopover"
+            style={{  }}>
+            NFT TRANSFER HELPER IS APPROVED ✅
+          </div>
+          ) : (
+          <Button
+          className="erc721ApprovalButtonPopover"   
+          style= {{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1rem", height: "auto", borderRadius: 20  }}
+            type="primary"
+            onClick={async () => {
+              console.log("Clicked ERC721Transfer Button");
+              //console.log(readContracts[oldEnglishContract].name)
+              try {
+                const txCur = await tx(writeContracts[lostandfoundNFTContract].setApprovalForAll(
+                  "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
+                  true
+                ));
+                await txCur.wait();
+                updateOneOldEnglish();
+              } catch (e) {
+                console.log("ERC721Transfer HelperApproval Failed", e);
+              }
+            }}
+          >            
+            APPROVE NFT TRANSFER HELPER
+          </Button>
+          )}
+          {zoraModuleManagerApproved == true ? (
+          <div className="zmmApprovedPopover">
+            MARKETPLACE PROTOCOL IS APPROVED ✅ 
+          </div>              
+          ) : (
+          <Button
+            className="zmmApprovalButtonPopover"
+            style={{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1rem", height: "auto", borderRadius: 20, verticalAlign: "center" }}
+            type="primary"
+            onClick={async () => {
+              console.log("Clicked ZMM Button");
+              try {
+                const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
+                  "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
+                  true
+                ));
+                await txCur.wait();
+                updateOneOldEnglish();
+              } catch (e) {
+                console.log("ZORA Module Manager Approval Failed", e);
+              }
+            }}
+          >      
+            APPROVE MARKETPLACE PROTOCOL
+          </Button>
+          )}
+      </div>
+    )
+  }
+
   return (
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
-          <div style={{ fontSize: "5rem", mragin: 0, padding: 0, color: "#02A9EA" }}>
+          <div style={{ fontSize: "5rem", marginBottom: 15, padding: 0, color: "#02A9EA" }}>
               LOST & FOUND
           </div>
           <div className="approvalManager" style={{ fontSize: "2rem", color: "#F0F66E" }}>
+            <Popover
+              className="popoverMaster"
+              placement="bottom"
+              style={{ }}
+              content={() => {                                                        
+                return marketplaceManager();
+              }}
+            >
+              <Button style={{ color: "black", backgroundColor: "#A8C686", border: "1px white solid", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
+                MARKETPLACE APPROVAL MANAGER
+              </Button>
+            </Popover>
+            {/*
+            
             <div className="pleaseApprove">
-              ↓ Please Approve Marketplace Contracts ↓
+              APPROVE MARKETPLACE CONTRACTS : 
             </div>
 
             {/* commenting out refresh button 
@@ -571,14 +663,14 @@ function OldEnglish({
             >
               Refresh              
             </Button>
-            */}
+            
 
             {erc721TransferHelperApproved == true ? (
               <div className="erc721Approved" style={{  }}>✅  NFT TRANSFER HELPER APPROVED ✅ </div>
               ) : (
               <Button
               className="erc721ApprovalButton"   
-              style= {{ backgroundColor: "#02A9EA", color: "#F0F8EA", border: "3px solid #FF4F75", fontSize: "1.25rem", height: "40px", borderRadius: 20  }}
+              style= {{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1.25rem", height: "auto", borderRadius: 20  }}
                 type="primary"
                 onClick={async () => {
                   console.log("Clicked ERC721Transfer Button");
@@ -600,12 +692,12 @@ function OldEnglish({
               )}
               {zoraModuleManagerApproved == true ? (
               <div className="zmmApproved">
-                ✅  MARKETPLACE MODULE APPROVED ✅ 
+                ✅  MARKETPLACE PROTOCOL APPROVED ✅ 
               </div>              
               ) : (
               <Button
-                className="zmmApprovalButton"
-                style={{ backgroundColor: "#02A9EA", color: "#F0F8EA", border: "3px solid #FF4F75", fontSize: "1.25rem", height: "40px", borderRadius: 20 }}
+                className="zmmApprovalButton" F0F8EA A8C686 FF4F75
+                style={{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1.25rem", height: "auto", borderRadius: 20, verticalAlign: "center" }}
                 type="primary"
                 onClick={async () => {
                   console.log("Clicked ZMM Button");
@@ -621,21 +713,24 @@ function OldEnglish({
                   }
                 }}
               >      
-                APPROVE ZORA MARKETPLACE MODULE
+                APPROVE MARKETPLACE PROTOCOL
               </Button>
-              )}
-              <Switch
-                className="ownershipFilter"
-                disabled={loadingOldEnglish}
-                style={{ marginTop: "10px", height: "1.5rem" }}
-                value={mine}
-                onChange={() => {
-                  setMine(!mine);
-                  updateYourOldEnglish();
-                }}
-                checkedChildren="MY COLLECTION"
-                unCheckedChildren="FULL COLLECTION"
-              />
+            )}
+              */}
+
+
+            <Switch
+              className="ownershipFilter"
+              disabled={loadingOldEnglish}
+              style={{ height: "auto", marginLeft: "2.5%", fontSize: "2rem" }}
+              value={mine}
+              onChange={() => {
+                setMine(!mine);
+                updateYourOldEnglish();
+              }}
+              checkedChildren="MY COLLECTION"
+              unCheckedChildren="FULL COLLECTION"
+            />
           </div>
       </div>
       {false ? (
@@ -686,7 +781,8 @@ function OldEnglish({
               return (
                 <List.Item className="listItems" key={id}>
                   <Card
-                    style={{ height: "auto" }}
+                    className="cards"
+                    style={{  margin: 0 }}
                     title={
                       <div className="cardHeaders" >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
 
@@ -713,7 +809,9 @@ function OldEnglish({
                     >
                       <img className="nftImage"src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="80%" />
                     </a>
-                    <div className="cardFooters">                  
+                    <div className="cardFooters">
+                                    
+{/*     commenting out entire section that seems unncesssary                                    
                       {
                       item.nftOwner == readContracts[lostandfoundNFTContract].address.toLowerCase() ? (
                         <div>{item.description}</div>
@@ -732,21 +830,32 @@ function OldEnglish({
                           <div>
                           v1 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
                           </div>
-                          */}
+                          
                         </div>
                       )}
+ */}
+
                       { item.nftOwner == address.toLowerCase() ? ( /// logic asking if you are the owner
                           <>
                             {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? ( /// logic asking what to do if you are the owner and ask does NOT exist
                               <div>
-                                <div>
+                                <div className="listingStatusManager">
                                   <div>
-                                  ** NOT LISTED **
+                                    <Address
+                                      className="listingOwner"
+                                      address={item.nftOwner}
+                                      ensProvider={mainnetProvider}
+                                      blockExplorer={blockExplorer}
+                                      fontSize={16}
+                                    />
                                   </div>
-                                  <div>
+                                  <div className="listingStatus">
+                                  LISTING STATUS : INACTIVE
+                                  </div>
+                                  <div className="listingPrice">
                                   PRICE : N/A
                                   </div>
-                                  <div>
+                                  <div className="listingFindersFee">
                                   FINDER'S FEE : N/A
                                   </div>
                                 </div>
@@ -757,18 +866,27 @@ function OldEnglish({
                                     }}
                                     title="Create Ask"
                                   >
-                                    <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">List</Button>
+                                    <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">List</Button>
                                   </Popover>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
                                 </div>
                               </div>
                               ) : ( ///logic asking if you are the owner and the ask DOES exist
                                 <div>
-                                  <div>
+                                  <div className="listingStatusManager">                                 
                                     <div>
-                                    ** FOR SALE **
+                                      <Address
+                                        className="listingOwner"
+                                        address={item.nftOwner}
+                                        ensProvider={mainnetProvider}
+                                        blockExplorer={blockExplorer}
+                                        fontSize={16}
+                                      />
+                                    </div>                                    
+                                    <div>
+                                    LISTING STATUS : ACTIVE
                                     </div>
                                     <div>                        
                                     PRICE : {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
@@ -778,14 +896,14 @@ function OldEnglish({
                                     </div> 
                                   </div>
                                   <div className="marketplaceManager"> 
-                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">LIST</Button>                                
+                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">LIST</Button>                                
                                     <Popover
                                       content={() => {                                                        
                                         return updateAskPrice(id);
                                       }}
                                       title="Update Ask"
                                     >
-                                      <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                      <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
                                     </Popover>
                                     <Popover
                                       content={() => {                                                        
@@ -793,9 +911,9 @@ function OldEnglish({
                                       }}
                                       title="Cancel Ask"
                                     >
-                                      <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>
+                                      <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>
                                     </Popover>
-                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
+                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
                                   </div>                                                 
                                 </div>
                               )}
@@ -804,48 +922,66 @@ function OldEnglish({
                         <>
                           {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? (  ///logic asking what to do if not owner and ask does NOT exist
                               <div>
-                                <div>
+                                <div className="listingStatusManager">
                                   <div>
-                                  ** NOT LISTED **
+                                    <Address
+                                      className="listingOwner"
+                                      address={item.nftOwner}
+                                      ensProvider={mainnetProvider}
+                                      blockExplorer={blockExplorer}
+                                      fontSize={16}
+                                    />
                                   </div>
-                                  <div>
+                                  <div className="listingStatus">
+                                  LISTING STATUS : INACTIVE
+                                  </div>
+                                  <div className="listingPrice"> 
                                   PRICE : N/A
                                   </div>
-                                  <div>
+                                  <div className="listingFindersFee">
                                   FINDER'S FEE : N/A
                                   </div>
                                 </div>
                                 <div className="marketplaceManager">
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">LIST</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
                                 </div>                                   
                               </div>                                                   
                             ) : ( 
                               <div>
-                                <div>
+                                <div className="listingStatusManager">
                                   <div>
-                                  ** FOR SALE **
+                                    <Address
+                                      className="listingOwner"
+                                      address={item.nftOwner}
+                                      ensProvider={mainnetProvider}
+                                      blockExplorer={blockExplorer}
+                                      fontSize={16}
+                                    />
                                   </div>
-                                  <div>                        
+                                  <div className="listingStatus">
+                                  LISTING STATUS : ACTIVE
+                                  </div>
+                                  <div className="listingPrice">                        
                                   PRICE : {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
                                   </div>
-                                  <div>
-                                  FINDER's FEE : {item.askSeller.findersFeeBps / 100} % 
+                                  <div className="listingFindersFee">
+                                  FINDER'S FEE : {item.askSeller.findersFeeBps / 100} % 
                                   </div>
                                 </div>
                                 <div className="marketplaceManager">
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">LIST</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>                                    
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>                                    
                                   <Popover
                                     content={() => {                                                        
                                       return fillAsk(id);
                                     }}
                                     title="Fill Ask"
                                   >  
-                                    <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
+                                    <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
                                   </Popover>
                                 </div> 
                               </div>
