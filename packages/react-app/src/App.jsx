@@ -272,14 +272,6 @@ function App(props) {
       <Header />
       */}
 
-      <NetworkDisplay
-        NETWORKCHECK={NETWORKCHECK}
-        localChainId={localChainId}
-        selectedChainId={selectedChainId}
-        targetNetwork={targetNetwork}
-        logoutOfWeb3Modal={logoutOfWeb3Modal}
-      />
-
       {/* commenting out the previous mint flow from OE40 messaging/branding
       <div style={{ maxWidth: 820, margin: "auto", marginTop: 12, paddingBottom: 32 }}>
         <div style={{ fontSize: 16, marginTop: 32 }}>
@@ -361,9 +353,9 @@ function App(props) {
       </div>
       */}
 
-      <Menu style={{ textAlign: "start", fontSize: "2rem" }} selectedKeys={[location.pathname]} mode="horizontal">
+      <Menu style={{ textAlign: "start", backgroundColor: "black", margin: "1%" }} selectedKeys={[location.pathname]} mode="horizontal">
         <Menu.Item key="/">
-          <Link style={{color: "red"}} to="/">MARKETPLACE</Link>
+          <Link style={{ color: "#FF4F75", fontSize: "2rem" }} to="/">MARKETPLACE</Link>
         </Menu.Item>
 
         {/*
@@ -376,16 +368,38 @@ function App(props) {
         */}
 
         <Menu.Item key="/mint">
-          <Link style={{color: "magenta"}} to="/mint">MINT</Link>
+          <Link style={{ color: "#F0F66E", fontSize: "2rem" }} to="/mint">MINT</Link>
         </Menu.Item>
         <Menu.Item key="/about">
-          <Link style={{color: "teal"}}to="/about">ABOUT</Link>
-        </Menu.Item>        
+          <Link style={{ color: "#F0F8EA", fontSize: "2rem" }}to="/about">ABOUT</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Account
+            address={address}
+            localProvider={localProvider}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            price={price}
+            web3Modal={web3Modal}
+            loadWeb3Modal={loadWeb3Modal}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+            blockExplorer={blockExplorer}
+          />        
+        </Menu.Item>
+        <Menu.Item>
+          <NetworkDisplay
+            NETWORKCHECK={NETWORKCHECK}
+            localChainId={localChainId}
+            selectedChainId={selectedChainId}
+            targetNetwork={targetNetwork}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+          />
+        </Menu.Item>
       </Menu>
 
       <Switch>
         <Route exact path="/">
-          <div style={{ fontSize: 16, marginTop: 32 }}>
+          <div className="OldEnglishWrapper">
             <OldEnglish
               readContracts={readContracts}
               mainnetProvider={mainnetProvider}
@@ -495,17 +509,19 @@ function App(props) {
       </Switch>
 
       <ThemeSwitch />
+{/*
 
-      {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
-      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
+
+      // 👨‍💼 Your account is in the top right with a wallet at connect options 
+      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 0 }}>
         <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
-          {/*<div style={{ marginRight: 20 }}>
+          <div style={{ marginRight: 20 }}>
             <NetworkSwitch
               networkOptions={networkOptions}
               selectedNetwork={selectedNetwork}
               setSelectedNetwork={setSelectedNetwork}
             />
-          </div>*/}
+          </div>
           <Account
             address={address}
             localProvider={localProvider}
@@ -518,8 +534,12 @@ function App(props) {
             blockExplorer={blockExplorer}
           />
         </div>
+
+        
         <FaucetHint localProvider={localProvider} targetNetwork={targetNetwork} address={address} />
+        
       </div>
+*/}
 
       {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
       <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>

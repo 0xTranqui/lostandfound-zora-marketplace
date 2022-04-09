@@ -6,7 +6,9 @@ import Balance from "./Balance";
 import Wallet from "./Wallet";
 
 
+//my custom import
 import Address_Header from "./Address_Header";
+
 
 
 /*
@@ -58,7 +60,7 @@ export default function Account({
   const { currentTheme } = useThemeSwitcher();
 
   return (
-    <div>
+    <div style={{ }}>
       {minimized ? (
         ""
       ) : (
@@ -68,8 +70,11 @@ export default function Account({
           ) : (
             "Connecting..."
           )}
+          
+          {/*  commenting out balance tracking + display of user
           <Balance address={address} provider={localProvider} price={price} />
-            
+           */}  
+
           {/*
           <Wallet
             address={address}
@@ -87,7 +92,7 @@ export default function Account({
         (web3Modal?.cachedProvider ? (
           <Button
             key="logoutbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, borderColor: "red" }}
+            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, color: "#F0F8EA", border: "2px solid #F0F8EA" }}
             shape="round"
             size="large"
             onClick={logoutOfWeb3Modal}
@@ -97,7 +102,7 @@ export default function Account({
         ) : (
           <Button
             key="loginbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, borderColor: "green" }}
+            style={{ verticalAlign: "middle", margin: 0, color: "#F0F8EA", border:"2px solid #F0F8EA" }}
             shape="round"
             size="large"
             /* type={minimized ? "default" : "primary"}     too many people just defaulting to MM and having a bad time */
@@ -105,6 +110,7 @@ export default function Account({
           >
             connect
           </Button>
+
         ))}
     </div>
   );

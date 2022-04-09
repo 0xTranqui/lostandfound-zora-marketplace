@@ -76,7 +76,7 @@ export default function Address(props) {
   return (
     <span>
       <span style={{ verticalAlign: "middle" }}>
-        Owner: 
+        OWNER : 
       </span>
       <span style={{ verticalAlign: "middle", paddingLeft: 5, fontSize: props.fontSize ? props.fontSize : 28 }}>
         {props.onChange ? (

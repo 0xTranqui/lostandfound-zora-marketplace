@@ -83,8 +83,8 @@ function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNet
     }
   } else {
     networkDisplay = (
-      <div style={{ zIndex: -1, position: "absolute", right: 154, top: 28, padding: 16, color: "orange" }}>
-        {targetNetwork.name}
+      <div style={{ color: "#FF4F75" }}>
+        NETWORK : {targetNetwork.name.toUpperCase()}
       </div>
     );
   }

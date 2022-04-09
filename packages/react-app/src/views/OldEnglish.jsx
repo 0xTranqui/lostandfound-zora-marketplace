@@ -9,6 +9,8 @@ import { useEventListener } from "eth-hooks/events/useEventListener";
 
 //==========my custom import
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
+import "./views.css";
+const { Meta } = Card;
 //==========my custom import
 
 function OldEnglish({
@@ -551,19 +553,14 @@ function OldEnglish({
   };
 
   return (
-    <div style={{ width: "auto", margin: "auto", paddingBottom: 25, minHeight: 800 }}>
-      {false ? (
-        <Spin style={{ marginTop: 100 }} />
-      ) : (
-        <div>
-          <div>
-            <div style={{ fontSize: "4rem", marginBotton: 0, padding: 0, color: "#3EB489" }}>
+    <div className="OldEnglish">
+      <div className="beforeTokenRender"> 
+          <div style={{ fontSize: "5rem", marginBotton: 0, padding: 0, color: "#02A9EA" }}>
               LOST & FOUND
-            </div>
           </div>
-          <div style={{ fontSize: "2rem", color: "#2c75ff" }}>
-            <div>
-              Please Approve Marketplace Contracts  :
+          <div className="approvalManager" style={{ fontSize: "2rem", color: "#F0F66E" }}>
+            <div className="pleaseApprove">
+              ↓ Please Approve Marketplace Contracts ↓
             </div>
 
             {/* commenting out refresh button 
@@ -577,10 +574,11 @@ function OldEnglish({
             */}
 
             {erc721TransferHelperApproved == true ? (
-              <div style={{marginLeft: 10, marginRight: 10, color: "blue" }}>ERC721 Transfer Helper Approved ✅ </div>
+              <div className="erc721Approved" style={{  }}>NFT TRANSFER HELPER APPROVED ✅ </div>
               ) : (
               <Button
-                style= {{marginLeft: 10, marginRight: 10, backgroundColor: "purple", color: "#f4ff00", border: "#f4ff00", fontSize:"1.25rem", fontWeight: "5rem"  }}
+              className="erc721ApprovalButton"   
+              style= {{ backgroundColor: "#02A9EA", color: "#F0F8EA", border: "3px solid #FF4F75", fontSize: "1.25rem", height: "40px", borderRadius: 20  }}
                 type="primary"
                 onClick={async () => {
                   console.log("Clicked ERC721Transfer Button");
@@ -597,49 +595,55 @@ function OldEnglish({
                   }
                 }}
               >            
-                APPROVE ERC721 TRANSFER HELPER
+                APPROVE NFT TRANSFER HELPER
               </Button>
               )}
               {zoraModuleManagerApproved == true ? (
-                <div
-                style={{marginLeft: 10, marginRight: 10 }}
-                >
-                ZORA Asks V1.1 Module Approved ✅ 
-                </div>              
+              <div className="zmmApproved">
+                MARKETPLACE MODULE APPROVED ✅ 
+              </div>              
               ) : (
-                <Button
-                  style={{marginLeft: 5, marginRight: 10, backgroundColor: "purple", color: "#f4ff00", border: "#f4ff00", fontSize: "1.25rem" }}
-                  type="primary"
-                  onClick={async () => {
-                    console.log("Clicked ZMM Button");
-                    try {
-                      const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
-                        "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
-                        true
-                      ));
-                      await txCur.wait();
-                      updateOneOldEnglish();
-                    } catch (e) {
-                      console.log("ZORA Module Manager Approval Failed", e);
-                    }
-                  }}
-                >      
-                  APPROVE ZORA MODULE MANAGER
-                </Button>
+              <Button
+                className="zmmApprovalButton"
+                style={{ backgroundColor: "#02A9EA", color: "#F0F8EA", border: "3px solid #FF4F75", fontSize: "1.25rem", height: "40px", borderRadius: 20 }}
+                type="primary"
+                onClick={async () => {
+                  console.log("Clicked ZMM Button");
+                  try {
+                    const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
+                      "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
+                      true
+                    ));
+                    await txCur.wait();
+                    updateOneOldEnglish();
+                  } catch (e) {
+                    console.log("ZORA Module Manager Approval Failed", e);
+                  }
+                }}
+              >      
+                APPROVE ZORA MARKETPLACE MODULE
+              </Button>
               )}
-            <Switch
-              disabled={loadingOldEnglish}
-              style={{ marginLeft: 5 }}
-              value={mine}
-              onChange={() => {
-                setMine(!mine);
-                updateYourOldEnglish();
-              }}
-              checkedChildren="MY COLLECTION"
-              unCheckedChildren="FULL COLLECTION"
-            />
+              <Switch
+                className="ownershipFilter"
+                disabled={loadingOldEnglish}
+                style={{ marginTop: "10px", height: "1.5rem" }}
+                value={mine}
+                onChange={() => {
+                  setMine(!mine);
+                  updateYourOldEnglish();
+                }}
+                checkedChildren="MY COLLECTION"
+                unCheckedChildren="FULL COLLECTION"
+              />
           </div>
+      </div>
+      {false ? (
+        <Spin style={{ marginTop: 100}} />
+      ) : (
+        <div className="tokenRenderWrapper">
           <List
+            className="tokenRender"
             grid={{
               gutter: 16,
               xs: 1,
@@ -649,7 +653,12 @@ function OldEnglish({
               xl: 3,
               xxl: 3,
             }}
+            align="center" ///THIS IS WHAT ALIGNS ALL OF THE CARDS!!!!!!
             locale={{ emptyText: `waiting for OEs...` }}
+            
+            
+            /* commenting out pagination
+
             pagination={{
               total: mine ? filteredOEs.length : totalSupply,
               defaultPageSize: perPage,
@@ -660,7 +669,11 @@ function OldEnglish({
               },
               showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${mine ? filteredOEs.length : maxSupply} items`,
-            }}
+            }} 
+            
+            */
+            
+
             loading={loadingOldEnglish}
             dataSource={filteredOEs ? filteredOEs : []}
             renderItem={item => {
@@ -671,12 +684,14 @@ function OldEnglish({
               //const nftOwner = await readContracts[lostandfoundNFTContract].ownerOf(id);
               //console.log(nftOwner);       
               return (
-                <List.Item key={id}>
+                <List.Item className="listItems" key={id}>
                   <Card
-                    style={{ height: "600px" }}
+                    style={{ height: "auto" }}
                     title={
-                      <div>
-                        <span style={{ fontSize: 18, marginRight: 8 }}>{item.name ? item.name + `  -  LF #${id}` : `LF #${id}`}</span>
+                      <div className="cardHeaders" >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
+
+                        
+{/*     commenting out individual token refresh button                    
                         <Button
                           shape="circle"
                           onClick={() => {
@@ -684,7 +699,10 @@ function OldEnglish({
                           }}
                           icon={<RedoOutlined />}
                         />
+ */}
+
                       </div>
+
                     }
                   >
                     <a
@@ -693,101 +711,149 @@ function OldEnglish({
                       }?a=${id}`}
                       target="_blank"
                     >
-                      <img src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="90%" />
+                      <img className="nftImage"src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="80%" />
                     </a>
-                    {
-                    item.nftOwner == readContracts[lostandfoundNFTContract].address.toLowerCase() ? (
-                      <div>{item.description}</div>
-                    ) : (
-                      <div>
-                        <Address
-                          address={item.nftOwner}
-                          ensProvider={mainnetProvider}
-                          blockExplorer={blockExplorer}
-                          fontSize={16}
-                        />
-                        {/*
-                        <div>                        
-                        v1 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH              
-                        </div>
+                    <div className="cardFooters">                  
+                      {
+                      item.nftOwner == readContracts[lostandfoundNFTContract].address.toLowerCase() ? (
+                        <div>{item.description}</div>
+                      ) : (
                         <div>
-                        v1 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
+                          <Address
+                            address={item.nftOwner}
+                            ensProvider={mainnetProvider}
+                            blockExplorer={blockExplorer}
+                            fontSize={16}
+                          />
+                          {/*
+                          <div>                        
+                          v1 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH              
+                          </div>
+                          <div>
+                          v1 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
+                          </div>
+                          */}
                         </div>
-                        */}
-                      </div>
-                    )}
-                    { item.nftOwner == address.toLowerCase() ? ( /// logic asking if you are the owner
+                      )}
+                      { item.nftOwner == address.toLowerCase() ? ( /// logic asking if you are the owner
+                          <>
+                            {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? ( /// logic asking what to do if you are the owner and ask does NOT exist
+                              <div>
+                                <div>
+                                  <div>
+                                  ** NOT LISTED **
+                                  </div>
+                                  <div>
+                                  PRICE : N/A
+                                  </div>
+                                  <div>
+                                  FINDER'S FEE : N/A
+                                  </div>
+                                </div>
+                                <div className="marketplaceManager">
+                                  <Popover
+                                    content={() => {                                                        
+                                      return createAsk(id);
+                                    }}
+                                    title="Create Ask"
+                                  >
+                                    <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">List</Button>
+                                  </Popover>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
+                                </div>
+                              </div>
+                              ) : ( ///logic asking if you are the owner and the ask DOES exist
+                                <div>
+                                  <div>
+                                    <div>
+                                    ** FOR SALE **
+                                    </div>
+                                    <div>                        
+                                    PRICE : {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
+                                    </div>
+                                    <div>
+                                    FINDER'S FEE : {item.askSeller.findersFeeBps / 100} % 
+                                    </div> 
+                                  </div>
+                                  <div className="marketplaceManager"> 
+                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">LIST</Button>                                
+                                    <Popover
+                                      content={() => {                                                        
+                                        return updateAskPrice(id);
+                                      }}
+                                      title="Update Ask"
+                                    >
+                                      <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                    </Popover>
+                                    <Popover
+                                      content={() => {                                                        
+                                        return cancelAsk(id);
+                                      }}
+                                      title="Cancel Ask"
+                                    >
+                                      <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>
+                                    </Popover>
+                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
+                                  </div>                                                 
+                                </div>
+                              )}
+                          </>
+                        ) : ( /// logic asking what to do if not the owner
                         <>
-                          {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? ( /// logic asking what to do if you are the owner and ask does NOT exist
-                              <Popover
-                                content={() => {                                                        
-                                  return createAsk(id);
-                                }}
-                                title="Create Ask"
-                              >
-                                <div>** UNLISTED **</div>
-                                <Button type="primary">List</Button>
-                              </Popover>
-                            ) : ( ///logic asking if you are the owner and the ask DOES exist
+                          {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? (  ///logic asking what to do if not owner and ask does NOT exist
                               <div>
                                 <div>
-                                  ** ACTIVE LISTING **
+                                  <div>
+                                  ** NOT LISTED **
+                                  </div>
+                                  <div>
+                                  PRICE : N/A
+                                  </div>
+                                  <div>
+                                  FINDER'S FEE : N/A
+                                  </div>
                                 </div>
-                                <div>                        
-                                  v2 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
-                                </div>
-                                <div>
-                                  v2 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
+                                <div className="marketplaceManager">
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
                                 </div>                                   
-                                <Popover
-                                  content={() => {                                                        
-                                    return updateAskPrice(id);
-                                  }}
-                                  title="Update Ask"
-                                >
-
-                                  <Button type="primary">Update Listing</Button>
-                                </Popover>
-                                <Popover
-                                  content={() => {                                                        
-                                    return cancelAsk(id);
-                                  }}
-                                  title="Cancel Ask"
-                                >
-
-                                  <Button type="primary">Cancel Listing</Button>
-                                </Popover>                                
+                              </div>                                                   
+                            ) : ( 
+                              <div>
+                                <div>
+                                  <div>
+                                  ** FOR SALE **
+                                  </div>
+                                  <div>                        
+                                  PRICE : {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
+                                  </div>
+                                  <div>
+                                  FINDER's FEE : {item.askSeller.findersFeeBps / 100} % 
+                                  </div>
+                                </div>
+                                <div className="marketplaceManager">
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid black" }} type="primary">CANCEL</Button>                                    
+                                  <Popover
+                                    content={() => {                                                        
+                                      return fillAsk(id);
+                                    }}
+                                    title="Fill Ask"
+                                  >  
+                                    <Button style={{ borderRadius: 20, border: "1px solid black" }} type="primary">BUY</Button>
+                                  </Popover>
+                                </div> 
                               </div>
-                            )}
+                          )}
+                          
                         </>
-                      ) : ( /// logic asking what to do if not the owner
-                      <>
-                        {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? (  ///logic asking what to do if not owner and ask does NOT exist
-                            <div>
-                              ** UNLISTED **
-                            </div>                            
-                          ) : ( 
-                            <Popover
-                              content={() => {                                                        
-                                return fillAsk(id);
-                              }}
-                              title="Fill Ask"
-                            >
-                              <div>
-                              ** ACTIVE LISTING **
-                              </div>
-                              <div>                        
-                              v2 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
-                              </div>
-                              <div>
-                              v2 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
-                              </div>   
-                              <Button type="primary">Buy</Button>
-                            </Popover>
-                        )}
-                        
-                      </>
-                    )}
+                      )}
+                    </div>
                   </Card>
                 </List.Item>
               );
