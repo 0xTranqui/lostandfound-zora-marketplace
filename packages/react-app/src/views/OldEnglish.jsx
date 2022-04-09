@@ -645,80 +645,10 @@ function OldEnglish({
                 return marketplaceManager();
               }}
             >
-              <Button style={{ color: "black", backgroundColor: "#A8C686", border: "1px white solid", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
+              <Button style={{ color: "white", backgroundColor: "#4b4b4b", border: "none", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
                 MARKETPLACE APPROVAL MANAGER
               </Button>
             </Popover>
-            {/*
-            
-            <div className="pleaseApprove">
-              APPROVE MARKETPLACE CONTRACTS : 
-            </div>
-
-            {/* commenting out refresh button 
-            <Button
-              onClick={() => {
-                return updateAllOldEnglish();
-              }}              
-            >
-              Refresh              
-            </Button>
-            
-
-            {erc721TransferHelperApproved == true ? (
-              <div className="erc721Approved" style={{  }}>✅  NFT TRANSFER HELPER APPROVED ✅ </div>
-              ) : (
-              <Button
-              className="erc721ApprovalButton"   
-              style= {{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1.25rem", height: "auto", borderRadius: 20  }}
-                type="primary"
-                onClick={async () => {
-                  console.log("Clicked ERC721Transfer Button");
-                  //console.log(readContracts[oldEnglishContract].name)
-                  try {
-                    const txCur = await tx(writeContracts[lostandfoundNFTContract].setApprovalForAll(
-                      "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
-                      true
-                    ));
-                    await txCur.wait();
-                    updateOneOldEnglish();
-                  } catch (e) {
-                    console.log("ERC721Transfer HelperApproval Failed", e);
-                  }
-                }}
-              >            
-                APPROVE NFT TRANSFER HELPER
-              </Button>
-              )}
-              {zoraModuleManagerApproved == true ? (
-              <div className="zmmApproved">
-                ✅  MARKETPLACE PROTOCOL APPROVED ✅ 
-              </div>              
-              ) : (
-              <Button
-                className="zmmApprovalButton" F0F8EA A8C686 FF4F75
-                style={{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1.25rem", height: "auto", borderRadius: 20, verticalAlign: "center" }}
-                type="primary"
-                onClick={async () => {
-                  console.log("Clicked ZMM Button");
-                  try {
-                    const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
-                      "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
-                      true
-                    ));
-                    await txCur.wait();
-                    updateOneOldEnglish();
-                  } catch (e) {
-                    console.log("ZORA Module Manager Approval Failed", e);
-                  }
-                }}
-              >      
-                APPROVE MARKETPLACE PROTOCOL
-              </Button>
-            )}
-              */}
-
-
             <Switch
               className="ownershipFilter"
               disabled={loadingOldEnglish}
