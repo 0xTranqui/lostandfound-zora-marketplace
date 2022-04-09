@@ -355,7 +355,7 @@ function App(props) {
 
       <Menu style={{ textAlign: "start", backgroundColor: "black", margin: "1%" }} selectedKeys={[location.pathname]} mode="horizontal">
         <Menu.Item key="/">
-          <Link style={{ color: "#FF4F75", fontSize: "2rem" }} to="/">MARKETPLACE</Link>
+          <Link style={{ color: "#FF4F75", fontSize: "1.5rem" }} to="/">MARKETPLACE</Link>
         </Menu.Item>
 
         {/*
@@ -368,10 +368,10 @@ function App(props) {
         */}
 
         <Menu.Item key="/mint">
-          <Link style={{ color: "#F0F66E", fontSize: "2rem" }} to="/mint">MINT</Link>
+          <Link style={{ color: "#F0F66E", fontSize: "1.5rem" }} to="/mint">MINT</Link>
         </Menu.Item>
         <Menu.Item key="/about">
-          <Link style={{ color: "#F0F8EA", fontSize: "2rem" }}to="/about">ABOUT</Link>
+          <Link style={{ color: "#F0F8EA", fontSize: "1.5rem" }}to="/about">ABOUT</Link>
         </Menu.Item>
         <Menu.Item>
           <Account

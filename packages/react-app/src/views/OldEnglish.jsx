@@ -555,7 +555,7 @@ function OldEnglish({
   return (
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
-          <div style={{ fontSize: "5rem", marginBotton: 0, padding: 0, color: "#02A9EA" }}>
+          <div style={{ fontSize: "5rem", mragin: 0, padding: 0, color: "#02A9EA" }}>
               LOST & FOUND
           </div>
           <div className="approvalManager" style={{ fontSize: "2rem", color: "#F0F66E" }}>
@@ -574,7 +574,7 @@ function OldEnglish({
             */}
 
             {erc721TransferHelperApproved == true ? (
-              <div className="erc721Approved" style={{  }}>NFT TRANSFER HELPER APPROVED ✅ </div>
+              <div className="erc721Approved" style={{  }}>✅  NFT TRANSFER HELPER APPROVED ✅ </div>
               ) : (
               <Button
               className="erc721ApprovalButton"   
@@ -600,7 +600,7 @@ function OldEnglish({
               )}
               {zoraModuleManagerApproved == true ? (
               <div className="zmmApproved">
-                MARKETPLACE MODULE APPROVED ✅ 
+                ✅  MARKETPLACE MODULE APPROVED ✅ 
               </div>              
               ) : (
               <Button
