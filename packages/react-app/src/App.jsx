@@ -353,7 +353,7 @@ function App(props) {
       </div>
       */}
 
-      <Menu style={{ textAlign: "start", backgroundColor: "black", margin: "1%" }} selectedKeys={[location.pathname]} mode="horizontal">
+      <Menu style={{ textAlign: "start", backgroundColor: "#343434", margin: "1%" }} selectedKeys={[location.pathname]} mode="horizontal">
         <Menu.Item key="/">
           <Link style={{ color: "#FF4F75", fontSize: "1.5rem" }} to="/">MARKETPLACE</Link>
         </Menu.Item>
@@ -508,7 +508,7 @@ function App(props) {
         </Route>               
       </Switch>
 
-      <ThemeSwitch />
+{/*       <ThemeSwitch />    commenting out theme switch */}
 {/*
 
 
@@ -542,7 +542,7 @@ function App(props) {
 */}
 
       {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
-      <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
+{/*       <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
         <Row align="middle" gutter={[4, 4]}>
           <Col span={8}>
             <Ramp price={price} address={address} networks={NETWORKS} />
@@ -570,7 +570,7 @@ function App(props) {
         <Row align="middle" gutter={[4, 4]}>
           <Col span={24}>
             {
-              /*  if the local provider has a signer, let's show the faucet:  */
+                if the local provider has a signer, let's show the faucet:  *this should be a comment
               faucetAvailable ? (
                 <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} />
               ) : (
@@ -579,7 +579,7 @@ function App(props) {
             }
           </Col>
         </Row>
-      </div>
+      </div> */}
     </div>
   );
 }

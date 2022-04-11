@@ -558,7 +558,7 @@ function OldEnglish({
     return (
       <div className="approvalPopOverManager">
         <div className="pleaseApprovePopover">
-        Lost & Found marketplace is built on top of the ZORA Marketplace Protocol. In order to interact with the protocol, please sign the following approvals to allow it to interact with your assets : {/* ↓ ↓ */}
+        Lost & Found Marketplace is built on the ZORA Protocol. Please sign the following approvals to allow the protocol to interact with your assets : {/* ↓ ↓ */}
         </div>
 
         {/* commenting out refresh button 
@@ -640,19 +640,18 @@ function OldEnglish({
             <Popover
               className="popoverMaster"
               placement="bottom"
-              style={{ }}
               content={() => {                                                        
                 return marketplaceManager();
               }}
             >
-              <Button style={{ color: "white", backgroundColor: "#4b4b4b", border: "none", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
+              <Button style={{ color: "white", backgroundColor: "#1d0236", border: "2px solid black", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
                 MARKETPLACE APPROVAL MANAGER
               </Button>
             </Popover>
             <Switch
               className="ownershipFilter"
               disabled={loadingOldEnglish}
-              style={{ height: "auto", marginLeft: "2.5%", fontSize: "2rem" }}
+              style={{ height: "auto", marginLeft: "2.5%", fontSize: "2rem", border: "2px solid black" }}
               value={mine}
               onChange={() => {
                 setMine(!mine);
@@ -667,13 +666,13 @@ function OldEnglish({
         <Spin style={{ marginTop: 100}} />
       ) : (
         <div className="tokenRenderWrapper">
-          <List
+          <List            
             className="tokenRender"
             grid={{
               gutter: 16,
               xs: 1,
-              sm: 1,
-              md: 3,
+              sm: 2,
+              md: 2,
               lg: 3,
               xl: 3,
               xxl: 3,
@@ -712,9 +711,10 @@ function OldEnglish({
                 <List.Item className="listItems" key={id}>
                   <Card
                     className="cards"
-                    style={{  margin: 0 }}
+                    bodyStyle={{ padding: "0", margin: "0" }}
+                    style={{ border: "2px solid black", borderRadius: 2 }}
                     title={
-                      <div className="cardHeaders" >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
+                      <div className="cardHeaders" style={{ marginTop: 5, marginBottom: 5}} >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
 
                         
 {/*     commenting out individual token refresh button                    
@@ -731,15 +731,15 @@ function OldEnglish({
 
                     }
                   >
-                    <a
+                    <a                      
                       href={`${blockExplorer}token/${
                         readContracts[lostandfoundNFTContract] && readContracts[lostandfoundNFTContract].address
                       }?a=${id}`}
                       target="_blank"
                     >
-                      <img className="nftImage"src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="80%" />
+                      <img className="nftImage" src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="100%" />
                     </a>
-                    <div className="cardFooters">
+                    <div className="cardFooters"> {/* LMAO THIS LINE IS HOLDING EVERYTHING/*/}
                                     
 {/*     commenting out entire section that seems unncesssary                                    
                       {
@@ -796,11 +796,11 @@ function OldEnglish({
                                     }}
                                     title="Create Ask"
                                   >
-                                    <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">List</Button>
+                                    <Button style={{ borderRadius: 2, border: "1px solid black" }} type="primary">List</Button>
                                   </Popover>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
                                 </div>
                               </div>
                               ) : ( ///logic asking if you are the owner and the ask DOES exist
@@ -826,14 +826,14 @@ function OldEnglish({
                                     </div> 
                                   </div>
                                   <div className="marketplaceManager"> 
-                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">LIST</Button>                                
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">LIST</Button>                                
                                     <Popover
                                       content={() => {                                                        
                                         return updateAskPrice(id);
                                       }}
                                       title="Update Ask"
                                     >
-                                      <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
+                                      <Button style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">UPDATE</Button>
                                     </Popover>
                                     <Popover
                                       content={() => {                                                        
@@ -841,9 +841,9 @@ function OldEnglish({
                                       }}
                                       title="Cancel Ask"
                                     >
-                                      <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>
+                                      <Button style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">CANCEL</Button>
                                     </Popover>
-                                    <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">BUY</Button>
                                   </div>                                                 
                                 </div>
                               )}
@@ -873,10 +873,10 @@ function OldEnglish({
                                   </div>
                                 </div>
                                 <div className="marketplaceManager">
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">LIST</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">BUY</Button>
                                 </div>                                   
                               </div>                                                   
                             ) : ( 
@@ -902,16 +902,16 @@ function OldEnglish({
                                   </div>
                                 </div>
                                 <div className="marketplaceManager">
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">LIST</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 20, border: "1px solid white" }} type="primary">CANCEL</Button>                                    
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">CANCEL</Button>                                    
                                   <Popover
                                     content={() => {                                                        
                                       return fillAsk(id);
                                     }}
                                     title="Fill Ask"
                                   >  
-                                    <Button style={{ borderRadius: 20, border: "1px solid white" }} type="primary">BUY</Button>
+                                    <Button style={{ borderRadius: 5, border: "1px solid black" }} type="primary">BUY</Button>
                                   </Popover>
                                 </div> 
                               </div>

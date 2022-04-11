@@ -2,7 +2,7 @@
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
-   background-color: black;
+   background-color: #343434;
    width: 100%;
    margin: 0;
    padding: 0;
@@ -20,35 +20,48 @@
    display: flex;
    justify-content: center;
    justify-items: center;
-   margin: 1%;
+   margin: 2% 4% 2% 4%;
 }
 
 .tokenRender {
-   /* border: 2px solid blue; */
+/*    border: 2px solid white; */
    display: flex;
    justify-content: center;
 }
 
 .listItems {
    width: 100%;
-/*    border: 2px solid red; */
+/*    border: 2px solid teal; */
 }
+
 
 .cards {
-/*    border: 1px yellow solid; */
+   border-radius: 0;
 }
+
 
 .cardHeaders {
-   font-size: 1rem;
-   color: #F0F8EA;
-   font-size: 1.5rem;
+   color: white;
+   font-size: 1.25rem;
    height: auto;
-/*    border: 1px red solid */
+   display: flex;
+/*    border: 1px yellow solid; */
+   justify-content: center;
+/*    align-content: center;
+   align-self: center;
+   align-items: center; */
+
+/*  */
 }
 
+
 .nftImage {
-   /* border: .25rem solid red; */
-   width: 100%;
+/*    border: .25rem solid purple; */
+   border-top: 2px solid black;
+   border-bottom: 2px solid black;
+   width: fill;
+   margin: 0;
+   padding: 0;
 }
 
 .cardFooters {
@@ -60,6 +73,8 @@
 /*    border: 1px white solid; */
    grid-template-rows: 1fr 1fr;
    grid-template-columns: 1fr 1fr;
+   margin-left: 10%;
+   margin-right: 10%;
 }
 
 .pleaseApprovePopover {
@@ -189,11 +204,13 @@
    grid-column: 2 / 3;
    width: 40%;
    margin-left: 5%;
+   align-items: center;
 /*    justify-self: end; */
 }
 
 .marketplaceManager {
    display: grid;
+   margin: 0px 5px 5px 5px;
    grid-template: 1fr 1fr / 1fr 1fr;
    gap: 7px;
 }
@@ -202,6 +219,7 @@
    margin-top: 5px;
    margin-bottom: 5px;
    display: grid;
+
    grid-template-rows: 1fr 1fr;
    grid-template-columns: 1fr 1fr;
 /*    border: 2px solid white; */

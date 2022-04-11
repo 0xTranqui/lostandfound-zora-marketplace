@@ -3970,7 +3970,7 @@ a.ant-btn-sm {
   list-style: none;
   font-feature-settings: "tnum";
   position: relative;
-  background: #212121;
+  background: black; /*  CHANGED THIS */
   border-radius: 4px;
 }
 .ant-card-rtl {
@@ -3988,15 +3988,17 @@ a.ant-btn-sm {
   border: 1px solid #424242;
 }
 .ant-card-head {
-  min-height: 48px;
-  margin-bottom: -1px;
-  padding: 0 24px;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 500;
-  font-size: 16px;
-  background: 0 0;
-  border-bottom: 1px solid #424242;
-  border-radius: 4px 4px 0 0;
+  border-bottom-width: 0px; /** adding this also fixed a header issue */
+  min-height: 0px; /*** added this and fixed issue **/
+  height: 0%;
+  margin: 0; /* changed this to zero it out */
+  padding: 0 0;
+  color: rgba(255, 255, 255, 0.85); /* CHANGED TGHIS */
+/*   font-weight: 300; */
+/*   font-size: 25px; */
+
+/*   border-bottom: 4px solid white; /* CHANGED THIS */ 
+  border-radius: 0 0 0 0; /* zeroed this out */
 }
 .ant-card-head::before {
   display: table;
@@ -4012,7 +4014,8 @@ a.ant-btn-sm {
 .ant-card-head-title {
   display: inline-block;
   flex: 1;
-  padding: 16px 0;
+  padding: 0 0; /* changed this to zero it out */
+  margin: 0 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -4025,7 +4028,7 @@ a.ant-btn-sm {
 }
 .ant-card-head .ant-tabs {
   clear: both;
-  margin-bottom: -17px;
+  margin-bottom: 0;
 }
 .ant-card-head .ant-tabs-bar {
   border-bottom: 1px solid #424242;
@@ -4040,8 +4043,11 @@ a.ant-btn-sm {
   margin-left: 0;
 }
 .ant-card-body {
-  padding: 24px;
+/*   padding: 0; DELETED THIS SO I COULD CONTROL IT inline in oldenglish.jsx */
+  margin: 0;  /* changed this */
+  padding: 0; /* CHANGED THIS */
 }
+
 .ant-card-body::after,
 .ant-card-body::before,
 .ant-card-head::after {
@@ -4052,7 +4058,7 @@ a.ant-btn-sm {
   clear: both;
 }
 .ant-card-contain-grid:not(.ant-card-loading) .ant-card-body {
-  margin: -1px 0 0 -1px;
+  margin: -1px 0 0 -1px; /* was -1px 0 0 -1px; changed it to all zeroes */
   padding: 0;
 }
 .ant-card-grid {
@@ -4155,7 +4161,7 @@ a.ant-btn-sm {
   font-size: 14px;
 }
 .ant-card-type-inner .ant-card-body {
-  padding: 16px 24px;
+  padding: 0 24px;
 }
 .ant-card-type-inner .ant-card-extra {
   padding: 13.5px 0;
