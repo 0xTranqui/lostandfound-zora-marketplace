@@ -1,0 +1,51 @@
+.mint {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+/*    background-color: red; */
+   border: 1px solid red;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+   min-height: 800; /* change this to be however big the pre rendering section neexs to be */
+}
+
+.mintPageExplanation {
+   color: #A8C686;
+}
+
+.mintPageExplanationHead {
+   font-size: 2rem
+
+}
+
+.mintPageExplanationBody {
+   font-size: 1.5rem
+
+}
+
+.beforeMintRender {
+/*    border: 1px white solid; */
+   width: 100%;
+}
+
+.mintFormStyling {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+
+.mintRenderWrapper {
+   border: 2px solid magenta;
+   display: flex;
+   justify-content: center;
+   justify-items: center;
+   margin: 2% 4% 2% 4%;
+}
+
+.mintRender {
+/*    border: 2px solid white; */
+   display: flex;
+   justify-content: center;
+}

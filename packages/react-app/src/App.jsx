@@ -469,8 +469,8 @@ function App(props) {
           />
         </Route>
         <Route exact path="/mint">
-          <div style={{ fontSize: 16, marginTop: 32 }}>
-            <Mint
+          <div style={{  }}>
+            <Mint className="MintWrapper"
               readContracts={readContracts}
               mainnetProvider={mainnetProvider}
               blockExplorer={blockExplorer}

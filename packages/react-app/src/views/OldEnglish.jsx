@@ -9,7 +9,7 @@ import { useEventListener } from "eth-hooks/events/useEventListener";
 
 //==========my custom import
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
-import "./views.css";
+import "./Marketplace.css";
 const { Meta } = Card;
 //==========my custom import
 
@@ -76,7 +76,7 @@ function OldEnglish({
 */}
 
   //====my custom addition
-  const nftContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
+  const nftContractAddress = "0xFDE6A55455689725CF1359fAb1cee96c77168053"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
   // Imports + declartions for ZORA Approval Contracts
   const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
   const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
@@ -659,7 +659,8 @@ function OldEnglish({
               }}
               checkedChildren="MY COLLECTION"
               unCheckedChildren="FULL COLLECTION"
-            />
+            >
+            </Switch>
           </div>
       </div>
       {false ? (
@@ -681,9 +682,9 @@ function OldEnglish({
             locale={{ emptyText: `waiting for OEs...` }}
             
             
-            /* commenting out pagination
-
-            pagination={{
+            /* commenting out pagination */
+            
+/*             pagination={{
               total: mine ? filteredOEs.length : totalSupply,
               defaultPageSize: perPage,
               defaultCurrent: page,
@@ -693,9 +694,9 @@ function OldEnglish({
               },
               showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${mine ? filteredOEs.length : maxSupply} items`,
-            }} 
+            }}  */
             
-            */
+            
             
 
             loading={loadingOldEnglish}
@@ -737,7 +738,7 @@ function OldEnglish({
                       }?a=${id}`}
                       target="_blank"
                     >
-                      <img className="nftImage" src={imageWithGateway && imageWithGateway} alt={"OldEnglish #" + id} width="100%" />
+                      <img className="nftImage" src={imageWithGateway && imageWithGateway} alt={"LF #" + id} width="100%" />
                     </a>
                     <div className="cardFooters"> {/* LMAO THIS LINE IS HOLDING EVERYTHING/*/}
                                     
@@ -816,7 +817,7 @@ function OldEnglish({
                                       />
                                     </div>                                    
                                     <div>
-                                    LISTING STATUS : ACTIVE
+                                    LISTING STATUS : ACTIVE 
                                     </div>
                                     <div>                        
                                     PRICE : {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
@@ -911,7 +912,7 @@ function OldEnglish({
                                     }}
                                     title="Fill Ask"
                                   >  
-                                    <Button style={{ borderRadius: 5, border: "1px solid black" }} type="primary">BUY</Button>
+                                    <Button style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
                                   </Popover>
                                 </div> 
                               </div>

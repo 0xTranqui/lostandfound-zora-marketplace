@@ -8,8 +8,9 @@ html {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #343434;
+/*   background-color: blue; */
 /*   border: 2px solid white; */
+  background-color: #343434;
   height: 100%;
   width: 100vw;
   max-width: 100%;
@@ -23,5 +24,13 @@ html {
   /* border: 3px solid teal; */
   width: 100%;
   margin: 0;
+}
+
+.MintWrapper {
+  display: flex;
+  justify-content: center;
+/*   border: 3px solid teal; */
+  width: 100%;
+  margin: 0;;
 }
 
