@@ -68,11 +68,11 @@ function OldEnglish({
          
          try {
             const metadataObject1 = await mintMetadataFetch1.json();
-            const imageURL = "https://ipfs.io/ipfs/" + metadataObject1.image.substring(7);
-            setMintImageURL1(imageURL);
+            const imageURL1 = "https://ipfs.io/ipfs/" + metadataObject1.image.substring(7);
+            setMintImageURL1(imageURL1);
 
             console.log("metadataObject1 = ", metadataObject1);
-            console.log("imageURL = ", imageURL);
+            console.log("imageURL1 = ", imageURL1);
             console.log("mintImageURL1 = ", mintImageURL1);
          } catch(e) {
             console.log(e);
@@ -81,6 +81,33 @@ function OldEnglish({
          console.log(e);
       }
    };
+
+   const fetchMetadataMint2 = async (tokenId) => {
+      try {
+         const mintedTokenId2 = tokenId;
+         const metadataURL2 = "https://ipfs.io/ipfs/bafybeiervi5luxk2had5y7v7cbhvn3nqr5ci6ivdavvfifftwnpcodmoja/" + mintedTokenId2 + ".token.json";
+         const mintMetadataFetch2 = await fetch(metadataURL2);
+
+         console.log("mintedTokenId2 = ", mintedTokenId2);
+         console.log("metadataURL2 = ", metadataURL2);
+         console.log("mintMetadataFetch2 = ", mintMetadataFetch2);
+         
+         try {
+            const metadataObject2 = await mintMetadataFetch2.json();
+            const imageURL2 = "https://ipfs.io/ipfs/" + metadataObject2.image.substring(7);
+            setMintImageURL2(imageURL2);
+
+            console.log("metadataObject2 = ", metadataObject2);
+            console.log("imageURL2 = ", imageURL2);
+            console.log("mintImageURL2 = ", mintImageURL2);
+         } catch(e) {
+            console.log(e);
+         }
+      }  catch (e) {
+         console.log(e);
+      }
+   };
+
 
 /*    useEffect(() => {
       fetchMetadataMint1(mintedTokenID);
@@ -93,10 +120,10 @@ function OldEnglish({
                <div className="mintPageExplanationHead">
                THIS IS THE LOST & FOUND, VOL. 1 COLLECTION
                </div>
-               <div className="mintPageExplanationBody">
+               <div className="mintPageExplanationSubhead">
                A BODY OF WORK BY DANNY DIAMONDS
                </div>
-               <br />
+               <br /> 
                <div className="mintPageExplanationBody" style={{ color: "#F0F66E" }} >
                {"" + maxSupply - totalSupply} / {"" + maxSupply} PIECES REMAIN
                </div>
@@ -104,7 +131,6 @@ function OldEnglish({
                HOW MANY WILL YOU MINT ?
                </div>
             </div>
-            <br />
             <div>
                <Form
                   className="mintFormStyling"
@@ -143,7 +169,9 @@ function OldEnglish({
                               console.log("count after second if = " + count);
                            }  else {
                               console.log("count after else = " + count);
-                              setTokenIdMinted2(mintedTokenID);  
+                              setTokenIdMinted2(mintedTokenID);
+                              fetchMetadataMint2(mintedTokenID);
+                              console.log("Mint Image URL after else = " + mintImageURL2)  
                         }
                         count += 1;
 /*                         console.log("count after end of for loop = " + count);   */
@@ -160,22 +188,22 @@ function OldEnglish({
                   }}                 
                   onFinishFailed={onFinishFailed}
                >
-                  <Form.Item style={{ fontSize: "1rem", color: "#A8C686"}} >
-                  QUANTITY : ID 1 {"" + tokenIdMinted1} + ID 2 {"" + tokenIdMinted2}
+                  <Form.Item style={{ fontSize: "1rem", color: "#02A9EA"}} >
+                  Quantity :
                   </Form.Item>
                   <Form.Item
                   name="numberOfTokens"
                   rules={[
                      {
-                        required: true,
+                        required: false,
                         message: "How Many NFTs Do You Want To Mint?"
                      },
                   ]}
                   >
-                  <Input style={{ backgroundColor: "grey", border: "2px #A8C686 solid", textAlign: "center"}} placeholder={"LIMIT = 2"} />
+                  <Input style={{ backgroundColor: "grey", border: "2px #02A9EA solid", width: "100px", textAlign: "center"}} placeholder={"LIMIT = 2"} />
                   </Form.Item>
                   <Form.Item>
-                  <Button type="primary" style={{ backgroundColor: "#A8C686", border: "2px solid grey", color: "black"}} htmlType="submit" loading={mint}>MINT</Button>
+                  <Button type="primary" style={{ backgroundColor: "#02A9EA", border: "2px solid grey", color: "#F0F8EA", width: "auto"}} htmlType="submit" loading={mint}>MINT</Button>
                   </Form.Item>
                </Form>
             </div>
@@ -186,14 +214,55 @@ function OldEnglish({
 {/*          {false ? (
             <Spin style={{ marignTop: 100}} />
          ) : ( */}
+
+
             <div className="mintRenderWrapper">
-               {mintImageURL1 == "" ? (
+               {(mintImageURL1 != "" && mintImageURL2 != "") ? (
+                  <div className="mintRenderTwoNFTs">
+                     <div className="twoMintedNFTRenderTitle1">First Token Id Minted: #{tokenIdMinted1}</div>
+                     <div className="twoMintedNFTRenderTitle2">Second Token Id Minted: #{tokenIdMinted2}</div>
+                     <img className="twoMintedNFTRender1" src={mintImageURL2} width="40%" />
+                     <img className="twoMintedNFTRender2" src={mintImageURL1} width="40%" />
+                  </div>                                    
+               ) : (
+                  <>
+                     {(mintImageURL1 != "" && mintImageURL2 == "") ? (
+                     <div className="mintRenderOneNFT">
+                        <div className="oneMintedNFTRenderTitle">Token Id Minted: #{tokenIdMinted1}</div>
+                        <img className="oneMintedNFTRender" src={mintImageURL1} />
+                     </div>
+                     ) : (
+                     <div className="mintRenderOneNFT">
+                        <div className="oneMintedNFTRenderTitle" style={{color: "#F0F66E"}}>WAITING FOR MINT</div>
+                        <div className="oneMintedNFTRender"></div>                        
+                     </div>
+                     )}
+                  </>  
+               )}
+
+
+
+
+{/*             <div className="mintRenderWrapper">
+               {mintImageURL1 == "" && mintImageURL2 == "" ? (
                   <div>No IMAGE YET</div>
                ) : (
-                  <div>
-                     <img src={mintImageURL1 && mintImageURL1} width="100%" />
-                  </div>
-               )}
+                  <>
+                     {mintImageURL1 != "" && mintImageURL2 == "" ? (
+                     <div>
+                        <img src={mintImageURL1} width="40%" />
+                     </div>
+                     ) : (
+                     <div>
+                        <img src={mintImageURL1} width="40%" />
+                        <img src={mintImageURL2} width="40%" />
+                     </div>
+                     )}
+                  </>  
+               )} */}
+
+
+
 {/*                <List
                   grid={{
                      gutter: 16,
@@ -237,7 +306,7 @@ function OldEnglish({
                      )
                   }}  
                >
-               </List> */}                
+               </List> */}                         
             </div>
          {/* )} */}
       </div>
