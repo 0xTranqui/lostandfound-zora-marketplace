@@ -1,9 +1,10 @@
 .mint {
+   background-color: #343434;
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
 /*    background-color: red; */
-/*    border: 1px solid red; */
+   border: 1px solid red;
    width: 100%;
    margin: 0;
    padding: 0;

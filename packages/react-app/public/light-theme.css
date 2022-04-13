@@ -15054,7 +15054,7 @@ table tr th.ant-table-selection-column .ant-radio-wrapper {
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected,
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover {
   color: #1890ff;
-  border-bottom: 2px solid #1890ff;
+  border-bottom: 2px solid red;
 }
 .ant-menu-horizontal > .ant-menu-item,
 .ant-menu-horizontal > .ant-menu-submenu {

@@ -60,7 +60,16 @@ export default function Account({
   const { currentTheme } = useThemeSwitcher();
 
   return (
-    <div style={{ }}>
+    <div
+    style={{
+      /* border: "1px solid orange", */ 
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "end",
+      textAlign: "start",
+      fontSize: "1rem"
+      }}
+    >
       {minimized ? (
         ""
       ) : (
@@ -92,7 +101,7 @@ export default function Account({
         (web3Modal?.cachedProvider ? (
           <Button
             key="logoutbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, color: "#F0F8EA", border: "2px solid #F0F8EA" }}
+            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, color: "brown", border: "2px solid brown" }}
             shape="round"
             size="large"
             onClick={logoutOfWeb3Modal}
@@ -102,7 +111,7 @@ export default function Account({
         ) : (
           <Button
             key="loginbutton"
-            style={{ verticalAlign: "middle", margin: 0, color: "#F0F8EA", border:"2px solid #F0F8EA" }}
+            style={{ verticalAlign: "middle", margin: 0, color: "brown", border:"2px solid brown" }}
             shape="round"
             size="large"
             /* type={minimized ? "default" : "primary"}     too many people just defaulting to MM and having a bad time */

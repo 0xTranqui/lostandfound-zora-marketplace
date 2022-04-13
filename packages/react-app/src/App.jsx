@@ -33,6 +33,8 @@ import { Home, ExampleUI, Hints, Subgraph } from "./views";
 import { OldEnglish, Drinks, Mint, About } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
+import linedPaperBackground from "./Lined_Paper_Background_For_Site.png";
+
 //====MY CUSTOM IMPORTS
 //import { Price } from "@uniswap/sdk";
 //====MY CUSTOM IMPORTS
@@ -272,137 +274,81 @@ function App(props) {
 
 
   return (
-    <div className="App">
+    <div
+    style={{background: `url(${linedPaperBackground})`, backgroundSize: "cover"  }}
+    className="App"
+    >
       {/* ✏️ Edit the header and change the title to your project name */}
       
-      {/* stripping header
-      <Header />
-      */}
 
-      {/* commenting out the previous mint flow from OE40 messaging/branding
-      <div style={{ maxWidth: 820, margin: "auto", marginTop: 12, paddingBottom: 32 }}>
-        <div style={{ fontSize: 16, marginTop: 32 }}>
-          {/*}<h2>{`Get yourself an oe40 `}</h2>
-          <p>Take a sip. Wrap it up. Pour one out. </p>
-        </div>
-        
-        <Form
-          form={mintForm}
-          layout={"inline"}
-          name="mint"
-          >
-          <Input
-          placeholder={"How Many NFTs Do you Want to Mint? Max = 2: "}
-          //onChange={e => setMintQuantity({ ...mintQuantity, _numberOfTokens: e.target.value })}    
-          />
-          <Button
-            type="primary"
-            size="large"
-            loading={minting}
-            onClick={async () => {
-              setMinting(true);
-              const pricePerMint = await readContracts[lostandfoundNFTContract].PRICE();
-              try {
-                const txCur = await tx(writeContracts[lostandfoundNFTContract].mint( mintQuantity, { value: (pricePerMint * mintQuantity) }));
-                await txCur.wait();
-                setMinting(false);
-                notification.open({
-                  message: "🍻 Minted an LF 🍻",
-                  description: "Sip, wrap, pour and recycle!",
-                });
-              } catch (e) {
-                console.log("mint failed", e);
-                setMinting(false);
-              }
-            }}
-            disabled={maxSupply && totalSupply && maxSupply.lt(totalSupply)}
-          >
-            V2 MINT {mintQuantity} for Ξ{(priceOfMint && (+ethers.utils.formatEther(priceOfMint)).toFixed(4)) * mintQuantity}
-          </Button>
-        </Form>      
-          
-        <Button
-          type="primary"
-          size="large"
-          loading={minting}
-          onClick={async () => {
-            setMinting(true);
-            const priceRightNow = await readContracts[oldEnglishContract].price();
-            try {
-              const txCur = await tx(writeContracts[oldEnglishContract].mintItem({ value: priceRightNow }));
-              await txCur.wait();
-              setMinting(false);
-              notification.open({
-                message: "🍻 Minted an OE 🍻",
-                description: "Sip, wrap, pour and recycle!",
-              });
-            } catch (e) {
-              console.log("mint failed", e);
-              setMinting(false);
-            }
-          }}
-          disabled={limit && totalSupply && limit.lt(totalSupply)}
+{/*       <Header /> */}
+
+      <div className="header">
+        <Menu
+          style={{ textAlign: "start", backgroundColor: "transparent", borderBottom: "none" /* border: "1px red solid" */ }} selectedKeys={[location.pathname]} mode="horizontal"
+          className="headerMenu"
         >
-          MINT for Ξ{priceToMint && (+ethers.utils.formatEther(priceToMint)).toFixed(4)}
-        </Button>
+          <Menu.Item
+            style={{border: "none"}}
+            key="/">
+            <div className="menuButtonsMarketplace">
+              <Link
+              /* className="menuButtons" */
+              style={{ color: "maroon" }} to="/"
+              >
+                MARKETPLACE
+              </Link>
+            </div>
+          </Menu.Item>
 
-        <div style={{ fontSize: 16, marginTop: 32 }}>
-          <p>Recycle an empty to get your Ξ0.001 back!!</p>
-          <p>
-            {" "}
-            {"" + totalSupply} / {"" + limit} minted
-          </p>
-        </div>
+          <Menu.Item 
+            style={{border: "none"}}
+            key="/mint"
+          >
+            <div className="menuButtonsMint">
+              <Link
+              style={{ color: "purple"}} to="/mint"
+              >
+                MINT
+              </Link>
+            </div>
+          </Menu.Item>
 
-        <h2 style={{ marginTop: 12 }}>{`Your $BUZZ: ${
-          buzzBalance ? ethers.utils.formatEther(buzzBalance) : "..."
-        }`}</h2>
-      </div>
-      */}
-
-      <Menu style={{ textAlign: "start", backgroundColor: "#343434", margin: "1%" }} selectedKeys={[location.pathname]} mode="horizontal">
-        <Menu.Item key="/">
-          <Link style={{ color: "#FF4F75", fontSize: "1.5rem" }} to="/">MARKETPLACE</Link>
-        </Menu.Item>
-
-        {/*
-        <Menu.Item key="/activity">
-          <Link to="/activity">Activity</Link>
-        </Menu.Item>
-        <Menu.Item key="/debug">
-          <Link to="/debug">Contracts</Link>
-        </Menu.Item>
-        */}
-
-        <Menu.Item key="/mint">
-          <Link style={{ color: "#F0F66E", fontSize: "1.5rem" }} to="/mint">MINT</Link>
-        </Menu.Item>
-        <Menu.Item key="/about">
-          <Link style={{ color: "#F0F8EA", fontSize: "1.5rem" }}to="/about">ABOUT</Link>
-        </Menu.Item>
-        <Menu.Item>
-          <Account
-            address={address}
-            localProvider={localProvider}
-            userSigner={userSigner}
-            mainnetProvider={mainnetProvider}
-            price={price}
-            web3Modal={web3Modal}
-            loadWeb3Modal={loadWeb3Modal}
-            logoutOfWeb3Modal={logoutOfWeb3Modal}
-            blockExplorer={blockExplorer}
-          />        
-        </Menu.Item>
-        <Menu.Item>
-          <NetworkDisplay
-            NETWORKCHECK={NETWORKCHECK}
-            localChainId={localChainId}
-            selectedChainId={selectedChainId}
-            targetNetwork={targetNetwork}
-            logoutOfWeb3Modal={logoutOfWeb3Modal}
-          />
-        </Menu.Item>
-      </Menu>
+          <Menu.Item
+            style={{border: "none"}}
+            key="/about"
+          >
+            <div className="menuButtonsAbout">
+              <Link
+              style={{ color: "navy" }}to="/about"
+              >
+                ABOUT
+              </Link>
+            </div>
+          </Menu.Item>
+        </Menu>
+        <NetworkDisplay
+          className="headerNewtorkDisplay"
+          style={{ }}        
+          NETWORKCHECK={NETWORKCHECK}
+          localChainId={localChainId}
+          selectedChainId={selectedChainId}
+          targetNetwork={targetNetwork}
+          logoutOfWeb3Modal={logoutOfWeb3Modal}
+        />
+        <Account
+          className="headerAccount"
+          address={address}
+          localProvider={localProvider}
+          userSigner={userSigner}
+          mainnetProvider={mainnetProvider}
+          price={price}
+          web3Modal={web3Modal}
+          loadWeb3Modal={loadWeb3Modal}
+          logoutOfWeb3Modal={logoutOfWeb3Modal}
+          blockExplorer={blockExplorer}
+        />       
+      </div>      
 
       <Switch>
         <Route exact path="/">

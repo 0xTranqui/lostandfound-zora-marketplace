@@ -2,7 +2,7 @@
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
-   background-color: #343434;
+   background-color: transparent;
    width: 100%;
    margin: 0;
    padding: 0;
@@ -17,6 +17,7 @@
 
 .tokenRenderWrapper {
    /* border: 2px solid magenta; */
+   background-color: transparent;
    display: flex;
    justify-content: center;
    justify-items: center;
@@ -42,6 +43,7 @@
 
 .cardHeaders {
    color: white;
+   background-color: black;
    font-size: 1.25rem;
    height: auto;
    display: flex;
@@ -65,6 +67,9 @@
 }
 
 .cardFooters {
+   background-color: black;
+   margin: 0;
+   padding: 0
    /* border: 2px solid blue; */
 }
 
@@ -210,20 +215,24 @@
 
 .marketplaceManager {
    display: grid;
-   margin: 0px 5px 5px 5px;
+   
+   background-color: black;
+   margin: 0px 5px 0px 5px;
+   padding-bottom: 5px;
    grid-template: 1fr 1fr / 1fr 1fr;
    gap: 7px;
 }
 
 .listingStatusManager {
-   margin-top: 5px;
-   margin-bottom: 5px;
    display: grid;
-
+   color: white;
+   background-color: black;
+   font-weight: bold;
    grid-template-rows: 1fr 1fr;
    grid-template-columns: 1fr 1fr;
 /*    border: 2px solid white; */
    font-size: .9rem;
+   
 }
 
 .listingOwner {
@@ -239,7 +248,6 @@
    grid-column: 2 / 3;
 /*    border: 1px solid red; */
 /*    color: #F0F66E; */
-   color: white;
 }
 
 .listingPrice {
@@ -248,7 +256,6 @@
    grid-column: 1 / 2;
 /*    border: 1px solid red; */
 /*    color: #A8C686; */
-   color: white;
 }
 
 .listingFindersFee {
@@ -256,6 +263,5 @@
    grid-row: 2 / 3;
    grid-column: 2 / 3;
 /*    border: 1px solid red; */
-/*    color: #FF4F75; */
-   color: white;  
+/*    color: #FF4F75; */  
 }

@@ -10,7 +10,7 @@ import { useEventListener } from "eth-hooks/events/useEventListener";
 //==========my custom import
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
 import "./Marketplace.css";
-const { Meta } = Card;
+import LF_Logo_V1 from "./LF_Logo_V1.png";
 //==========my custom import
 
 function OldEnglish({
@@ -633,8 +633,8 @@ function OldEnglish({
   return (
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
-          <div style={{ fontSize: "5rem", marginBottom: 15, padding: 0, color: "#02A9EA" }}>
-              LOST & FOUND
+          <div style={{ marginTop: 15, marginBottom: 15}} >
+              <img width="50%" src={LF_Logo_V1}></img>
           </div>
           <div className="approvalManager" style={{ fontSize: "2rem", color: "#F0F66E" }}>
             <Popover
@@ -715,7 +715,7 @@ function OldEnglish({
                     bodyStyle={{ padding: "0", margin: "0" }}
                     style={{ border: "2px solid black", borderRadius: 2 }}
                     title={
-                      <div className="cardHeaders" style={{ marginTop: 5, marginBottom: 5}} >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
+                      <div className="cardHeaders" >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
 
                         
 {/*     commenting out individual token refresh button                    

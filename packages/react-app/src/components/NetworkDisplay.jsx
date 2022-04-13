@@ -2,6 +2,7 @@ import { Alert, Button } from "antd";
 import React from "react";
 import { NETWORK } from "../constants";
 
+
 function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNetwork, logoutOfWeb3Modal }) {
   let networkDisplay = "";
   if (NETWORKCHECK && localChainId && selectedChainId && localChainId !== selectedChainId) {
@@ -83,7 +84,15 @@ function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNet
     }
   } else {
     networkDisplay = (
-      <div style={{ color: "#FF4F75" }}>
+      <div
+      style={{
+        /* border: "1px solid turquoise" */
+        color: "brown",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "end", 
+        fontSize: "1rem"
+      }}>
         NETWORK : {targetNetwork.name.toUpperCase()}
       </div>
     );

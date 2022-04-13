@@ -14745,7 +14745,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   background: #351d20;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-danger.ant-menu-item-selected {
-  background-color: #351d20;
+  background-color: red;
 }
 .ant-menu-inline .ant-menu-item-danger.ant-menu-item::after {
   border-right-color: #ab2229;
@@ -15150,7 +15150,7 @@ table tr th.ant-table-selection-column .ant-radio-wrapper {
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected,
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover {
   color: #2caad9;
-  border-bottom: 2px solid #2caad9;
+  border-bottom: 2px solid black;
 }
 .ant-menu-horizontal > .ant-menu-item,
 .ant-menu-horizontal > .ant-menu-submenu {
