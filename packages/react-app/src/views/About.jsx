@@ -60,7 +60,7 @@ function OldEnglish({
                   WHO IS <a href="https://twitter.com/0xTranqui"><u>TRANQUI.ETH</u></a>
                </div>
                <div className="aboutPageBody">
-                  - tranqui.eth is an web3 developer focused on the creation of new forms of public digital infrastructure uniquely enabled by blockchains
+                  - tranqui.eth is a web3 developer focused on creating new forms of public digital infrastructure uniquely enabled by blockchains
                </div>
             </div>
             <div className="sections">
