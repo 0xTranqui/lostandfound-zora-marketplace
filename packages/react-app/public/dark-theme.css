@@ -7157,7 +7157,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 .ant-form-inline .ant-form-item {
   flex: none;
   flex-wrap: nowrap;
-  margin-right: 16px;
+  margin-right: 0px; /*CHANGED THIS FROM 16px - @0xTranqui - 4/12/22 */
   margin-bottom: 0;
 }
 .ant-form-inline .ant-form-item-with-help {

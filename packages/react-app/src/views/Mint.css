@@ -11,7 +11,11 @@
 }
 
 .mintPageExplanation {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
    color: #A8C686;
+/*    border: 1px red solid; */
 }
 
 .mintPageExplanationHead {
@@ -25,19 +29,22 @@
 }
 
 .mintPageExplanationBody {
-   font-size: 1rem
+   font-size: 1rem;
+   margin-bottom: 10px;
 
 }
 
 .beforeMintRender {
 /*    border: 1px white solid; */
    width: 100%;
+/*    border: 1px red solid; */
 }
 
 .mintFormStyling {
    display: flex;
    justify-content: center;
    align-items: center;
+   gap: 10px;
 }
 
 
@@ -123,8 +130,8 @@
    grid-row: 2 / 3;
    grid-column: 1 / 2;
    width: 90%;
+
 /*    border: 1px turquoise solid; */
-   margin-bottom: 10px   
 }
 
 .twoMintedNFTRender2 {
@@ -133,6 +140,5 @@
    grid-column: 2 / 3;
    width: 90%;
 /*    border: 1px green solid; */
-   margin-bottom: 10px   
 }
 

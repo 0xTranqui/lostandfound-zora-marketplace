@@ -2382,7 +2382,7 @@ module.exports = {
         abi: ZORAASKSV1_1MODULEABI,
       },
       lostandFoundContract: {
-        address: "0xd2BFd5468b8bB61E98C4620850Bd5AcCDeA443A0",
+        address: "0x313162D682F57b68E4974b88974D0cAE792E27eF",
         abi: LOSTANDFOUNDCONTRACTABI,
       },
     },

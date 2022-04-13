@@ -76,7 +76,7 @@ function OldEnglish({
 */}
 
   //====my custom addition
-  const nftContractAddress = "0xd2BFd5468b8bB61E98C4620850Bd5AcCDeA443A0"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
+  const nftContractAddress = "0x313162D682F57b68E4974b88974D0cAE792E27eF"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
   // Imports + declartions for ZORA Approval Contracts
   const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
   const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;

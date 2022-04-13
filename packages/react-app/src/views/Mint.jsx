@@ -29,12 +29,9 @@ function OldEnglish({
    //===my custom imports
    lostandfoundNFTContract,
    priceOfMint,
-   maxSupply
+   maxSupply,
+   remainingMints
 }) {
-   const rawDrinks = useEventListener(readContracts, oldEnglishContract, "Drink", localProvider, startBlock - 9000);
-   const drinks = useDebounce(rawDrinks, 1000);
-
-
 
    const onFinishFailed = errorInfo => {
       console.log("Failed:", errorInfo);
@@ -51,9 +48,6 @@ function OldEnglish({
    //=====Saving image urls for each mint
    const [mintImageURL1, setMintImageURL1] = useState("");
    const [mintImageURL2, setMintImageURL2] = useState("");
-
-/*    //==rendering mint objects???
-   const currentTokensMinted = tokenIdMinted1.concat(tokenIdMinted2); */
 
    //===fetching metadata
    const fetchMetadataMint1 = async (tokenId) => {
@@ -127,9 +121,19 @@ function OldEnglish({
                <div className="mintPageExplanationBody" style={{ color: "#F0F66E" }} >
                {"" + maxSupply - totalSupply} / {"" + maxSupply} PIECES REMAIN
                </div>
-               <div className="mintPageExplanationBody">
+{/*                <div className="mintPageExplanationBody">
+               YOU'RE WALLET HAS <u>{"" + remainingMints}</u> MINTS LEFT
+               </div> */}
+{/*                <div className="mintPageExplanationBody">
                HOW MANY WILL YOU MINT ?
+               </div> */}
+               <div className="mintPageExplanationBody">
+               LIMIT = 2 MINTS PER WALLET
                </div>
+               <div className="mintPageExplanationBody">
+               PRICE PER TOKEN = {"" + (priceOfMint / (10**18))} ETH
+               </div>
+
             </div>
             <div>
                <Form
@@ -188,9 +192,6 @@ function OldEnglish({
                   }}                 
                   onFinishFailed={onFinishFailed}
                >
-                  <Form.Item style={{ fontSize: "1rem", color: "#02A9EA"}} >
-                  Quantity :
-                  </Form.Item>
                   <Form.Item
                   name="numberOfTokens"
                   rules={[
@@ -200,10 +201,10 @@ function OldEnglish({
                      },
                   ]}
                   >
-                  <Input style={{ backgroundColor: "grey", border: "2px #02A9EA solid", width: "100px", textAlign: "center"}} placeholder={"LIMIT = 2"} />
+                  <Input style={{ backgroundColor: "grey", border: "2px #02A9EA solid", width: "100px", textAlign: "center"}} placeholder={"QUANTITY"} />
                   </Form.Item>
                   <Form.Item>
-                  <Button type="primary" style={{ backgroundColor: "#02A9EA", border: "2px solid grey", color: "#F0F8EA", width: "auto"}} htmlType="submit" loading={mint}>MINT</Button>
+                  <Button type="primary" style={{ backgroundColor: "#02A9EA", border: "2px solid grey", color: "#F0F8EA", height: "auto", width: "100px" }} htmlType="submit" loading={mint}>MINT</Button>
                   </Form.Item>
                </Form>
             </div>
@@ -219,96 +220,54 @@ function OldEnglish({
             <div className="mintRenderWrapper">
                {(mintImageURL1 != "" && mintImageURL2 != "") ? (
                   <div className="mintRenderTwoNFTs">
-                     <div className="twoMintedNFTRenderTitle1">First Token Id Minted: #{tokenIdMinted1}</div>
-                     <div className="twoMintedNFTRenderTitle2">Second Token Id Minted: #{tokenIdMinted2}</div>
-                     <img className="twoMintedNFTRender1" src={mintImageURL2} width="40%" />
-                     <img className="twoMintedNFTRender2" src={mintImageURL1} width="40%" />
+                     <div className="twoMintedNFTRenderTitle1">TOKEN ID #{tokenIdMinted1}</div>
+                     <div className="twoMintedNFTRenderTitle2">TOKEN ID #{tokenIdMinted2}</div>
+                     <a
+                        className="twoMintedNFTRender1" 
+                        href={`${blockExplorer}token/${
+                        readContracts[lostandfoundNFTContract] && readContracts[lostandfoundNFTContract].address
+                        }?a=${tokenIdMinted1}`}
+                        target="_blank"                                        
+                     >
+                        <img  src={mintImageURL1} width="100%"  />
+                     </a>
+                     <a
+                        className="twoMintedNFTRender2"
+                        href={`${blockExplorer}token/${
+                        readContracts[lostandfoundNFTContract] && readContracts[lostandfoundNFTContract].address
+                        }?a=${tokenIdMinted2}`}
+                        target="_blank"                                             
+                     >
+                        <img  src={mintImageURL2} width="100%" />
+                     </a>
+                     <Link style={{ color: "#FF4F75", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
+                     <Link style={{ color: "#FF4F75", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
                   </div>                                    
                ) : (
                   <>
                      {(mintImageURL1 != "" && mintImageURL2 == "") ? (
                      <div className="mintRenderOneNFT">
-                        <div className="oneMintedNFTRenderTitle">Token Id Minted: #{tokenIdMinted1}</div>
-                        <img className="oneMintedNFTRender" src={mintImageURL1} />
+                        <div className="oneMintedNFTRenderTitle">Token ID #{tokenIdMinted1}</div>
+                        <a
+                           className="oneMintedNFTRender"
+                           href={`${blockExplorer}token/${
+                           readContracts[lostandfoundNFTContract] && readContracts[lostandfoundNFTContract].address
+                           }?a=${tokenIdMinted1}`}
+                           target="_blank"
+                        >
+                           <img src={mintImageURL1} width="100%" />
+                        </a>
+                        <Link style={{ color: "#FF4F75", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
                      </div>
                      ) : (
                      <div className="mintRenderOneNFT">
-                        <div className="oneMintedNFTRenderTitle" style={{color: "#F0F66E"}}>WAITING FOR MINT</div>
-                        <div className="oneMintedNFTRender"></div>                        
+{/*                         <div className="oneMintedNFTRenderTitle" style={{color: "#F0F66E"}}>WAITING FOR MINT</div>
+                        <div className="oneMintedNFTRender"></div>   */}                      
                      </div>
                      )}
                   </>  
-               )}
-
-
-
-
-{/*             <div className="mintRenderWrapper">
-               {mintImageURL1 == "" && mintImageURL2 == "" ? (
-                  <div>No IMAGE YET</div>
-               ) : (
-                  <>
-                     {mintImageURL1 != "" && mintImageURL2 == "" ? (
-                     <div>
-                        <img src={mintImageURL1} width="40%" />
-                     </div>
-                     ) : (
-                     <div>
-                        <img src={mintImageURL1} width="40%" />
-                        <img src={mintImageURL2} width="40%" />
-                     </div>
-                     )}
-                  </>  
-               )} */}
-
-
-
-{/*                <List
-                  grid={{
-                     gutter: 16,
-                     xs: 1,
-                     sm: 2,
-                     md: 2,
-                     lg: 2,
-                     xl: 2,
-                     xxl: 2,
-                  }}
-                  align="center" ///THIS IS WHAT ALIGNS ALL OF THE CARDS!!!!!!
-                  locale={{ emptyText: `waiting for LFs...` }}
-                  //loading={loadingMints}
-                  dataSource={currentTokensMinted}
-                  renderItem={ async item => {
-                     console.log("item", item)
-                     try {
-                        const tokenId = item;
-                        console.log("tokenId", tokenId)
-                        const metadataURL = "https://ipfs.io/ipfs/bafybeiervi5luxk2had5y7v7cbhvn3nqr5ci6ivdavvfifftwnpcodmoja/" + {tokenId} + ".token.json"
-                        console.log("metadataURL", metadataURL)
-                        const metadataFetch = await fetch(metadataURL);
-                        console.log("metadataFetch", metadataFetch)
-                        const metadataObject = await metadataFetch.json();
-                        console.log("metadataObject", metadataObject)
-                        const imageGateway = "https://ipfs.io/ipfs/" + metadataObject.image.substring(7);
-                        console.log("imageGateway", imageGateway)
-                     } catch (e) {
-                        console.log(e)
-                     }
-
-                     return (
-                        <List.Item key={tokenId}>
-                           <Card
-                              bodyStyle={{ padding: "0", margin: "0" }}
-                              style={{ border: "2px solid black", borderRadius: 2 }}
-                           >
-                              <img src={imageGateway ** imageGateway} alt={"LF #" + tokenId} width="100%" />
-                           </Card>
-                        </List.Item>
-                     )
-                  }}  
-               >
-               </List> */}                         
+               )}                        
             </div>
-         {/* )} */}
       </div>
    );
 }

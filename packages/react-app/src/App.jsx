@@ -172,6 +172,13 @@ function App(props) {
   const totalSupply = useContractReader(readContracts, lostandfoundNFTContract, "totalSupply");
   const maxSupply =  useContractReader(readContracts, lostandfoundNFTContract, "MAX_SUPPLY");
   
+  const remainingMints =  useContractReader(
+    readContracts,
+    lostandfoundNFTContract,
+    "allowedMintCount",
+    [address]
+  );
+  //^this contract read tells the current user how many mints they have left
   
 
   //======= bringing in external ZORA contracts
@@ -476,6 +483,7 @@ function App(props) {
               blockExplorer={blockExplorer}
               totalSupply={totalSupply}
               maxSupply={maxSupply}
+              remainingMints={remainingMints}
               writeContracts={writeContracts}
               localProvider={localProvider}
               tx={tx}
