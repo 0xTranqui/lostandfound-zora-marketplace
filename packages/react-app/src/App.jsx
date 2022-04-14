@@ -34,6 +34,9 @@ import { OldEnglish, Drinks, Mint, About } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 import linedPaperBackground from "./Lined_Paper_Background_For_Site.png";
+import marketplaceButton from "./views/buttons/marketplaceButton.png";
+import mintButton from "./views/buttons/mintButton.png";
+import aboutButton from "./views/buttons/aboutButton.png";
 
 //====MY CUSTOM IMPORTS
 //import { Price } from "@uniswap/sdk";
@@ -285,48 +288,43 @@ function App(props) {
 
       <div className="header">
         <Menu
-          style={{ textAlign: "start", backgroundColor: "transparent", borderBottom: "none" /* border: "1px red solid" */ }} selectedKeys={[location.pathname]} mode="horizontal"
+          style={{ textAlign: "start", backgroundColor: "transparent", borderBottom: "none" }} selectedKeys={[location.pathname]} mode="horizontal"
           className="headerMenu"
         >
           <Menu.Item
             /* style={{border: "none"}} */
-            key="/">
-            <div className="menuButtonsMarketplace">
-              <Link
-              /* className="menuButtons" */
-              style={{ color: "#930538" }} to="/"
-              >
+            key="/"
+          >
+            <Link to="/">
+              <button className="marketplaceButton" >
                 MARKETPLACE
-              </Link>
-            </div>
+              </button>
+            </Link>
           </Menu.Item>
 
           <Menu.Item 
             /* style={{border: "none"}} */
             key="/mint"
           >
-            <div className="menuButtonsMint">
-              <Link
-              style={{ color: "#a12f99"}} to="/mint"
-              >
+            <Link to="/mint">
+              <button className="mintButton" >
                 MINT
-              </Link>
-            </div>
+              </button>
+            </Link>
           </Menu.Item>
 
           <Menu.Item
             /* style={{border: "none"}} */
             key="/about"
           >
-            <div className="menuButtonsAbout">
-              <Link
-              style={{ color: "#005d8e" }}to="/about"
-              >
+            <Link to="/about">
+              <button className="aboutButton" >
                 ABOUT
-              </Link>
-            </div>
+              </button>
+            </Link>
           </Menu.Item>
         </Menu>
+        
         <NetworkDisplay
           className="headerNewtorkDisplay"
           style={{ }}        

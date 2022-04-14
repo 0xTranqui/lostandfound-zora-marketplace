@@ -49,6 +49,7 @@ html {
   display: flex;
   flex-direction: row;
   align-items: end;
+  border: 1px red solid;
 }
 
 .headerNetworkDisplay {
@@ -74,6 +75,36 @@ html {
   background-color: #ffb300;
   text-align: center;
   width: 175px;
+}
+
+.marketplaceButton {
+  background: url("./views/buttons/marketplaceButton.png");
+  background-size: cover;
+  cursor: pointer;
+  border: none;
+  width: 250px;
+  color: transparent;
+  margin-bottom: 5px;
+}
+
+.mintButton {
+  background: url("./views/buttons/mintButton.png");
+  background-size: cover;
+  cursor: pointer;
+  border: none;
+  width: 150px;
+  color: transparent;
+  margin-bottom: 5px;
+}
+
+.aboutButton {
+  background: url("./views/buttons/aboutButton.png");
+  background-size: cover;
+  cursor: pointer;
+  border: none;
+  width: 175px;
+  color: transparent;
+  margin-bottom: 5px;
 }
 
 .menuButtonsMint {
