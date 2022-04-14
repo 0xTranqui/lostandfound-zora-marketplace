@@ -67,7 +67,7 @@ export default function Account({
       flexDirection: "row",
       justifyContent: "end",
       textAlign: "start",
-      fontSize: "1rem"
+      fontSize: "1.5rem"
       }}
     >
       {minimized ? (
@@ -101,23 +101,23 @@ export default function Account({
         (web3Modal?.cachedProvider ? (
           <Button
             key="logoutbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4, color: "#3e190f", border: "2px solid #3e190f" }}
+            style={{ verticalAlign: "top", marginLeft: 8, color: "#3e190f", border: "2px solid #3e190f" }}
             shape="round"
             size="large"
             onClick={logoutOfWeb3Modal}
           >
-            logout
+            LOG OUT
           </Button>
         ) : (
           <Button
             key="loginbutton"
-            style={{ verticalAlign: "middle", margin: 0, color: "#3e190f", border:"2px solid #3e190f" }}
+            style={{ verticalAlign: "middle", marginLeft : 8, color: "#3e190f", border:"2px solid #3e190f" }}
             shape="round"
             size="large"
             /* type={minimized ? "default" : "primary"}     too many people just defaulting to MM and having a bad time */
             onClick={loadWeb3Modal}
           >
-            connect
+            CONNECT
           </Button>
 
         ))}

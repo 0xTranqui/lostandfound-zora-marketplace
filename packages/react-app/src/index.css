@@ -3,9 +3,14 @@
   src: url("./views/fonts/tentang_nanti_dafont/tentang_nanti.otf");
 }
 
+@font-face {
+  font-family: oliver-regular;
+  src: url("./views/fonts/other_fonts/Oliver-Regular.ttf");
+}
+
 body {
   margin: 0;
-  font-family: chalkboard;
+  font-family: oliver-regular;
 }
 
 code {

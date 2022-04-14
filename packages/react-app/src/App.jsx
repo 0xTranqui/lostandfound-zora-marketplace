@@ -193,7 +193,7 @@ function App(props) {
     "isApprovedForAll",
     [
       address, //current signer
-      "0x029AA5a949C9C90916729D50537062cb73b5Ac92" //current rinkeby OE NFT contract
+      "0x029AA5a949C9C90916729D50537062cb73b5Ac92" // ERC721TransferHelper
     ]
   );
 
@@ -443,7 +443,7 @@ function App(props) {
           </div>
         </Route>     
         <Route exact path="/about">
-          <div style={{ fontSize: 16, marginTop: 32 }}>
+          <div>
             <About
               readContracts={readContracts}
               mainnetProvider={mainnetProvider}

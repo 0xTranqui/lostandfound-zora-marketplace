@@ -91,7 +91,7 @@ function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNet
         display: "flex",
         flexDirection: "row",
         justifyContent: "end", 
-        fontSize: "1rem"
+        fontSize: "1.25rem"
       }}>
         NETWORK : {targetNetwork.name.toUpperCase()}
       </div>

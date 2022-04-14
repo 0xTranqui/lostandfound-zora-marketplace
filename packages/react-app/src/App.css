@@ -68,7 +68,7 @@ html {
 .menuButtonsMarketplace {
   border: 2px solid #930538;
   border-radius: 50%;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
   background-color: #ffb300;
@@ -79,7 +79,7 @@ html {
 .menuButtonsMint {
   border: 2px solid #a12f99;
   border-radius: 50%;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
   background-color: #ff95ff;
@@ -90,7 +90,7 @@ html {
 .menuButtonsAbout {
   border: 2px solid #005d8e;
   border-radius: 50%;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
   background-color: #79b2ce;

@@ -62,61 +62,43 @@ function OldEnglish({
     setFillFinderIsDisabled(true)
   };
 
-  {/*
-  state = { value: 1 };
+  //====marketplace action in-flight states (doesnt work because shows up on every card simultaenously)
+/*   const [listing, setListing] = useState(false);
+  const [set, setSet] = useState(false);
+  const [cancel, setCancel] = useState(false);
+  const [fill, setFill] = useState(false);
+  const [transferHelper, setTransferHelper] = useState(false);
+  const [moduleManager, setModuleManager] = useState(false); */
 
-  finderChecker = e => {
-    console.log('radio checked', e.target.value);
-    this.setState({
-      value: e.target.value,
-    });
-  }
-
-  const { value } = this.state;
-*/}
 
   //====my custom addition
   const nftContractAddress = "0x313162D682F57b68E4974b88974D0cAE792E27eF"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
   // Imports + declartions for ZORA Approval Contracts
-  const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
-  const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
-  const asksModuleV1_1Address = mainnetZoraAddresses.AsksV1_1;
-  const oldEnglishContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9";
-  const lostandfoundContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01";
-
-  
-  ///this allows you to query the current ask for any given NFt. if no current ask, seller = 0 address
-  //const seller = useContractReader(readContracts, zoraAsksContract, "askForNFT", [nftContractAddress, 3]);
-  //const seller2 = readContracts()
-  //const specificSeller = seller["seller"];
-  //===MY SOON TO BE ADDED custom functionality to retrieve state of Asks for each NFT
+  //const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
+  //const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
+  //const asksModuleV1_1Address = mainnetZoraAddresses.AsksV1_1;
+  //const oldEnglishContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9";
+  //const lostandfoundContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01";
   
   const fetchMetadataAndUpdate = async id => {
     try {
       const tokenURI = await readContracts[lostandfoundNFTContract].tokenURI(id);
-      const nftMetadataURL = "https://ipfs.io/ipfs/" + tokenURI.substring(7); // previous function atob(tokenURI.substring(29));
+      const nftMetadataURL = "https://ipfs.io/ipfs/" + tokenURI.substring(7); 
       const nftMetadataFetch = await fetch(nftMetadataURL); 
 
       //===CUSTOM UPDATE
       const seller = await readContracts[zoraAsksContract].askForNFT(nftContractAddress, id);
-      
       const ownerAddress = await readContracts[lostandfoundNFTContract].ownerOf(id);
       const ownerAddressCleaned = ownerAddress.toString().toLowerCase();
-
-      //const ownerAddressStringLowerCase = ownerAddress.toLowerCase();
-
-      //const ownerAddressString = ownerAddress.toString().toLowerCase();      //console.log(ownerAddress);
-     // console.log(ownerAddressString);
-      //console.log(ownerAddressStringLowerCase);
       //===CUSTOM UPDATE
 
       try {
-        const nftMetadataObject = await nftMetadataFetch.json();// JSON.parse(jsonManifestString);
-        //const nftMetadataObjectFixed = nftMetadataObject.item.imag
+        const nftMetadataObject = await nftMetadataFetch.json();
         const collectibleUpdate = {};
 
-        //===CUSTOM UPDATE, added askSeller: seller as a key:value pair
+        //===CUSTOM UPDATE, added askSeller: seller and nftOwner: ownerAddress as key:value pairs
         collectibleUpdate[id] = { id: id, uri: tokenURI, askSeller: seller, nftOwner: ownerAddressCleaned, ...nftMetadataObject};
+        //====CUSTOM UPDATE
 
         setAllOldEnglish(i => ({ ...i, ...collectibleUpdate }));
       } catch (e) {
@@ -129,14 +111,14 @@ function OldEnglish({
 
 
   const updateAllOldEnglish = async () => {
-    if (readContracts[lostandfoundNFTContract] && totalSupply /*&& totalSupply <= receives.length*/) {
+    if (readContracts[lostandfoundNFTContract] && totalSupply) {
       setLoadingOldEnglish(true);
       let numberSupply = totalSupply.toNumber();
 
       let tokenList = Array(numberSupply).fill(0);
 
       tokenList.forEach((_, i) => {
-        let tokenId = i; //used to be i + 1 for OE
+        let tokenId = i; //make this i + 1 if you're first token ID is 1 instead of 0
         if (tokenId <= numberSupply - page * perPage && tokenId >= numberSupply - page * perPage - perPage) {
           fetchMetadataAndUpdate(tokenId);
         } else if (!allOldEnglish[tokenId]) {
@@ -148,7 +130,6 @@ function OldEnglish({
 
       setLoadingOldEnglish(false);
     }
-    console.log('AllOldEnglishvibes'); // can delete this, just in for testing refresh button
   };
 
   const updateYourOldEnglish = async () => {
@@ -176,109 +157,6 @@ function OldEnglish({
     console.log("Failed:", errorInfo);
   };
 
-  const [form] = Form.useForm();
-  const sendForm = id => {
-    const [sending, setSending] = useState(false);
-
-    return (
-      <div>
-        <Form
-          form={form}
-          layout={"inline"}
-          name="sendOE"
-          initialValues={{ tokenId: id }}
-          onFinish={async values => {
-            setSending(true);
-            try {
-              const txCur = await tx(
-                writeContracts[oldEnglishContract]["safeTransferFrom(address,address,uint256)"](
-                  address,
-                  values["to"],
-                  id,
-                ),
-              );
-              await txCur.wait();
-              updateOneOldEnglish(id);
-              setSending(false);
-            } catch (e) {
-              console.log("send failed", e);
-              setSending(false);
-            }
-          }}
-          onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            name="to"
-            rules={[
-              {
-                required: true,
-                message: "Which address should receive this OE?",
-              },
-            ]}
-          >
-            <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={sending}>
-              Send
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    );
-  };
-  
-  const [pourForm] = Form.useForm();
-  const pour = id => {
-    const [pouring, setPouring] = useState(false);
-
-    return (
-      <div>
-        <Form
-          form={pourForm}
-          layout={"inline"}
-          name="pourOE"
-          initialValues={{ tokenId: id }}
-          onFinish={async values => {
-            setPouring(true);
-            try {
-              const currentTokenId = id;
-              console.log(currentTokenId);
-              console.log("hello")
-              const txCur = await tx(writeContracts[oldEnglishContract]["pour"](id, values["to"]));
-              await txCur.wait();
-              updateOneOldEnglish(id);
-              setPouring(false);
-            } catch (e) {
-              console.log("pour failed", e);
-              setPouring(false);
-            }
-          }}
-          onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            name="to"
-            rules={[
-              {
-                required: true,
-                message: "Who's getting a pour?",
-              },
-            ]}
-          >
-            <AddressInput ensProvider={mainnetProvider} placeholder={"to address"} />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={pouring}>
-              Pour
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    );
-  };
-
   let filteredOEs = Object.values(allOldEnglish).sort((a, b) => b.askSeller.askPrice - a.askSeller.askPrice);
   const [mine, setMine] = useState(false);
   if (mine == true && address && filteredOEs) {
@@ -287,7 +165,7 @@ function OldEnglish({
     });
   }
 
-  //=====MY CUSTOM FUNCTIONALITY====
+  //========MY CUSTOM FUNCTIONALITY=======
 
   //********* CREATE ASK FLOW ***********
   const [createAskForm] = Form.useForm();
@@ -555,6 +433,9 @@ function OldEnglish({
   //===marketpalce approval <a href="https://zine.zora.co/zora-v3"></a>
 
   const marketplaceManager = () => {
+    const [transferHelper, setTransferHelper] = useState(false);
+    const [moduleManager, setModuleManager] = useState(false);
+
     return (
       <div className="approvalPopOverManager">
         <div className="pleaseApprovePopover">
@@ -580,11 +461,13 @@ function OldEnglish({
           ) : (
           <Button
           className="erc721ApprovalButtonPopover"   
-          style= {{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1rem", height: "auto", borderRadius: 20  }}
+          style= {{ backgroundColor: "#d87456", color: "#791600", border: "4px solid #791600", fontSize: "1rem", height: "auto", borderRadius: 20  }}
             type="primary"
+            loading={transferHelper}
             onClick={async () => {
               console.log("Clicked ERC721Transfer Button");
               //console.log(readContracts[oldEnglishContract].name)
+              setTransferHelper(true);
               try {
                 const txCur = await tx(writeContracts[lostandfoundNFTContract].setApprovalForAll(
                   "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
@@ -592,8 +475,10 @@ function OldEnglish({
                 ));
                 await txCur.wait();
                 updateOneOldEnglish();
+                setTransferHelper(false);
               } catch (e) {
                 console.log("ERC721Transfer HelperApproval Failed", e);
+                setTransferHelper(false);
               }
             }}
           >            
@@ -607,10 +492,12 @@ function OldEnglish({
           ) : (
           <Button
             className="zmmApprovalButtonPopover"
-            style={{ backgroundColor: "#FF4F75", color: "#F0F8EA", border: "4px solid #A8C686", fontSize: "1rem", height: "auto", borderRadius: 20, verticalAlign: "center" }}
+            style={{ backgroundColor: "#4998ff", color: "#283cc4", border: "4px solid #283cc4", fontSize: "1rem", height: "auto", borderRadius: 20, verticalAlign: "center" }}
             type="primary"
+            loading={moduleManager}
             onClick={async () => {
               console.log("Clicked ZMM Button");
+              setModuleManager(true);
               try {
                 const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
                   "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
@@ -618,8 +505,10 @@ function OldEnglish({
                 ));
                 await txCur.wait();
                 updateOneOldEnglish();
+                setModuleManager(false);
               } catch (e) {
                 console.log("ZORA Module Manager Approval Failed", e);
+                setModuleManager(false);
               }
             }}
           >      
@@ -633,35 +522,25 @@ function OldEnglish({
   return (
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
-          <div style={{ marginBottom: 15}} >
-              <img width="50%" src={LF_Logo_V1}></img>
+        <div style={{ marginBottom: 15}} >
+            <img width="50%" src={LF_Logo_V1}></img>
+        </div>
+        <div className="ownershipFilterWrapper">
+          <div className="ownershipFilterOptions">
+            FULL COLLECTION / MY COLLECTION :
           </div>
-          <div className="approvalManager" style={{ fontSize: "2rem", color: "#F0F66E" }}>
-            <Popover
-              className="popoverMaster"
-              placement="bottom"
-              content={() => {                                                        
-                return marketplaceManager();
-              }}
-            >
-              <Button style={{ color: "white", backgroundColor: "#3e190f", border: "2px solid #3e190f", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
-                MARKETPLACE APPROVAL MANAGER
-              </Button>
-            </Popover>
-            <Switch
-              className="ownershipFilter"
-              disabled={loadingOldEnglish}
-              style={{ height: "auto", marginLeft: "2.5%", fontSize: "2rem", border: "2px solid black", color: "#3e190f" }}
-              value={mine}
-              onChange={() => {
-                setMine(!mine);
-                updateYourOldEnglish();
-              }}
-              checkedChildren="MY COLLECTION"
-              unCheckedChildren="FULL COLLECTION"
-            >
-            </Switch>
-          </div>
+          <Switch
+          className="ownershipFilterSwitch"
+            disabled={loadingOldEnglish}
+            style={{ height: "auto", width: "5%", border: "2px #3e190f solid" }}
+            value={mine}
+            onChange={() => {
+              setMine(!mine);
+              updateYourOldEnglish();
+            }}
+          >
+          </Switch>
+        </div>
       </div>
       {false ? (
         <Spin style={{ backgroundColor: "black", marginTop: "10%" }} />
@@ -670,7 +549,7 @@ function OldEnglish({
           <List            
             className="tokenRender"
             grid={{
-              gutter: 16,
+              gutter: 30,
               xs: 1,
               sm: 2,
               md: 2,
@@ -711,8 +590,7 @@ function OldEnglish({
               return (
                 <List.Item className="listItems" key={id}>
                   <Card
-                    className="cards"
-                    bodyStyle={{ padding: "0", margin: "0" }}
+                    className="cards"                
                     style={{ border: "4px solid black", borderRadius: 2 }}
                     title={
                       <div className="cardHeaders" >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
@@ -740,32 +618,7 @@ function OldEnglish({
                     >
                       <img className="nftImage" src={imageWithGateway && imageWithGateway} alt={"LF #" + id} width="100%" />
                     </a>
-                    <div className="cardFooters"> {/* LMAO THIS LINE IS HOLDING EVERYTHING/*/}
-                                    
-{/*     commenting out entire section that seems unncesssary                                    
-                      {
-                      item.nftOwner == readContracts[lostandfoundNFTContract].address.toLowerCase() ? (
-                        <div>{item.description}</div>
-                      ) : (
-                        <div>
-                          <Address
-                            address={item.nftOwner}
-                            ensProvider={mainnetProvider}
-                            blockExplorer={blockExplorer}
-                            fontSize={16}
-                          />
-                          {/*
-                          <div>                        
-                          v1 List Price = {item.askSeller.askPrice.toString() / (10 ** 18)} ETH              
-                          </div>
-                          <div>
-                          v1 Finder's Fee = {item.askSeller.findersFeeBps / 100} % 
-                          </div>
-                          
-                        </div>
-                      )}
- */}
-
+                    <div className="cardFooters"> {/* LMAO THIS LINE IS HOLDING EVERYTHING/*/}                                  
                       { item.nftOwner == address.toLowerCase() ? ( /// logic asking if you are the owner
                           <>
                             {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? ( /// logic asking what to do if you are the owner and ask does NOT exist
@@ -789,20 +642,53 @@ function OldEnglish({
                                   <div className="listingFindersFee">
                                   FINDER'S FEE : N/A
                                   </div>
-                                </div>
-                                <div className="marketplaceManager">
+                                </div>                                
+                                { erc721TransferHelperApproved && zoraModuleManagerApproved == true ? ( 
+                                <div className="marketplaceManager">                                    
+                                  <Button
+                                    className="marketplaceApprovalButton"
+                                    disabled={true}
+                                    style={{ borderRadius: 2, border: "1px solid black", width: "100%", fontSize: "1.2rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} 
+                                    type="primary"
+                                  >
+                                    MARKETPLACE PROTOCOLS ARE APPROVED
+                                  </Button>
                                   <Popover
                                     content={() => {                                                        
                                       return createAsk(id);
                                     }}
                                     title="Create Ask"
                                   >
-                                    <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">LIST</Button>
+                                    <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>
                                   </Popover>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">CANCEL</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>
+                                </div>  
+                                ) : (
+                                <div className="marketplaceManager">
+                                  <Popover
+                                    className="popoverMaster"
+                                    placement="top"
+                                    content={() => {                                                        
+                                      return marketplaceManager();
+                                    }}
+                                  >
+                                    <Button
+                                      className="marketplaceApprovalButton"
+                                      disabled={false}
+                                      style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.2rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} 
+                                      type="primary"
+                                    >
+                                      APPROVE MARKETPLACE PROTOCOLS
+                                    </Button>
+                                  </Popover>                                    
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>
                                 </div>
+                                )}
                               </div>
                               ) : ( ///logic asking if you are the owner and the ask DOES exist
                                 <div>
@@ -826,15 +712,24 @@ function OldEnglish({
                                     FINDER'S FEE : {item.askSeller.findersFeeBps / 100} % 
                                     </div> 
                                   </div>
+                                  { erc721TransferHelperApproved && zoraModuleManagerApproved == true ? (
                                   <div className="marketplaceManager"> 
-                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">LIST</Button>                                
+                                    <Button
+                                    className="marketplaceApprovalButton"
+                                    disabled={true}
+                                    style={{ borderRadius: 2, border: "1px solid black", width: "100%", fontSize: "1.2rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} 
+                                    type="primary"
+                                    >
+                                      MARKETPLACE PROTOCOLS ARE APPROVED
+                                    </Button>                                  
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>                                
                                     <Popover
                                       content={() => {                                                        
                                         return updateAskPrice(id);
                                       }}
                                       title="Update Ask"
                                     >
-                                      <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">UPDATE</Button>
+                                      <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
                                     </Popover>
                                     <Popover
                                       content={() => {                                                        
@@ -842,10 +737,34 @@ function OldEnglish({
                                       }}
                                       title="Cancel Ask"
                                     >
-                                      <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">CANCEL</Button>
+                                      <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>
                                     </Popover>
-                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
-                                  </div>                                                 
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>
+                                  </div>
+                                  ) : (
+                                  <div className="marketplaceManager">
+                                    <Popover
+                                      className="popoverMaster"
+                                      placement="top"
+                                      content={() => {                                                        
+                                        return marketplaceManager();
+                                      }}
+                                    >
+                                      <Button
+                                        className="marketplaceApprovalButton"
+                                        disabled={false}
+                                        style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.2rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} 
+                                        type="primary"
+                                      >
+                                        APPROVE MARKETPLACE PROTOCOLS
+                                      </Button>
+                                    </Popover>
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>                                                                         
+                                  </div>
+                                  )} 
                                 </div>
                               )}
                           </>
@@ -874,10 +793,18 @@ function OldEnglish({
                                   </div>
                                 </div>
                                 <div className="marketplaceManager">
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">LIST</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">CANCEL</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
+                                  <Button
+                                    className="marketplaceApprovalButton"
+                                    disabled={true}
+                                    style={{ borderRadius: 2, border: "1px solid black", width: "100%", fontSize: "1.2rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} 
+                                    type="primary"
+                                  >
+                                    NO AVAILABLE ACTIONS FOR THIS ITEM
+                                  </Button>                                  
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>
                                 </div>                                   
                               </div>                                                   
                             ) : ( 
@@ -902,19 +829,52 @@ function OldEnglish({
                                   FINDER'S FEE : {item.askSeller.findersFeeBps / 100} % 
                                   </div>
                                 </div>
+                                { erc721TransferHelperApproved && zoraModuleManagerApproved == true ? (                                
                                 <div className="marketplaceManager">
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">LIST</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">CANCEL</Button>                                    
+                                  <Button
+                                    className="marketplaceApprovalButton"
+                                    disabled={true}
+                                    style={{ borderRadius: 2, border: "1px solid black", width: "100%", fontSize: "1.2rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} 
+                                    type="primary"
+                                  >
+                                    MARKETPLACE PROTOCOLS ARE APPROVED
+                                  </Button>                                  
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>                                    
                                   <Popover
                                     content={() => {                                                        
                                       return fillAsk(id);
                                     }}
                                     title="Fill Ask"
                                   >  
-                                    <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">BUY</Button>
+                                    <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>
                                   </Popover>
-                                </div> 
+                                </div>
+                                ) : (
+                                <div className="marketplaceManager">
+                                  <Popover
+                                    className="popoverMaster"
+                                    placement="top"
+                                    content={() => {                                                        
+                                      return marketplaceManager();
+                                    }}
+                                  >
+                                    <Button
+                                      className="marketplaceApprovalButton"
+                                      disabled={false}
+                                      style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.2rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} 
+                                      type="primary"
+                                    >
+                                      APPROVE MARKETPLACE PROTOCOLS
+                                    </Button>
+                                  </Popover>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>                                                                  
+                                </div>
+                                )} 
                               </div>
                           )}
                           

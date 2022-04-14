@@ -118,12 +118,6 @@ function OldEnglish({
                <div className="mintPageExplanationBody" >
                {"" + maxSupply - totalSupply} / {"" + maxSupply} PIECES REMAIN
                </div>
-{/*                <div className="mintPageExplanationBody">
-               YOU'RE WALLET HAS <u>{"" + remainingMints}</u> MINTS LEFT
-               </div> */}
-{/*                <div className="mintPageExplanationBody">
-               HOW MANY WILL YOU MINT ?
-               </div> */}
                <div className="mintPageExplanationBody">
                LIMIT = 2 MINTS PER WALLET
                </div>
@@ -144,17 +138,15 @@ function OldEnglish({
                   }}
                   onFinish={async values => {
                   setMint(true);
-
                   try {
                      const txCur = await tx(writeContracts[lostandfoundNFTContract].mint(
                         values["numberOfTokens"],
                         { value: (priceOfMint * values["numberOfTokens"]).toString() }//* values["numberOfTokens"] ) }
                      ));                     
                      await txCur.wait();
-
-                     // functionality that tracks the tokenId mints
+                     // functionality that tracks the state of user tokenId mints
                      const receipt = await txCur.wait();
-                     let mintedTokenID = null;                     
+/*                      let mintedTokenID = null;   */                   
                      for (const event of receipt.events) {
                         if (event.event !== 'Transfer') {
                            continue
@@ -179,7 +171,7 @@ function OldEnglish({
                      } 
                      setMint(false);
                      notification.open({
-                        message: "Your support means the world <3",
+                        message: "Thanks for supporting my dream and welcome to the Lost & Found! Love, Danny Diamonds",
                         description: "- Danny Diamonds",
                      });                     
                   } catch(e) {
@@ -198,22 +190,14 @@ function OldEnglish({
                      },
                   ]}
                   >
-                  <Input style={{ backgroundColor: "#7f67ff", border: "2px #3d3280 solid", width: "100px", textAlign: "center"}} placeholder={"QUANTITY"} />
+                  <Input style={{ fontSize: "1.2rem", backgroundColor: "#7f67ff", border: "2px #3d3280 solid", width: "125px", textAlign: "center"}} placeholder={"QUANTITY"} />
                   </Form.Item>
                   <Form.Item>
-                  <Button type="primary" style={{ backgroundColor: "#72a500", border: "2px solid #005a00", color: "#F0F8EA", height: "auto", width: "100px" }} htmlType="submit" loading={mint}>MINT</Button>
+                  <Button type="primary" style={{ fontSize: "1.2rem", backgroundColor: "#72a500", border: "2px solid #005a00", color: "#F0F8EA", height: "auto", width: "125px" }} htmlType="submit" loading={mint}>MINT</Button>
                   </Form.Item>
                </Form>
             </div>
-
-
-
          </div>
-{/*          {false ? (
-            <Spin style={{ marignTop: 100}} />
-         ) : ( */}
-
-
             <div className="mintRenderWrapper">
                {(mintImageURL1 != "" && mintImageURL2 != "") ? (
                   <div className="mintRenderTwoNFTs">
