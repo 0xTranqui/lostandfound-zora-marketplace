@@ -70,7 +70,7 @@ function OldEnglish({
                <div className="aboutPageBody">
                   - This marketplace was created to serve as a template for all creatives who want to gain control of how their work is interacted with <br />
                   - Check out the following links to a video tutorial, written guide, and the public GitHub Repository for this project to get started <br />
-                  - Need help building your own marketplace? tranqui.eth is open to commission work on a per project basis. Hit his <a href="https://twitter.com/0xTranqui"><u>DMs</u></a> to inquire <br />
+                  - Need help building your own marketplace? tranqui.eth is open to commission/advisory work on a per project basis. Hit his <a href="https://twitter.com/0xTranqui"><u>DMs</u></a> to inquire <br />
                   - Looking for graphic design help? Danny provided all of the logo/design work for this site. Hit his <a href="https://twitter.com/dannydiamondss"><u>DMs</u></a> to inquire
                </div>
             </div>        

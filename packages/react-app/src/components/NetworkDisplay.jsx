@@ -87,7 +87,7 @@ function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNet
       <div
       style={{
         /* border: "1px solid turquoise" */
-        color: "brown",
+        color: "#3e190f",
         display: "flex",
         flexDirection: "row",
         justifyContent: "end", 

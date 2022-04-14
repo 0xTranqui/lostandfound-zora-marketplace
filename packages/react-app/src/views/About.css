@@ -1,5 +1,5 @@
 .aboutPageWrapper {
-   background-color: #343434;
+   background-color: transparent;
    display: flex;
    flex-wrap: wrap;
 /*    background-color: red; */
@@ -14,7 +14,7 @@
    display: flex;
    flex-direction: row;
    flex-wrap: wrap;
-   color: #A8C686;
+   color: #3e190f;
 /*    border: 1px blue solid; */
 }
 
@@ -35,5 +35,5 @@
 
 .aboutPageBody {
    font-size: 1.25rem;
-   color: #F0F8EA;
+   color: #3e190f;
 }

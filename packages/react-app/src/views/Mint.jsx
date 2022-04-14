@@ -10,6 +10,8 @@ import { useEventListener } from "eth-hooks/events/useEventListener";
 //==========my custom import
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
 import "./Mint.css";
+import LF_Logo_V1 from "./LF_Logo_V1.png";
+import Premint_Artwork from "./Untitled_Artwork.png";
 //==========my custom import
 
 var count = 0; ///this saves count that is used to determine what state setting is used when picking up mints
@@ -111,14 +113,9 @@ function OldEnglish({
       <div className="mint">
          <div className="beforeMintRender">
             <div className="mintPageExplanation">
-               <div className="mintPageExplanationHead">
-               THIS IS THE LOST & FOUND, VOL. 1 COLLECTION
-               </div>
-               <div className="mintPageExplanationSubhead">
-               A BODY OF WORK BY DANNY DIAMONDS
-               </div>
+               <img width="50%"  src={LF_Logo_V1}></img>
                <br /> 
-               <div className="mintPageExplanationBody" style={{ color: "#F0F66E" }} >
+               <div className="mintPageExplanationBody" >
                {"" + maxSupply - totalSupply} / {"" + maxSupply} PIECES REMAIN
                </div>
 {/*                <div className="mintPageExplanationBody">
@@ -196,15 +193,15 @@ function OldEnglish({
                   name="numberOfTokens"
                   rules={[
                      {
-                        required: false,
+                        required: true,
                         message: "How Many NFTs Do You Want To Mint?"
                      },
                   ]}
                   >
-                  <Input style={{ backgroundColor: "grey", border: "2px #02A9EA solid", width: "100px", textAlign: "center"}} placeholder={"QUANTITY"} />
+                  <Input style={{ backgroundColor: "#7f67ff", border: "2px #3d3280 solid", width: "100px", textAlign: "center"}} placeholder={"QUANTITY"} />
                   </Form.Item>
                   <Form.Item>
-                  <Button type="primary" style={{ backgroundColor: "#02A9EA", border: "2px solid grey", color: "#F0F8EA", height: "auto", width: "100px" }} htmlType="submit" loading={mint}>MINT</Button>
+                  <Button type="primary" style={{ backgroundColor: "#72a500", border: "2px solid #005a00", color: "#F0F8EA", height: "auto", width: "100px" }} htmlType="submit" loading={mint}>MINT</Button>
                   </Form.Item>
                </Form>
             </div>
@@ -240,8 +237,8 @@ function OldEnglish({
                      >
                         <img  src={mintImageURL2} width="100%" />
                      </a>
-                     <Link style={{ color: "#FF4F75", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
-                     <Link style={{ color: "#FF4F75", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
+                     <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
+                     <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
                   </div>                                    
                ) : (
                   <>
@@ -257,10 +254,14 @@ function OldEnglish({
                         >
                            <img src={mintImageURL1} width="100%" />
                         </a>
-                        <Link style={{ color: "#FF4F75", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
+                        <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
                      </div>
                      ) : (
                      <div className="mintRenderOneNFT">
+                        <div className="oneMintedNFTRenderTitle">Token ID #? - Mint to Find Out</div>
+                        <div className="oneMintedNFTRender">
+                           <img src={Premint_Artwork} width="100%" />
+                        </div>
 {/*                         <div className="oneMintedNFTRenderTitle" style={{color: "#F0F66E"}}>WAITING FOR MINT</div>
                         <div className="oneMintedNFTRender"></div>   */}                      
                      </div>

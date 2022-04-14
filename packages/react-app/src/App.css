@@ -40,9 +40,7 @@ html {
   grid-template-rows: .5fr 1fr;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  margin-top: 1%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin: 2% 5%;
 }
 
 .headerMenu {
@@ -68,34 +66,34 @@ html {
 }
 
 .menuButtonsMarketplace {
-  border: 2px solid maroon;
+  border: 2px solid #930538;
   border-radius: 50%;
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 10px;
-  background-color: orange;
+  background-color: #ffb300;
   text-align: center;
   width: 175px;
 }
 
 .menuButtonsMint {
-  border: 2px solid purple;
+  border: 2px solid #a12f99;
   border-radius: 50%;
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 10px;
-  background-color: pink;
+  background-color: #ff95ff;
   width: 175px;
   text-align: center;
 }
 
 .menuButtonsAbout {
-  border: 2px solid navy;
+  border: 2px solid #005d8e;
   border-radius: 50%;
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 10px;
-  background-color: lightblue;
+  background-color: #79b2ce;
   width: 175px;
   text-align: center;
 }

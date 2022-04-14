@@ -633,7 +633,7 @@ function OldEnglish({
   return (
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
-          <div style={{ marginTop: 15, marginBottom: 15}} >
+          <div style={{ marginBottom: 15}} >
               <img width="50%" src={LF_Logo_V1}></img>
           </div>
           <div className="approvalManager" style={{ fontSize: "2rem", color: "#F0F66E" }}>
@@ -644,14 +644,14 @@ function OldEnglish({
                 return marketplaceManager();
               }}
             >
-              <Button style={{ color: "white", backgroundColor: "#1d0236", border: "2px solid black", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
+              <Button style={{ color: "white", backgroundColor: "#3e190f", border: "2px solid #3e190f", width: "40%", justifySelf: "end", marginRight: "2.5%", borderRadius: 20 }}>
                 MARKETPLACE APPROVAL MANAGER
               </Button>
             </Popover>
             <Switch
               className="ownershipFilter"
               disabled={loadingOldEnglish}
-              style={{ height: "auto", marginLeft: "2.5%", fontSize: "2rem", border: "2px solid black" }}
+              style={{ height: "auto", marginLeft: "2.5%", fontSize: "2rem", border: "2px solid black", color: "#3e190f" }}
               value={mine}
               onChange={() => {
                 setMine(!mine);
@@ -664,7 +664,7 @@ function OldEnglish({
           </div>
       </div>
       {false ? (
-        <Spin style={{ marginTop: 100}} />
+        <Spin style={{ backgroundColor: "black", marginTop: "10%" }} />
       ) : (
         <div className="tokenRenderWrapper">
           <List            
@@ -679,7 +679,7 @@ function OldEnglish({
               xxl: 3,
             }}
             align="center" ///THIS IS WHAT ALIGNS ALL OF THE CARDS!!!!!!
-            locale={{ emptyText: `waiting for OEs...` }}
+            locale={{ emptyText: `Fetching Markteplace Items...` }}
             
             
             /* commenting out pagination */
@@ -713,7 +713,7 @@ function OldEnglish({
                   <Card
                     className="cards"
                     bodyStyle={{ padding: "0", margin: "0" }}
-                    style={{ border: "2px solid black", borderRadius: 2 }}
+                    style={{ border: "4px solid black", borderRadius: 2 }}
                     title={
                       <div className="cardHeaders" >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
 
@@ -797,7 +797,7 @@ function OldEnglish({
                                     }}
                                     title="Create Ask"
                                   >
-                                    <Button style={{ borderRadius: 2, border: "1px solid black" }} type="primary">List</Button>
+                                    <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">LIST</Button>
                                   </Popover>
                                   <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">UPDATE</Button>
                                   <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">CANCEL</Button>
@@ -827,14 +827,14 @@ function OldEnglish({
                                     </div> 
                                   </div>
                                   <div className="marketplaceManager"> 
-                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">LIST</Button>                                
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">LIST</Button>                                
                                     <Popover
                                       content={() => {                                                        
                                         return updateAskPrice(id);
                                       }}
                                       title="Update Ask"
                                     >
-                                      <Button style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">UPDATE</Button>
+                                      <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">UPDATE</Button>
                                     </Popover>
                                     <Popover
                                       content={() => {                                                        
@@ -842,9 +842,9 @@ function OldEnglish({
                                       }}
                                       title="Cancel Ask"
                                     >
-                                      <Button style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">CANCEL</Button>
+                                      <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">CANCEL</Button>
                                     </Popover>
-                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">BUY</Button>
+                                    <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
                                   </div>                                                 
                                 </div>
                               )}
@@ -874,10 +874,10 @@ function OldEnglish({
                                   </div>
                                 </div>
                                 <div className="marketplaceManager">
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">LIST</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">UPDATE</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">CANCEL</Button>
-                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid grey" }} type="primary">BUY</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">LIST</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">UPDATE</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">CANCEL</Button>
+                                  <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
                                 </div>                                   
                               </div>                                                   
                             ) : ( 
@@ -912,7 +912,7 @@ function OldEnglish({
                                     }}
                                     title="Fill Ask"
                                   >  
-                                    <Button style={{ borderRadius: 2, border: "1px solid black" }} type="primary">BUY</Button>
+                                    <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f" }} type="primary">BUY</Button>
                                   </Popover>
                                 </div> 
                               </div>

@@ -75,14 +75,14 @@ export default function Address_Header(props) {
 
   return (
     <span>
-      <span style={{ color: "brown", fontSize: "1.5rem" }}>
+      <span style={{ color: "#3e190f", fontSize: "1.5rem" }}>
         WALLET : 
       </span>
       <span style={{ paddingLeft: 5, fontSize: props.fontSize ? props.fontSize : 28 }}>
         {props.onChange ? (
           <Text editable={{ onChange: props.onChange }} copyable={{ text: address }}>
             <a
-              style={{ color: currentTheme === "light" ? "#222222" : "brown" }}
+              style={{ color: currentTheme === "light" ? "#222222" : "#3e190f" }}
               target="_blank"
               href={etherscanLink}
               rel="noopener noreferrer"
@@ -93,7 +93,7 @@ export default function Address_Header(props) {
         ) : (
           <Text copyable={{ text: address }}>
             <a
-              style={{ color: currentTheme === "light" ? "#222222" : "brown", fontSize: "1.5rem" }}
+              style={{ color: currentTheme === "light" ? "#222222" : "#3e190f", fontSize: "1.5rem" }}
               target="_blank"
               href={etherscanLink}
               rel="noopener noreferrer"

@@ -289,12 +289,12 @@ function App(props) {
           className="headerMenu"
         >
           <Menu.Item
-            style={{border: "none"}}
+            /* style={{border: "none"}} */
             key="/">
             <div className="menuButtonsMarketplace">
               <Link
               /* className="menuButtons" */
-              style={{ color: "maroon" }} to="/"
+              style={{ color: "#930538" }} to="/"
               >
                 MARKETPLACE
               </Link>
@@ -302,12 +302,12 @@ function App(props) {
           </Menu.Item>
 
           <Menu.Item 
-            style={{border: "none"}}
+            /* style={{border: "none"}} */
             key="/mint"
           >
             <div className="menuButtonsMint">
               <Link
-              style={{ color: "purple"}} to="/mint"
+              style={{ color: "#a12f99"}} to="/mint"
               >
                 MINT
               </Link>
@@ -315,12 +315,12 @@ function App(props) {
           </Menu.Item>
 
           <Menu.Item
-            style={{border: "none"}}
+            /* style={{border: "none"}} */
             key="/about"
           >
             <div className="menuButtonsAbout">
               <Link
-              style={{ color: "navy" }}to="/about"
+              style={{ color: "#005d8e" }}to="/about"
               >
                 ABOUT
               </Link>

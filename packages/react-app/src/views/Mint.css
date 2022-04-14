@@ -1,21 +1,21 @@
 .mint {
-   background-color: #343434;
+   background-color: transparent;
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
 /*    background-color: red; */
-   border: 1px solid red;
    width: 100%;
    margin: 0;
    padding: 0;
-   min-height: 800; /* change this to be however big the pre rendering section neexs to be */
+   height: 100%;
+   min-height: 100vh;
 }
 
 .mintPageExplanation {
    display: flex;
    flex-direction: column;
    align-items: center;
-   color: #A8C686;
+   color: #3e190f;
 /*    border: 1px red solid; */
 }
 
@@ -78,7 +78,7 @@
    margin-top: 10px;
    margin-bottom: 10px;
    font-size: 2rem;
-   color: #F0F66E;
+   color: #3e190f;
 }
 
 .oneMintedNFTRender {
@@ -111,7 +111,7 @@
    margin-bottom: 10px;
 /*    border: 1px solid red; */
    font-size: 2rem;
-   color: #F0F66E;
+   color: #3e190f;
 }
 
 .twoMintedNFTRenderTitle2 {
@@ -122,7 +122,7 @@
    margin-bottom: 10px;
 /*    border: 1px solid yellow; */
    font-size: 2rem;
-   color: #F0F66E;
+   color: #3e190f;
    
 }
 

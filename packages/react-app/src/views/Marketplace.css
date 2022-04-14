@@ -6,7 +6,7 @@
    width: 100%;
    margin: 0;
    padding: 0;
-   min-height: 800;
+   min-height: 100vh;
    /* border: 2px solid pink; */
 }
 
@@ -17,7 +17,6 @@
 
 .tokenRenderWrapper {
    /* border: 2px solid magenta; */
-   background-color: transparent;
    display: flex;
    justify-content: center;
    justify-items: center;
@@ -43,7 +42,7 @@
 
 .cardHeaders {
    color: white;
-   background-color: black;
+   background-color: #3e190f;
    font-size: 1.25rem;
    height: auto;
    display: flex;
@@ -59,15 +58,15 @@
 
 .nftImage {
 /*    border: .25rem solid purple; */
-   border-top: 2px solid black;
-   border-bottom: 2px solid black;
+   border-top: 2px solid #3e190f;
+   border-bottom: 2px solid #3e190f;
    width: fill;
    margin: 0;
    padding: 0;
 }
 
 .cardFooters {
-   background-color: black;
+   background-color: #3e190f;
    margin: 0;
    padding: 0
    /* border: 2px solid blue; */
@@ -216,7 +215,7 @@
 .marketplaceManager {
    display: grid;
    
-   background-color: black;
+   background-color: #3e190f;
    margin: 0px 5px 0px 5px;
    padding-bottom: 5px;
    grid-template: 1fr 1fr / 1fr 1fr;
@@ -226,7 +225,7 @@
 .listingStatusManager {
    display: grid;
    color: white;
-   background-color: black;
+   background-color: #3e190f;
    font-weight: bold;
    grid-template-rows: 1fr 1fr;
    grid-template-columns: 1fr 1fr;
