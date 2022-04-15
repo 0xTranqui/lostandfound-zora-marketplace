@@ -82,13 +82,6 @@
    margin-right: 10%;
 }
 
-.createAskFormPopoverManager {
-   display: grid;
-   grid-template: 1fr 1fr 1fr / 1fr ;
-   margin-left: 10%;
-   margin-right: 10%;
-}
-
 .updateAskFormPopoverManager {
    display: grid;
    grid-template: 1fr 1fr / 1fr;

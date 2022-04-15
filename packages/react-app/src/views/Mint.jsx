@@ -171,8 +171,8 @@ function OldEnglish({
                      } 
                      setMint(false);
                      notification.open({
-                        message: "Thanks for supporting my dream and welcome to the Lost & Found! Love, Danny Diamonds",
-                        description: "- Danny Diamonds",
+                        message: "Thanks for supporting my dream and welcome to the Lost & Found! Love,",
+                        description: "Danny Diamonds",
                      });                     
                   } catch(e) {
                      console.log("mint failed", e);
@@ -226,8 +226,20 @@ function OldEnglish({
                      >
                         <img  src={mintImageURL2} width="100%" />
                      </a>
-                     <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
-                     <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
+                     <Link to="/">
+                        <Button
+                        style={{ backgroundColor: "black", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
+                        >
+                           VIEW IN MARKETPLACE
+                        </Button>
+                     </Link>
+                     <Link to="/">
+                        <Button
+                        style={{ backgroundColor: "black", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
+                        >
+                           VIEW IN MARKETPLACE
+                        </Button>
+                     </Link>
                   </div>                                    
                ) : (
                   <>
@@ -243,7 +255,7 @@ function OldEnglish({
                         >
                            <img src={mintImageURL1} width="100%" />
                         </a>
-                        <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>CHECK IT OUT IN THE MARKETPLACE</u></Link>
+                        <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>VIEW</u></Link>
                      </div>
                      ) : (
                      <div className="mintRenderOneNFT">

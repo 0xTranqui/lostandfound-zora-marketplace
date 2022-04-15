@@ -280,8 +280,9 @@ function OldEnglish({
     return (
       <div>
         <Form
+          className="updateAskFormPopoverManager"
           form={setAskForm}
-          layout={"inline"}
+          /* layout={"inline"} */
           name="update ask price"
           initialValues={{ 
             tokenId: id,
@@ -300,7 +301,7 @@ function OldEnglish({
               updateOneOldEnglish(id);
               setSet(false);
             } catch (e) {
-              console.log("update ask price failed", e);
+              console.log("UPDATE LISTING PRICE FAILED", e);
               setSet(false);
             }
           }}
@@ -311,18 +312,24 @@ function OldEnglish({
             rules={[
               {
                 required: true,
-                message: "What is the new updated price (ETH)?",
+                message: "WHAT IS THE UPDATED LISTING PRICE?",
               },
             ]}
           >
             <Input
-            placeholder={"Updated Listing Price (ETH): "}
+            style={{width: "300px"}}
+            placeholder={"UPDATED LISTING PRICE"}
             addonAfter={"ETH"}
             />
           </Form.Item>                
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={set}>
-              Update Listing
+            <Button
+            style={{ backgroundColor: "#579dfa", color: "#283cc4", border: "4px solid #283cc4", fontSize: "1.25rem", height: "auto", borderRadius: 20  }} 
+            type="primary"
+            htmlType="submit"
+            loading={set}
+            >
+              UPDATE
             </Button>
           </Form.Item>
         </Form>
@@ -338,8 +345,9 @@ function OldEnglish({
     return (
       <div>
         <Form
+          className="cancelAskFormPopoverManager"
           form={cancelAskForm}
-          layout={"inline"}
+/*           layout={"inline"} */
           name="cancel ask "
           initialValues={{ 
             tokenId: id,
@@ -355,15 +363,20 @@ function OldEnglish({
               updateOneOldEnglish(id);
               setCancel(false);
             } catch (e) {
-              console.log("cancel ask failed", e);
+              console.log("CANCEL ASK FAILED", e);
               setCancel(false);
             }
           }}
           onFinishFailed={onFinishFailed}
         >              
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={cancel}>
-              Cancel Listing
+            <Button
+            style={{ backgroundColor: "#e26843", color: "#791600", border: "4px solid #791600", fontSize: "1.25rem", height: "auto", borderRadius: 20  }} 
+            type="primary"
+            htmlType="submit"
+            loading={cancel}
+            >
+            CANCEL
             </Button>
           </Form.Item>
         </Form>
@@ -379,8 +392,9 @@ function OldEnglish({
     return (
       <div>
         <Form
+          className="filllAskFormPopoverManager"      
           form={fillAskForm}
-          layout={"inline"}
+/*           layout={"inline"} */
           name="fill ask "
           initialValues={{ 
             tokenId: id,
@@ -403,7 +417,7 @@ function OldEnglish({
               updateOneOldEnglish(id);
               setFill(false);
             } catch (e) {
-              console.log("fill ask failed", e);
+              console.log("FILL ASK FAILED", e);
               setFill(false);
             }
           }}
@@ -414,24 +428,29 @@ function OldEnglish({
             rules={[
               {
                 required: true,
-                message: "Who helped facilitate this sale",
+                message: "WHO FACILITATED THIS SALE?",
               },
             ]}
           >
             <div className="fillAskPopver">
               <Radio.Group >
-                <Radio onClick={fillHandleClickFalse} value={""}>Reward the Finder</Radio>                
-                <Radio onClick={fillHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>No Finder Involved</Radio>
+                <Radio onClick={fillHandleClickFalse} value={""}>REWARD A FINDER</Radio>                
+                <Radio onClick={fillHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>NO FINDER INVOLVED</Radio>
               </Radio.Group>
               <Input
-                placeholder={"Finder Wallet Address"}
+                style={{ marginTop: "5px", width: "100%" }}
+                placeholder={"FINDER WALLET ADDRESS (NO .ETH NAMES)"}
                 disabled={fillFinderIsDisabled}
               />
             </div>
           </Form.Item>        
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={fill}>
-              Buy
+            <Button
+            style={{ backgroundColor: "#72a500", color: "#005a00", border: "4px solid #005a00", fontSize: "1.25rem", height: "auto", borderRadius: 20  }} 
+            type="primary"
+            htmlType="submit"
+            loading={fill}>
+              BUY
             </Button>
           </Form.Item>
         </Form>
@@ -667,7 +686,7 @@ function OldEnglish({
                                   </Button>
                                   <Popover
                                   placement="top"
-                                  style={{ display: "flex", flexDirection: "column", jusitfyContent: "center" }}
+                                  /* style={{ display: "flex", flexDirection: "column", jusitfyContent: "center" }} */
                                     content={() => {                                                        
                                       return createAsk(id);
                                     }}
@@ -737,6 +756,7 @@ function OldEnglish({
                                     </Button>                                  
                                     <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>                                
                                     <Popover
+                                      placement="top"                                                     
                                       content={() => {                                                        
                                         return updateAskPrice(id);
                                       }}
