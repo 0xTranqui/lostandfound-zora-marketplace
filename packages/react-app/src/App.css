@@ -1,3 +1,8 @@
+@font-face {
+  font-family: oliver-regular;
+  src: url("./views/fonts/other_fonts/Oliver-Regular.ttf");
+} 
+
 html {
   padding: 0;
   margin: 0;
@@ -16,6 +21,7 @@ html {
   max-width: 100%;
   margin: 0;
   padding: 0;
+  font-family: oliver-regular;
 }
 
 .OldEnglishWrapper {
@@ -76,6 +82,10 @@ html {
   text-align: center;
   width: 175px;
 }
+
+/* #marketplaceButtonID {
+  border-bottom: 2px solid red;
+} */
 
 .marketplaceButton {
   background: url("./views/buttons/marketplaceButton.png");

@@ -173,8 +173,10 @@ function OldEnglish({
     const [listing, setListing] = useState(false);
 
     return (
-      <div>
+      <div style={{ display: "flex", flexDirection: "row", jusitfyContent: "center" }}>
         <Form
+          style={{ display: "flex", flexDirection: "row", jusitfyContent: "center" }}
+          className="createAskFormPopover"
           form={createAskForm}
           layout={"inline"}
           name="create ask"
@@ -205,7 +207,7 @@ function OldEnglish({
           }}
           onFinishFailed={onFinishFailed}
         >
-          <Form.Item
+          <Form.Item            
             name="askPrice"
             rules={[
               {
@@ -409,8 +411,8 @@ function OldEnglish({
               },
             ]}
           >
-            <div>
-              <Radio.Group>
+            <div className="fillAskPopver">
+              <Radio.Group >
                 <Radio onClick={fillHandleClickFalse} value={""}>Reward the Finder</Radio>                
                 <Radio onClick={fillHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>No Finder Involved</Radio>
               </Radio.Group>
@@ -527,12 +529,12 @@ function OldEnglish({
         </div>
         <div className="ownershipFilterWrapper">
           <div className="ownershipFilterOptions">
-            FULL COLLECTION / MY COLLECTION :
+            FULL COLLECTION
           </div>
           <Switch
           className="ownershipFilterSwitch"
             disabled={loadingOldEnglish}
-            style={{ height: "auto", width: "5%", border: "2px #3e190f solid" }}
+            style={{ height: "50%", width: "5%", border: "4px #3e190f solid" }}
             value={mine}
             onChange={() => {
               setMine(!mine);
@@ -540,6 +542,9 @@ function OldEnglish({
             }}
           >
           </Switch>
+          <div className="ownershipFilterOptions">
+            MY COLLECTION 
+          </div>
         </div>
       </div>
       {false ? (
@@ -654,10 +659,11 @@ function OldEnglish({
                                     MARKETPLACE PROTOCOLS ARE APPROVED
                                   </Button>
                                   <Popover
+                                  placement="top"
+                                  style={{ display: "flex", flexDirection: "column", jusitfyContent: "center" }}
                                     content={() => {                                                        
                                       return createAsk(id);
                                     }}
-                                    title="Create Ask"
                                   >
                                     <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">LIST</Button>
                                   </Popover>
@@ -727,7 +733,6 @@ function OldEnglish({
                                       content={() => {                                                        
                                         return updateAskPrice(id);
                                       }}
-                                      title="Update Ask"
                                     >
                                       <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
                                     </Popover>
@@ -735,7 +740,6 @@ function OldEnglish({
                                       content={() => {                                                        
                                         return cancelAsk(id);
                                       }}
-                                      title="Cancel Ask"
                                     >
                                       <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>
                                     </Popover>
@@ -843,10 +847,11 @@ function OldEnglish({
                                   <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">UPDATE</Button>
                                   <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">CANCEL</Button>                                    
                                   <Popover
+                                    className="fillAskPopver"
                                     content={() => {                                                        
                                       return fillAsk(id);
                                     }}
-                                    title="Fill Ask"
+                                    
                                   >  
                                     <Button style={{ borderRadius: 2, border: "1px solid black", backgroundColor: "white", color: "#3e190f", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>
                                   </Popover>

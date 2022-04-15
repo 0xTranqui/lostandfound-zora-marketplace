@@ -43,7 +43,7 @@ function OldEnglish({
                </div>
                <div className="aboutPageBody">
                   - This site serves as a direct link between Danny Diamonds and people looking to interact with his work <br/>
-                  - The marketplace functionality is build on top of the <a href="https://zine.zora.co/zora-v3">ZORA Protocol</a>, which is a public / permisssionesless / free-to-use marketplace protocol that enables creators to own their own marketplaces and curate custom experiences for their communities<br/>
+                  - The marketplace functionality is build on top of the <a href="https://zine.zora.co/zora-v3"><u>ZORA Protocol</u></a>, which is a public / permisssionesless / free-to-use marketplace protocol that enables creators to own their own marketplaces and curate custom experiences for their communities<br/>
                   - What you see here is Danny's first step into reclaiming the value and context of his art which has been been held for ransom from predatory third-parties in previous iterations of fan economies
                </div>
             </div>

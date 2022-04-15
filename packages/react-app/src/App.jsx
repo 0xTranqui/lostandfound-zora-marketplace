@@ -296,7 +296,7 @@ function App(props) {
             key="/"
           >
             <Link to="/">
-              <button className="marketplaceButton" >
+              <button className="marketplaceButton" id="marketplaceButtonID" >
                 MARKETPLACE
               </button>
             </Link>

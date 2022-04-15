@@ -101,7 +101,7 @@ export default function Account({
         (web3Modal?.cachedProvider ? (
           <Button
             key="logoutbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, color: "#3e190f", border: "2px solid #3e190f" }}
+            style={{ fontSize: "1.5rem", marginLeft: 8, paddingBottom: 0, paddingTop: 0, color: "#3e190f", border: "4px solid #3e190f", display: "flex", flexDirection: "row", alignItems: "center", alignSelf: "center" }}
             shape="round"
             size="large"
             onClick={logoutOfWeb3Modal}
@@ -111,7 +111,7 @@ export default function Account({
         ) : (
           <Button
             key="loginbutton"
-            style={{ verticalAlign: "middle", marginLeft : 8, color: "#3e190f", border:"2px solid #3e190f" }}
+            style={{ verticalAlign: "middle", marginLeft : 8, color: "#3e190f", border: "3px solid #3e190f" }}
             shape="round"
             size="large"
             /* type={minimized ? "default" : "primary"}     too many people just defaulting to MM and having a bad time */

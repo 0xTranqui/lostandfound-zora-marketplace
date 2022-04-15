@@ -7652,10 +7652,10 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   min-height: 24px;
 }
 .ant-form-large .ant-form-item-label > label {
-  height: 40px;
+  height: auto; /* CHANGEDX THIS */
 }
 .ant-form-large .ant-form-item-control-input {
-  min-height: 40px;
+  min-height: 20px; /* CHANGED */
 }
 .ant-form-item {
   box-sizing: border-box;
@@ -13483,7 +13483,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   padding: 0 7px;
 }
 .ant-input-group-lg .ant-select-single .ant-select-selector {
-  height: 40px;
+  height: auto; /* changed this */
 }
 .ant-input-group-sm .ant-select-single .ant-select-selector {
   height: 24px;
@@ -15150,7 +15150,7 @@ table tr th.ant-table-selection-column .ant-radio-wrapper {
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected,
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover {
   color: #2caad9;
-  border-bottom: 2px solid #3e190f;
+  border-bottom: none;
 }
 .ant-menu-horizontal > .ant-menu-item,
 .ant-menu-horizontal > .ant-menu-submenu {
@@ -17784,7 +17784,7 @@ span.ant-transfer-list-search-action {
   padding: 0 11px;
 }
 .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
-  height: 40px;
+  height: auto;
 }
 .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item,
 .ant-select-single.ant-select-lg:not(.ant-select-customize-input)
@@ -17795,7 +17795,7 @@ span.ant-transfer-list-search-action {
 }
 .ant-select-single.ant-select-lg:not(.ant-select-customize-input):not(.ant-select-customize-input)
   .ant-select-selection-search-input {
-  height: 38px;
+  height: auto;
 }
 .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
   height: 24px;
@@ -17998,7 +17998,7 @@ span.ant-transfer-list-search-action {
   line-height: 32px;
 }
 .ant-select-multiple.ant-select-lg .ant-select-selection-search {
-  height: 33px;
+  height: auto;
   line-height: 33px;
 }
 .ant-select-multiple.ant-select-lg .ant-select-selection-search-input,
@@ -18029,7 +18029,7 @@ span.ant-transfer-list-search-action {
   margin-left: 3px;
 }
 .ant-select-multiple.ant-select-lg .ant-select-selection-item {
-  height: 32px;
+  height: auto;
   line-height: 32px;
 }
 .ant-select-disabled .ant-select-selection-item-remove {

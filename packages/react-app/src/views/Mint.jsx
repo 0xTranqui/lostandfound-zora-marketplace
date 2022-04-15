@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Input, notification, Switch, Typography } from "antd";
+import { Button, Card, List, Spin, Popover, Form, Input, notification, Switch, Typography, Menu, Dropdown, Select } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { ethers } from "ethers";
@@ -190,10 +190,14 @@ function OldEnglish({
                      },
                   ]}
                   >
-                  <Input style={{ fontSize: "1.2rem", backgroundColor: "#7f67ff", border: "2px #3d3280 solid", width: "125px", textAlign: "center"}} placeholder={"QUANTITY"} />
+                     <label></label>
+                  <Select placeholder="Quantity" size="large" style={{ marginTop: 0, marginBottom: 0, padding: 0, color: "white", fontSize: "1.2rem", backgroundColor: "#9b8deb", border: "2px #3d3280 solid", borderRadius: 10, width: "auto"}} >
+                     <Option value="1">1</Option>
+                     <Option value="2">2</Option>
+                  </Select>  
                   </Form.Item>
                   <Form.Item>
-                  <Button type="primary" style={{ fontSize: "1.2rem", backgroundColor: "#72a500", border: "2px solid #005a00", color: "#F0F8EA", height: "auto", width: "125px" }} htmlType="submit" loading={mint}>MINT</Button>
+                  <Button type="primary" style={{ fontSize: "1.2rem", backgroundColor: "#72a500", border: "2px solid #005a00", borderRadius: 10, color: "#F0F8EA", height: "auto", width: "125px" }} htmlType="submit" loading={mint}>MINT</Button>
                   </Form.Item>
                </Form>
             </div>
