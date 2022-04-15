@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Input, notification, Switch, Typography, Menu, Dropdown, Select } from "antd";
+import { Button, Card, List, Spin, Popover, Form, Input, notification, Switch, Typography, Menu, Dropdown, Select, Row } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { ethers } from "ethers";
@@ -182,6 +182,8 @@ function OldEnglish({
                   onFinishFailed={onFinishFailed}
                >
                   <Form.Item
+                  label={<label style={{ color: "#3e190f", fontSize: "1.5rem" }}>QUANTITY :</label>}
+                  style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"}}
                   name="numberOfTokens"
                   rules={[
                      {
@@ -190,14 +192,13 @@ function OldEnglish({
                      },
                   ]}
                   >
-                     <label></label>
-                  <Select placeholder="Quantity" size="large" style={{ marginTop: 0, marginBottom: 0, padding: 0, color: "white", fontSize: "1.2rem", backgroundColor: "#9b8deb", border: "2px #3d3280 solid", borderRadius: 10, width: "auto"}} >
-                     <Option value="1">1</Option>
-                     <Option value="2">2</Option>
-                  </Select>  
+                     <Select placeholder="Q" size="large" style={{ marginTop: 0, marginBottom: 0, padding: 0, color: "white", fontSize: "1.2rem", backgroundColor: "#9b8deb", border: "2px #3d3280 solid", borderRadius: 10, width: "auto"}} >
+                        <Select.Option value="1">1</Select.Option>
+                        <Select.Option value="2">2</Select.Option>
+                     </Select>  
                   </Form.Item>
                   <Form.Item>
-                  <Button type="primary" style={{ fontSize: "1.2rem", backgroundColor: "#72a500", border: "2px solid #005a00", borderRadius: 10, color: "#F0F8EA", height: "auto", width: "125px" }} htmlType="submit" loading={mint}>MINT</Button>
+                     <Button type="primary" style={{ fontSize: "1.2rem", backgroundColor: "#72a500", border: "2px solid #005a00", borderRadius: 10, color: "#F0F8EA", height: "auto", width: "auto" }} htmlType="submit" loading={mint}>MINT !</Button>
                   </Form.Item>
                </Form>
             </div>
@@ -247,7 +248,7 @@ function OldEnglish({
                      ) : (
                      <div className="mintRenderOneNFT">
                         <div className="oneMintedNFTRenderTitle">Token ID #? - Mint to Find Out</div>
-                        <div className="oneMintedNFTRender">
+                        <div className="oneMintedNFTRender" style={{width: "40%"}}>
                            <img src={Premint_Artwork} width="100%" />
                         </div>
 {/*                         <div className="oneMintedNFTRenderTitle" style={{color: "#F0F66E"}}>WAITING FOR MINT</div>

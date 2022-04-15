@@ -72,7 +72,7 @@ function OldEnglish({
 
 
   //====my custom addition
-  const nftContractAddress = "0x313162D682F57b68E4974b88974D0cAE792E27eF"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
+  const nftContractAddress = "0xcdEC1f89eE5755C3b519A2F66851711da84BF876"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
   // Imports + declartions for ZORA Approval Contracts
   //const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
   //const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
@@ -173,12 +173,11 @@ function OldEnglish({
     const [listing, setListing] = useState(false);
 
     return (
-      <div style={{ display: "flex", flexDirection: "row", jusitfyContent: "center" }}>
+      <div >
         <Form
-          style={{ display: "flex", flexDirection: "row", jusitfyContent: "center" }}
-          className="createAskFormPopover"
+          className="createAskFormPopoverManager"
           form={createAskForm}
-          layout={"inline"}
+          /* layout={"inline"} */
           name="create ask"
           initialValues={{ 
             tokenId: id,
@@ -207,57 +206,65 @@ function OldEnglish({
           }}
           onFinishFailed={onFinishFailed}
         >
-          <Form.Item            
+          <Form.Item
+            style={{marginTop: 0, marignBottom: 0, paddingTop: 0, paddingBottom: 0}}              
             name="askPrice"
+            label="LIST PRICE "
             rules={[
               {
                 required: true,
-                message: "How much are you listing this NFT for??",
+                message: "HOW MUCH ARE YOU LISTING THIS NFT FOR?",
               },
             ]}
           >
             <Input
-            placeholder={"Listing Price (ETH): "}
             addonAfter={"ETH"}
             />
           </Form.Item>         
           <Form.Item
+            style={{marginTop: 0, marignBottom: 0, paddingTop: 0, paddingBottom: 0}}
             name="sellerFundsRecipient"
+            label="SELLER FUNDS RECIPIENT"
             rules={[
               {
                 required: true,
-                message: "Who's gets the funds from this sale?",
+                message: "WHO GETS THE FUNDS FROM THIS SALE?",
               },
             ]}
           >
             <Input
-            placeholder={"Seller Funds Recipient (Full Wallet Address):"}
+            placeholder={"FULL WALLET ADDRESS (NO .ETH NAMES)"}
             />
           </Form.Item>
           <Form.Item
+            style={{marginTop: 0, marignBottom: 0, paddingTop: 0, paddingBottom: 0}}
             name="findersFeeBps"
             rules={[
               {
                 required: true,
-                message: "How much is the finder's fee?",
+                message: "INPUT REQUIRED IF 'FINDER'S FEE IS SELECTED'",
               },
             ]}
           >
             <div>
               <Radio.Group>
-                <Radio onClick={createHandleClickFalse} value={""}>Add Finder's Fee</Radio>                
-                <Radio onClick={createHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>No Finder's Fee</Radio>
+                <Radio onClick={createHandleClickFalse} value={""}>ADD FINDER'S FEE</Radio>                
+                <Radio onClick={createHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>NO FINDER'S FEE</Radio>
               </Radio.Group>
               <Input
-              placeholder={"Finders Fee BPS in %"}
+              style={{ marginTop: "5px", width: "50%" }}
               addonAfter={"%"}
               disabled={createFinderIsDisabled}
               />
             </div>
           </Form.Item>          
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={listing}>
-              List
+            <Button
+            style={{ backgroundColor: "#72a500", color: "#005a00", border: "4px solid #005a00", fontSize: "1.25rem", height: "auto", borderRadius: 20  }} 
+            type="primary"
+            htmlType="submit"
+            loading={listing}>
+              LIST
             </Button>
           </Form.Item>
         </Form>
@@ -548,7 +555,7 @@ function OldEnglish({
         </div>
       </div>
       {false ? (
-        <Spin style={{ backgroundColor: "black", marginTop: "10%" }} />
+        <Spin />
       ) : (
         <div className="tokenRenderWrapper">
           <List            

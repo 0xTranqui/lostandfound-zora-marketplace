@@ -75,6 +75,42 @@
    /* border: 2px solid blue; */
 }
 
+.createAskFormPopoverManager {
+   display: grid;
+   grid-template: 1fr 1fr 1fr / 1fr ;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+.createAskFormPopoverManager {
+   display: grid;
+   grid-template: 1fr 1fr 1fr / 1fr ;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+.updateAskFormPopoverManager {
+   display: grid;
+   grid-template: 1fr 1fr / 1fr;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+.cancelAskFormPopoverManager {
+   display: grid;
+   grid-template: 1fr / 1fr;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+.filllAskFormPopoverManager {
+   display: grid;
+   grid-template: 1fr 1fr / 1fr;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+
 .approvalPopOverManager {
    display: grid;
 /*    border: 1px white solid; */
@@ -205,11 +241,7 @@
   /*  justify-self: start; */
 }
 
-.fillAskPopover {
-   display: grid;
-   grid-template: 1fr 1fr / 1fr 1fr 1fr;
-   background: red;
-}
+
 
 .ownershipFilterWrapper {
    width: 100%;
@@ -239,11 +271,6 @@
 
 }
 
-.createAskFormPopover {
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-}
 
 .marketplaceManager {
    display: grid;
