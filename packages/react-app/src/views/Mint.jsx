@@ -55,7 +55,7 @@ function OldEnglish({
    const fetchMetadataMint1 = async (tokenId) => {
       try {
          const mintedTokenId1 = tokenId;
-         const metadataURL1 = "https://ipfs.io/ipfs/bafybeiervi5luxk2had5y7v7cbhvn3nqr5ci6ivdavvfifftwnpcodmoja/" + mintedTokenId1 + ".token.json";
+         const metadataURL1 = "https://ipfs.io/ipfs/bafybeif7iqjd5axwazni55zh742cgrr6d4udoos5ecgcb5rwbjtr6k6gxm/" + mintedTokenId1 + ".token.json";
          const mintMetadataFetch1 = await fetch(metadataURL1);
 
          console.log("mintedTokenId1 = ", mintedTokenId1);
@@ -81,7 +81,7 @@ function OldEnglish({
    const fetchMetadataMint2 = async (tokenId) => {
       try {
          const mintedTokenId2 = tokenId;
-         const metadataURL2 = "https://ipfs.io/ipfs/bafybeiervi5luxk2had5y7v7cbhvn3nqr5ci6ivdavvfifftwnpcodmoja/" + mintedTokenId2 + ".token.json";
+         const metadataURL2 = "https://ipfs.io/ipfs/bafybeif7iqjd5axwazni55zh742cgrr6d4udoos5ecgcb5rwbjtr6k6gxm/" + mintedTokenId2 + ".token.json";
          const mintMetadataFetch2 = await fetch(metadataURL2);
 
          console.log("mintedTokenId2 = ", mintedTokenId2);
@@ -255,7 +255,13 @@ function OldEnglish({
                         >
                            <img src={mintImageURL1} width="100%" />
                         </a>
-                        <Link style={{ color: "#cc0083", fontSize: "1.5rem", marginTop: "10px" }} to="/"><u>VIEW</u></Link>
+                        <Link to="/">
+                           <Button
+                           style={{ backgroundColor: "black", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
+                           >
+                              VIEW IN MARKETPLACE
+                           </Button>
+                        </Link>
                      </div>
                      ) : (
                      <div className="mintRenderOneNFT">

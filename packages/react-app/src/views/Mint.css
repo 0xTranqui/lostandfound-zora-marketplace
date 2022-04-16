@@ -84,7 +84,7 @@
    display: grid;
    grid-row: 2 / 3;
    grid-column: 1 / 2;
-   width: 50%;
+   width: 40%;
 /*    border: 1px red solid; */
    margin-bottom: 10px
 }
@@ -129,7 +129,7 @@
    display: grid;
    grid-row: 2 / 3;
    grid-column: 1 / 2;
-   width: 90%;
+   width: 80%;
 
 /*    border: 1px turquoise solid; */
 }
@@ -138,7 +138,7 @@
    display: grid;
    grid-row: 2 / 3;
    grid-column: 2 / 3;
-   width: 90%;
+   width: 80%;
 /*    border: 1px green solid; */
 }
 

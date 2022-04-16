@@ -86,7 +86,7 @@ function App(props) {
   const zoraTransferHelperContract = "zoraTransferHelper";
   const zmmContract = "zoraModuleManager";
   const zoraAsksContract = "zoraAsksV1_1Module";
-  const lostandfoundNFTContract = "lostandFoundContract";
+  const lostandfoundNFTContract = "lostandFoundContract2";
 
   //======my custom additions
 
