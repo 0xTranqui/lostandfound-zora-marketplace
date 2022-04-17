@@ -35,12 +35,11 @@ import { OldEnglish, Drinks, Mint, About } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 import linedPaperBackground from "./Lined_Paper_Background_For_Site.png";
-import marketplaceButton from "./views/buttons/marketplaceButton.png";
-import mintButton from "./views/buttons/mintButton.png";
-import aboutButton from "./views/buttons/aboutButton.png";
+
 
 //====MY CUSTOM IMPORTS
 //import { Price } from "@uniswap/sdk";
+import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json";
 //====MY CUSTOM IMPORTS
 
 const { ethers } = require("ethers");
@@ -75,19 +74,20 @@ const web3Modal = Web3ModalSetup();
 
 // 🛰 providers
 const providers = [
-  /* "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406", */
+  "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406",
   `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
-  /* "https://rpc.scaffoldeth.io:48544", */
+  "https://rpc.scaffoldeth.io:48544",
 ];
 
 function App(props) {
   const oldEnglishContract = "EightPack";
 
   //======my custom additions
-  const zoraTransferHelperContract = "zoraTransferHelper";
-  const zmmContract = "zoraModuleManager";
-  const zoraAsksContract = "zoraAsksV1_1Module";
-  const lostandfoundNFTContract = "lostandFoundContract2";
+  const zoraTransferHelperContract = "zoraTransferHelper"; //change this in external_contracts.js to convert to rinkeby/mainnet
+  const zmmContract = "zoraModuleManager"; //change this in external_contracts.js to convert to rinkeby/mainnet
+  const zoraAsksContract = "zoraAsksV1_1Module"; //change this in external_contracts.js to convert to rinkeby/mainnet
+  const lostandfoundNFTContract = "lostandFoundContract2"; // update address of lostandFoundContract2 if redeploying an identical nft contract for testing purposes
+  const lostandfoundNFTContractAddress = "0x7b2DE8719120F21Ac8A95f9115bc8D9779EC44d4"; // change this to the nft contract you want to be interacting with
 
   //======my custom additions
 
@@ -194,15 +194,13 @@ function App(props) {
 
   //======= bringing in external ZORA contracts
   
-  const zoraERC721TransferHelper = useContractLoader(mainnetProvider, contractConfig);
-  
   const erc721TransferHelperApproved = useContractReader(
     readContracts,
     lostandfoundNFTContract, //====***needs to be changed to eventual contract address
     "isApprovedForAll",
     [
       address, //current signer
-      "0x029AA5a949C9C90916729D50537062cb73b5Ac92" // ERC721TransferHelper
+      mainnetZoraAddresses.ERC721TransferHelper // ERC721TransferHelper
     ]
   );
 
@@ -212,7 +210,7 @@ function App(props) {
     "isModuleApproved",
     [
       address, //current signer 
-      "0xA98D3729265C88c5b3f861a0c501622750fF4806" ///zora ask module
+      mainnetZoraAddresses.AsksV1_1 ///zora ask module
     ]
   );
 
@@ -372,6 +370,7 @@ function App(props) {
               zmmContract={zmmContract}
               zoraAsksContract={zoraAsksContract}
               lostandfoundNFTContract={lostandfoundNFTContract}
+              lostandfoundNFTContractAddress={lostandfoundNFTContractAddress}
               erc721TransferHelperApproved={erc721TransferHelperApproved}
               zoraModuleManagerApproved={zoraModuleManagerApproved}
               priceOfMint={priceOfMint}

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Switch, Input, Radio, Space, Select, Cascader, DatePicker, InputNumber, TreeSelect } from "antd";
+import { Button, Card, List, Spin, Popover, Form, Switch, Input, InputNumber, Radio, Space, Select, Cascader, DatePicker, TreeSelect } from "antd";
 import { BorderBottomOutlined, PicCenterOutlined, RedoOutlined } from "@ant-design/icons";
 import { Address, AddressInput } from "../components";
 import { useDebounce } from "../hooks";
@@ -10,7 +10,8 @@ import { useEventListener } from "eth-hooks/events/useEventListener";
 //==========my custom import
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
 import "./Marketplace.css";
-import LF_Logo_V1 from "./LF_Logo_V1.png";
+import LF_Logo_V2_5 from "./LF_Logo_V2_5.png";
+
 //==========my custom import
 
 function OldEnglish({
@@ -27,10 +28,12 @@ function OldEnglish({
   balance,
   startBlock,
   ///=======my custom imports
-  zoraTransferHelperContract,
+/*   zoraTransferHelperContract,
+*/
   zmmContract,
   zoraAsksContract,
   lostandfoundNFTContract,
+  lostandfoundNFTContractAddress,
   erc721TransferHelperApproved,
   zoraModuleManagerApproved,
   maxSupply
@@ -62,25 +65,7 @@ function OldEnglish({
     setFillFinderIsDisabled(true)
   };
 
-  //====marketplace action in-flight states (doesnt work because shows up on every card simultaenously)
-/*   const [listing, setListing] = useState(false);
-  const [set, setSet] = useState(false);
-  const [cancel, setCancel] = useState(false);
-  const [fill, setFill] = useState(false);
-  const [transferHelper, setTransferHelper] = useState(false);
-  const [moduleManager, setModuleManager] = useState(false); */
-
-
   //====my custom addition
-  const nftContractAddress = "0x7b2DE8719120F21Ac8A95f9115bc8D9779EC44d4"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
-  const zoraAsksContractAddress = "0xa98d3729265c88c5b3f861a0c501622750ff4806";
-  // Imports + declartions for ZORA Approval Contracts
-  //const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
-  //const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
-  //const asksModuleV1_1Address = mainnetZoraAddresses.AsksV1_1;
-  //const oldEnglishContractAddress = "0x03D6563e2047534993069F242181B207f80C5dD9";
-  //const lostandfoundContractAddress = "0x0E0e37De35471924F50598d55F7b69f93703fA01";
-  
   const fetchMetadataAndUpdate = async id => {
     try {
       const tokenURI = await readContracts[lostandfoundNFTContract].tokenURI(id);
@@ -88,7 +73,7 @@ function OldEnglish({
       const nftMetadataFetch = await fetch(nftMetadataURL); 
 
       //===CUSTOM UPDATE
-      const seller = await readContracts[zoraAsksContract].askForNFT(nftContractAddress, id);
+      const seller = await readContracts[zoraAsksContract].askForNFT(lostandfoundNFTContractAddress, id);
       const ownerAddress = await readContracts[lostandfoundNFTContract].ownerOf(id);
       const ownerAddressCleaned = ownerAddress.toString().toLowerCase();
       //===CUSTOM UPDATE
@@ -119,7 +104,7 @@ function OldEnglish({
       let tokenList = Array(numberSupply).fill(0);
 
       tokenList.forEach((_, i) => {
-        let tokenId = i; //make this i + 1 if you're first token ID is 1 instead of 0
+        let tokenId = i; // make this i + 1 if your first token ID is 1 instead of 0
         if (tokenId <= numberSupply - page * perPage && tokenId >= numberSupply - page * perPage - perPage) {
           fetchMetadataAndUpdate(tokenId);
         } else if (!allOldEnglish[tokenId]) {
@@ -176,9 +161,9 @@ function OldEnglish({
     return (
       <div >
         <Form
-          className="createAskFormPopoverManager"
+/*           className="createAskFormPopoverManager" */ // not using actively
+          layout={"horizontal"}
           form={createAskForm}
-          /* layout={"inline"} */
           name="create ask"
           initialValues={{ 
             tokenId: id,
@@ -190,12 +175,12 @@ function OldEnglish({
             setListing(true);
             try {
               const txCur = await tx(writeContracts[zoraAsksContract].createAsk(
-                nftContractAddress,
+                lostandfoundNFTContractAddress,
                 id,
                 ethers.utils.parseUnits(values["askPrice"], 'ether'), 
                 "0x0000000000000000000000000000000000000000",
                 values["sellerFundsRecipient"],
-                values["findersFeeBps"] * 100
+                (Number(values["findersFeeBps"]).toFixed(2)) * 100 // converts inputted % into a whole number of basis points between 0 - 10000
               ));
               await txCur.wait();
               updateOneOldEnglish(id);
@@ -250,9 +235,9 @@ function OldEnglish({
             <div>
               <Radio.Group>
                 <Radio onClick={createHandleClickFalse} value={""}>ADD FINDER'S FEE</Radio>                
-                <Radio onClick={createHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>NO FINDER'S FEE</Radio>
+                <Radio onClick={createHandleClickTrue} value={"0x0000000000000000000000000000000000000000"}>NO FINDER'S FEE</Radio> {/*returns the zero address if no finder selected */}
               </Radio.Group>
-              <Input
+              <Input            
               style={{ marginTop: "5px", width: "50%" }}
               addonAfter={"%"}
               disabled={createFinderIsDisabled}
@@ -261,7 +246,7 @@ function OldEnglish({
           </Form.Item>          
           <Form.Item>
             <Button
-            style={{ backgroundColor: "#72a500", color: "#005a00", border: "4px solid #005a00", fontSize: "1.25rem", height: "auto", borderRadius: 20  }} 
+            style={{ backgroundColor: "#ffb300", color: "#c43b00", border: "4px solid #c43b00", fontSize: "1.25rem", height: "auto", borderRadius: 20  }} 
             type="primary"
             htmlType="submit"
             loading={listing}>
@@ -283,7 +268,6 @@ function OldEnglish({
         <Form
           className="updateAskFormPopoverManager"
           form={setAskForm}
-          /* layout={"inline"} */
           name="update ask price"
           initialValues={{ 
             tokenId: id,
@@ -293,7 +277,7 @@ function OldEnglish({
             setSet(true);
             try {
               const txCur = await tx(writeContracts[zoraAsksContract].setAskPrice(
-                nftContractAddress,
+                lostandfoundNFTContractAddress,
                 id,
                 ethers.utils.parseUnits(values["updatedPrice"], 'ether'), 
                 "0x0000000000000000000000000000000000000000"
@@ -348,7 +332,6 @@ function OldEnglish({
         <Form
           className="cancelAskFormPopoverManager"
           form={cancelAskForm}
-/*           layout={"inline"} */
           name="cancel ask "
           initialValues={{ 
             tokenId: id,
@@ -357,7 +340,7 @@ function OldEnglish({
             setCancel(true);
             try {
               const txCur = await tx(writeContracts[zoraAsksContract].cancelAsk(
-                nftContractAddress,
+                lostandfoundNFTContractAddress,
                 id
               ));
               await txCur.wait();
@@ -399,15 +382,13 @@ function OldEnglish({
           name="fill ask "
           initialValues={{ 
             tokenId: id,
-            //fillPrice: '',
             finderAddress: '',
-            //value: (fillPrice * (10**18)).toString()
           }}
           onFinish={async values => {
             setFill(true);
             try {
               const txCur = await tx(writeContracts[zoraAsksContract].fillAsk(
-                nftContractAddress,
+                lostandfoundNFTContractAddress,
                 id,
                 "0x0000000000000000000000000000000000000000", // 0 address for ETH sale               
                 BigNumber.from(allOldEnglish[id].askSeller.askPrice).toString(),
@@ -459,8 +440,6 @@ function OldEnglish({
     );
   };
 
-  //===marketpalce approval <a href="https://zine.zora.co/zora-v3"></a>
-
   const marketplaceManager = () => {
     const [transferHelper, setTransferHelper] = useState(false);
     const [moduleManager, setModuleManager] = useState(false);
@@ -494,12 +473,10 @@ function OldEnglish({
             type="primary"
             loading={transferHelper}
             onClick={async () => {
-              console.log("Clicked ERC721Transfer Button");
-              //console.log(readContracts[oldEnglishContract].name)
               setTransferHelper(true);
               try {
                 const txCur = await tx(writeContracts[lostandfoundNFTContract].setApprovalForAll(
-                  "0x029AA5a949C9C90916729D50537062cb73b5Ac92", //change to 'zoraTransferHelperContract'
+                  mainnetZoraAddresses.ERC721TransferHelper,
                   true
                 ));
                 await txCur.wait();
@@ -525,11 +502,10 @@ function OldEnglish({
             type="primary"
             loading={moduleManager}
             onClick={async () => {
-              console.log("Clicked ZMM Button");
               setModuleManager(true);
               try {
                 const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
-                  zoraAsksContractAddress, 
+                  mainnetZoraAddresses.AsksV1_1, 
                   true
                 ));
                 await txCur.wait();
@@ -552,7 +528,7 @@ function OldEnglish({
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
         <div style={{ marginBottom: 15}} >
-            <img width="50%" src={LF_Logo_V1}></img>
+            <img width="50%" src={LF_Logo_V2_5}></img>
         </div>
         <div className="ownershipFilterWrapper">
           <div className="ownershipFilterOptions">
@@ -591,11 +567,9 @@ function OldEnglish({
             }}
             align="center" ///THIS IS WHAT ALIGNS ALL OF THE CARDS!!!!!!
             locale={{ emptyText: `Fetching Markteplace Items...` }}
-            
-            
-            /* commenting out pagination */
-            
-/*             pagination={{
+                        
+            /* commenting out pagination (having multiple pages of NFTs)
+            pagination={{
               total: mine ? filteredOEs.length : totalSupply,
               defaultPageSize: perPage,
               defaultCurrent: page,
@@ -605,20 +579,14 @@ function OldEnglish({
               },
               showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${mine ? filteredOEs.length : maxSupply} items`,
-            }}  */
+            }}
+            */
             
-            
-            
-
             loading={loadingOldEnglish}
             dataSource={filteredOEs ? filteredOEs : []}
             renderItem={item => {
               const id = item.id;
-              const imageWithGateway = "https://ipfs.io/ipfs/" + item.image.substring(7);
-
-              //console.log(item.owner);
-              //const nftOwner = await readContracts[lostandfoundNFTContract].ownerOf(id);
-              //console.log(nftOwner);       
+              const imageWithGateway = "https://ipfs.io/ipfs/" + item.image.substring(7);                   
               return (
                 <List.Item className="listItems" key={id}>
                   <Card
@@ -630,7 +598,6 @@ function OldEnglish({
                       >
                         {item.name ? `LF #${id}` + "   -   " + item.name : `LF #${id}`}
                       </div>
-
                     }
                   >
                     <a                      
@@ -791,7 +758,7 @@ function OldEnglish({
                                 </div>
                               )}
                           </>
-                        ) : ( /// logic asking what to do if not the owner
+                        ) : ( /// logic asking what to do if user not the owner
                         <>
                           {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? (  ///logic asking what to do if not owner and ask does NOT exist
                               <div>

@@ -10,7 +10,7 @@ import { useEventListener } from "eth-hooks/events/useEventListener";
 //==========my custom import
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
 import "./Mint.css";
-import LF_Logo_V1 from "./LF_Logo_V1.png";
+import LF_Logo_V2_5 from "./LF_Logo_V2_5.png";
 import Premint_Artwork from "./Untitled_Artwork.png";
 import Confetti from 'react-confetti';
 import { useWindowSize, useWindowWidth, useWindowHeight } from '@react-hook/window-size';
@@ -132,7 +132,7 @@ function OldEnglish({
       <div className="mint">
          <div className="beforeMintRender">
             <div className="mintPageExplanation">
-               <img width="50%"  src={LF_Logo_V1}></img>
+               <img width="50%"  src={LF_Logo_V2_5}></img>
                <br /> 
                <div className="mintPageExplanationBody" >
                {"" + maxSupply - totalSupply} / {"" + maxSupply} PIECES REMAIN

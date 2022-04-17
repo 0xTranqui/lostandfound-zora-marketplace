@@ -1,20 +1,16 @@
+require("dotenv").config();
+
+
 // MY INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
-
-//===my personal infura ID
-export const INFURA_ID = "9736d74c7c2e4cb8a1361d81b219fac3";
-//9736d74c7c2e4cb8a1361d81b219fac3//
-//ca184a9a80cf476e817e50e1125e940b//
-
-//===my personal infura ID
-
+export const INFURA_ID = "7b0e75d38d424750b92791477924d133";
 
 // MY ETHERSCAN_ID, SWAP IN YOURS FROM https://etherscan.io/myapikey
-export const ETHERSCAN_KEY = "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
+export const ETHERSCAN_KEY = process.env.REACT_APP_ETHERSCAN_KEY;
 
 // BLOCKNATIVE ID FOR Notify.js:
 export const BLOCKNATIVE_DAPPID = "0b58206a-f3c0-4701-a62f-73c7243e8c77";
 
-export const ALCHEMY_KEY = "JnCCoZ3_jXyqns-7ihfn-n9tRU8nzWYN";
+export const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY;
 //my own alchemy key (zora-acution-house-v1-rinkeby)
 
 export const NETWORKS = {
