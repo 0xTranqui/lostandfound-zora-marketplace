@@ -74,7 +74,7 @@ module.exports = {
     },
 
     rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${process.env.RINKEBY_INFURA_KEY}`,
+      url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.RINKEBY_ALCHEMY_KEY}`,
       accounts: [`${process.env.RINKEBY_DEPLOYER_PRIV_KEY}`],
     },
     // kovan: {
@@ -107,7 +107,7 @@ module.exports = {
         l1: "mainnet",
       },
     },
-    rinkeby: {
+/*     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${process.env.RINKEBY_INFURA_KEY}`, // <---- YOUR INFURA ID! (or it won't work)
 
       //    url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXX/eth/rinkeby", // <---- YOUR MORALIS ID! (not limited to infura)
@@ -115,7 +115,7 @@ module.exports = {
       accounts: {
         mnemonic: mnemonic(),
       },
-    },
+    }, */
     kovan: {
       url: "https://kovan.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
 
@@ -284,6 +284,15 @@ module.exports = {
   solidity: {
     compilers: [
       {
+        version: "0.8.9",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },      
+      {
         version: "0.8.4",
         settings: {
           optimizer: {
@@ -312,7 +321,7 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
+    apiKey: process.env.RINKEBY_ETHERSCAN_API_KEY,
   },
 };
 
