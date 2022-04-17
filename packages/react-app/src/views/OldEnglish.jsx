@@ -72,7 +72,8 @@ function OldEnglish({
 
 
   //====my custom addition
-  const nftContractAddress = "0x77dc12710Aa6933695D8A71B99E7a2f10cf63926"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
+  const nftContractAddress = "0x7b2DE8719120F21Ac8A95f9115bc8D9779EC44d4"; //<-- LF | OE -> "0x03D6563e2047534993069F242181B207f80C5dD9";
+  const zoraAsksContractAddress = "0xa98d3729265c88c5b3f861a0c501622750ff4806";
   // Imports + declartions for ZORA Approval Contracts
   //const erc721TransferHelperAddress = mainnetZoraAddresses.ERC721TransferHelper;
   //const moduleManagerAddress = mainnetZoraAddresses.ZoraModuleManager;
@@ -528,7 +529,7 @@ function OldEnglish({
               setModuleManager(true);
               try {
                 const txCur = await tx(writeContracts[zmmContract].setApprovalForModule(
-                  "0xA98D3729265C88c5b3f861a0c501622750fF4806", /// change to 'zoraAsksContract' 
+                  zoraAsksContractAddress, 
                   true
                 ));
                 await txCur.wait();
@@ -582,9 +583,9 @@ function OldEnglish({
             grid={{
               gutter: 30,
               xs: 1,
-              sm: 2,
+              sm: 1,
               md: 2,
-              lg: 3,
+              lg: 2,
               xl: 3,
               xxl: 3,
             }}
@@ -624,19 +625,10 @@ function OldEnglish({
                     className="cards"                
                     style={{ border: "4px solid black", borderRadius: 2 }}
                     title={
-                      <div className="cardHeaders" >{item.name ? item.name + "   -   " + `LF #${id}` : `LF #${id}`}
-
-                        
-{/*     commenting out individual token refresh button                    
-                        <Button
-                          shape="circle"
-                          onClick={() => {
-                            updateOneOldEnglish(id);
-                          }}
-                          icon={<RedoOutlined />}
-                        />
- */}
-
+                      <div
+                        className="cardHeaders"
+                      >
+                        {item.name ? `LF #${id}` + "   -   " + item.name : `LF #${id}`}
                       </div>
 
                     }
@@ -665,7 +657,7 @@ function OldEnglish({
                                     />
                                   </div>
                                   <div className="listingStatus">
-                                  LISTING STATUS : INACTIVE
+                                  LISTING : INACTIVE
                                   </div>
                                   <div className="listingPrice">
                                   PRICE : N/A
@@ -735,7 +727,7 @@ function OldEnglish({
                                       />
                                     </div>                                    
                                     <div>
-                                    LISTING STATUS : ACTIVE 
+                                    LISTING : ACTIVE 
                                     </div>
                                     <div>                        
                                     PRICE : {item.askSeller.askPrice.toString() / (10 ** 18)} ETH
@@ -814,7 +806,7 @@ function OldEnglish({
                                     />
                                   </div>
                                   <div className="listingStatus">
-                                  LISTING STATUS : INACTIVE
+                                  LISTING : INACTIVE
                                   </div>
                                   <div className="listingPrice"> 
                                   PRICE : N/A
@@ -851,7 +843,7 @@ function OldEnglish({
                                     />
                                   </div>
                                   <div className="listingStatus">
-                                  LISTING STATUS : ACTIVE
+                                  LISTING : ACTIVE
                                   </div>
                                   <div className="listingPrice">                        
                                   PRICE : {item.askSeller.askPrice.toString() / (10 ** 18)} ETH

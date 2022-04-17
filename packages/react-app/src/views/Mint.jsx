@@ -12,6 +12,8 @@ import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeb
 import "./Mint.css";
 import LF_Logo_V1 from "./LF_Logo_V1.png";
 import Premint_Artwork from "./Untitled_Artwork.png";
+import Confetti from 'react-confetti';
+import { useWindowSize, useWindowWidth, useWindowHeight } from '@react-hook/window-size';
 //==========my custom import
 
 var count = 0; ///this saves count that is used to determine what state setting is used when picking up mints
@@ -32,7 +34,8 @@ function OldEnglish({
    lostandfoundNFTContract,
    priceOfMint,
    maxSupply,
-   remainingMints
+   remainingMints,
+   nftContractURI
 }) {
 
    const onFinishFailed = errorInfo => {
@@ -51,25 +54,38 @@ function OldEnglish({
    const [mintImageURL1, setMintImageURL1] = useState("");
    const [mintImageURL2, setMintImageURL2] = useState("");
 
+   //====saving nft names for each mint
+   const [mintName1, setMintName1] = useState("");
+   const [mintName2, setMintName2] = useState("");
+
+   //====defining window size for confetti animation
+   const width = useWindowWidth();
+   const height = useWindowHeight();
+
    //===fetching metadata
    const fetchMetadataMint1 = async (tokenId) => {
       try {
          const mintedTokenId1 = tokenId;
-         const metadataURL1 = "https://ipfs.io/ipfs/bafybeif7iqjd5axwazni55zh742cgrr6d4udoos5ecgcb5rwbjtr6k6gxm/" + mintedTokenId1 + ".token.json";
+         const metadataURL1 = "https://ipfs.io/ipfs/" + nftContractURI.substring(7) + "/" + mintedTokenId1 + ".token.json"; 
          const mintMetadataFetch1 = await fetch(metadataURL1);
 
          console.log("mintedTokenId1 = ", mintedTokenId1);
          console.log("metadataURL1 = ", metadataURL1);
          console.log("mintMetadataFetch1 = ", mintMetadataFetch1);
+/*          console.log("tokenURI1", tokenURI1); */
+/*          console.log("v2_metadataURl1", v2_metadataURl1); */
          
          try {
             const metadataObject1 = await mintMetadataFetch1.json();
             const imageURL1 = "https://ipfs.io/ipfs/" + metadataObject1.image.substring(7);
+            const nftName1 = metadataObject1.name;
             setMintImageURL1(imageURL1);
+            setMintName1(nftName1);
 
             console.log("metadataObject1 = ", metadataObject1);
             console.log("imageURL1 = ", imageURL1);
             console.log("mintImageURL1 = ", mintImageURL1);
+            console.log("mintName1 = ", mintName1);
          } catch(e) {
             console.log(e);
          }
@@ -81,7 +97,7 @@ function OldEnglish({
    const fetchMetadataMint2 = async (tokenId) => {
       try {
          const mintedTokenId2 = tokenId;
-         const metadataURL2 = "https://ipfs.io/ipfs/bafybeif7iqjd5axwazni55zh742cgrr6d4udoos5ecgcb5rwbjtr6k6gxm/" + mintedTokenId2 + ".token.json";
+         const metadataURL2 = "https://ipfs.io/ipfs/" + nftContractURI.substring(7) + "/" + mintedTokenId2 + ".token.json";
          const mintMetadataFetch2 = await fetch(metadataURL2);
 
          console.log("mintedTokenId2 = ", mintedTokenId2);
@@ -91,11 +107,14 @@ function OldEnglish({
          try {
             const metadataObject2 = await mintMetadataFetch2.json();
             const imageURL2 = "https://ipfs.io/ipfs/" + metadataObject2.image.substring(7);
+            const nftName2 = metadataObject2.name;
             setMintImageURL2(imageURL2);
+            setMintName2(nftName2);
 
             console.log("metadataObject2 = ", metadataObject2);
             console.log("imageURL2 = ", imageURL2);
             console.log("mintImageURL2 = ", mintImageURL2);
+            console.log("mintName2 = ", mintName2);
          } catch(e) {
             console.log(e);
          }
@@ -199,15 +218,19 @@ function OldEnglish({
                   </Form.Item>
                   <Form.Item>
                      <Button type="primary" style={{ fontSize: "1.2rem", backgroundColor: "#72a500", border: "2px solid #005a00", borderRadius: 10, color: "#F0F8EA", height: "auto", width: "auto" }} htmlType="submit" loading={mint}>MINT !</Button>
-                  </Form.Item>
+                  </Form.Item>               
                </Form>
             </div>
          </div>
             <div className="mintRenderWrapper">
                {(mintImageURL1 != "" && mintImageURL2 != "") ? (
                   <div className="mintRenderTwoNFTs">
-                     <div className="twoMintedNFTRenderTitle1">TOKEN ID #{tokenIdMinted1}</div>
-                     <div className="twoMintedNFTRenderTitle2">TOKEN ID #{tokenIdMinted2}</div>
+                     <Confetti
+                        height={document.body.scrollHeight}
+                        width={width * .99}
+                     />                     
+                     <div className="twoMintedNFTRenderTitle1">LF #{tokenIdMinted1 + " - " + mintName1}</div>
+                     <div className="twoMintedNFTRenderTitle2">LF #{tokenIdMinted2 + " - " + mintName2}</div>
                      <a
                         className="twoMintedNFTRender1" 
                         href={`${blockExplorer}token/${
@@ -228,14 +251,14 @@ function OldEnglish({
                      </a>
                      <Link to="/">
                         <Button
-                        style={{ backgroundColor: "black", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
+                        style={{ backgroundColor: "#3e190f", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
                         >
                            VIEW IN MARKETPLACE
                         </Button>
                      </Link>
                      <Link to="/">
                         <Button
-                        style={{ backgroundColor: "black", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
+                        style={{ backgroundColor: "#3e190f", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
                         >
                            VIEW IN MARKETPLACE
                         </Button>
@@ -245,7 +268,12 @@ function OldEnglish({
                   <>
                      {(mintImageURL1 != "" && mintImageURL2 == "") ? (
                      <div className="mintRenderOneNFT">
-                        <div className="oneMintedNFTRenderTitle">Token ID #{tokenIdMinted1}</div>
+                        <Confetti
+                           height={document.body.scrollHeight}
+                           width={width * .99}
+/*                         width={width} */
+                        />
+                        <div className="oneMintedNFTRenderTitle">LF #{tokenIdMinted1 + " - " + mintName1}</div>
                         <a
                            className="oneMintedNFTRender"
                            href={`${blockExplorer}token/${
@@ -257,7 +285,7 @@ function OldEnglish({
                         </a>
                         <Link to="/">
                            <Button
-                           style={{ backgroundColor: "black", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
+                           style={{ backgroundColor: "#3e190f", color: "white", borderRadius: 20, fontSize: "1.5rem", height: "auto", marginTop: "20px" }}
                            >
                               VIEW IN MARKETPLACE
                            </Button>
@@ -265,7 +293,7 @@ function OldEnglish({
                      </div>
                      ) : (
                      <div className="mintRenderOneNFT">
-                        <div className="oneMintedNFTRenderTitle">Token ID #? - Mint to Find Out</div>
+                        <div className="oneMintedNFTRenderTitle">LF #? - Mint to Find Out</div>
                         <div className="oneMintedNFTRender" style={{width: "40%"}}>
                            <img src={Premint_Artwork} width="100%" />
                         </div>

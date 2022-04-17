@@ -8,6 +8,7 @@ import {
   useOnBlock,
   useUserProviderAndSigner
 } from "eth-hooks";
+import { useResolveEnsName} from "eth-hooks/dapps/ens/";
 import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
@@ -74,9 +75,9 @@ const web3Modal = Web3ModalSetup();
 
 // 🛰 providers
 const providers = [
-  "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406",
+  /* "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406", */
   `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
-  "https://rpc.scaffoldeth.io:48544",
+  /* "https://rpc.scaffoldeth.io:48544", */
 ];
 
 function App(props) {
@@ -185,6 +186,11 @@ function App(props) {
   );
   //^this contract read tells the current user how many mints they have left
   
+  const nftContractURI =  useContractReader(
+    readContracts,
+    lostandfoundNFTContract,
+    "contractURI"
+  );
 
   //======= bringing in external ZORA contracts
   
@@ -233,10 +239,10 @@ function App(props) {
     }
   }, [localProvider]);
 
-  /*
-  const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
-  console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
-  */
+  
+/*   const addressFromENS = useResolveEnsName(mainnetProvider, "austingriffith.eth");
+  console.log("🏷 Resolved austingriffith.eth as:", addressFromENS) */
+ 
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
@@ -428,6 +434,7 @@ function App(props) {
               totalSupply={totalSupply}
               maxSupply={maxSupply}
               remainingMints={remainingMints}
+              nftContractURI={nftContractURI}
               writeContracts={writeContracts}
               localProvider={localProvider}
               tx={tx}
