@@ -596,7 +596,7 @@ function OldEnglish({
                       <div
                         className="cardHeaders"
                       >
-                        {item.name ? `LF #${id}` + "   -   " + item.name : `LF #${id}`}
+                        {item.name ? /* `LF #${id}` + "   -   " + */ item.name : `LF #${id}`}
                       </div>
                     }
                   >
