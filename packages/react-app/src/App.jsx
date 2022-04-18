@@ -469,7 +469,7 @@ function App(props) {
         </Route>               
       </Switch>
 
-{/*       <ThemeSwitch />    commenting out theme switch */}
+{/*       <ThemeSwitch /> commenting out theme switch, always dark mode */}
 {/*
 
 

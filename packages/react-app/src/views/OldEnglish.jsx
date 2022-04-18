@@ -440,10 +440,6 @@ function OldEnglish({
     );
   };
 
-/*   const characterDescriptionPopover = () => {
-    return characterDescription
-  } */
-
   const marketplaceManager = () => {
     const [transferHelper, setTransferHelper] = useState(false);
     const [moduleManager, setModuleManager] = useState(false);
@@ -569,7 +565,7 @@ function OldEnglish({
               xl: 3,
               xxl: 3,
             }}
-            align="center" ///THIS IS WHAT ALIGNS ALL OF THE CARDS!!!!!!
+            align="center"
             locale={{ emptyText: `Fetching Markteplace Items...` }}
                         
             /* commenting out pagination (having multiple pages of NFTs)
@@ -593,14 +589,14 @@ function OldEnglish({
               const imageWithGateway = "https://ipfs.io/ipfs/" + item.image.substring(7);
               const characterDescription = () => {
                 return (
-                  <div style={{ marign: 0, padding: 0}}>
+                  <div style={{ padding: 0}}>
                     <div style={{fontSize: "2rem", textAlign: "center"}}>
                       <i>{"" + item.name}</i>
                     </div>                    
-                    <div>
+                    <div style={{fontSize: "1.25rem", marginLeft: "10%", marginRight: "10%", textAlign: "center"}}>
                       <u>Background:</u> {" " + item.description}
                     </div>
-                    <div>
+                    <div style={{fontSize: "1.25rem", marginLeft: "10%", marginRight: "10%", textAlign: "center"}}>
                       <u>Defining Characteristic:</u>{" " + item.attributes[0].value}
                     </div>  
                   </div>
@@ -613,8 +609,9 @@ function OldEnglish({
                     style={{ border: "4px solid black", borderRadius: 2 }}
                     title={
                       <Popover                      
-                        overlayInnerStyle={{backgroundColor: "black", width: "50%"}}
-                        placement="bottom"
+                        overlayInnerStyle={{backgroundColor: "black", width: "100%", fontFamily: "oliver-regular"}}
+                        arrowPointAtCenter="false"
+                        placement="top"
                         content={() => {
                           return characterDescription();
                         }}
