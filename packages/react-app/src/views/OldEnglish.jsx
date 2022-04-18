@@ -440,6 +440,10 @@ function OldEnglish({
     );
   };
 
+/*   const characterDescriptionPopover = () => {
+    return characterDescription
+  } */
+
   const marketplaceManager = () => {
     const [transferHelper, setTransferHelper] = useState(false);
     const [moduleManager, setModuleManager] = useState(false);
@@ -586,18 +590,41 @@ function OldEnglish({
             dataSource={filteredOEs ? filteredOEs : []}
             renderItem={item => {
               const id = item.id;
-              const imageWithGateway = "https://ipfs.io/ipfs/" + item.image.substring(7);                   
+              const imageWithGateway = "https://ipfs.io/ipfs/" + item.image.substring(7);
+              const characterDescription = () => {
+                return (
+                  <div style={{ marign: 0, padding: 0}}>
+                    <div style={{fontSize: "2rem", textAlign: "center"}}>
+                      <i>{"" + item.name}</i>
+                    </div>                    
+                    <div>
+                      <u>Background:</u> {" " + item.description}
+                    </div>
+                    <div>
+                      <u>Defining Characteristic:</u>{" " + item.attributes[0].value}
+                    </div>  
+                  </div>
+                )
+              }       
               return (
                 <List.Item className="listItems" key={id}>
                   <Card
                     className="cards"                
                     style={{ border: "4px solid black", borderRadius: 2 }}
                     title={
-                      <div
-                        className="cardHeaders"
+                      <Popover                      
+                        overlayInnerStyle={{backgroundColor: "black", width: "50%"}}
+                        placement="bottom"
+                        content={() => {
+                          return characterDescription();
+                        }}
                       >
-                        {item.name ? `LF #${id}` + " - " + item.name : `LF #${id}`}
-                      </div>
+                        <div
+                          className="cardHeaders"
+                        >
+                          {item.name ? `LF #${id}` + " - " + item.name : `LF #${id}`}
+                        </div>
+                      </Popover>
                     }
                   >
                     <a                      
