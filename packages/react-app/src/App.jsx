@@ -86,8 +86,8 @@ function App(props) {
   const zoraTransferHelperContract = "zoraTransferHelper"; //change this in external_contracts.js to convert to rinkeby/mainnet
   const zmmContract = "zoraModuleManager"; //change this in external_contracts.js to convert to rinkeby/mainnet
   const zoraAsksContract = "zoraAsksV1_1Module"; //change this in external_contracts.js to convert to rinkeby/mainnet
-  const lostandfoundNFTContract = "lostandFoundContract2"; // update address of lostandFoundContract2 if redeploying an identical nft contract for testing purposes
-  const lostandfoundNFTContractAddress = "0x7b2DE8719120F21Ac8A95f9115bc8D9779EC44d4"; // change this to the nft contract you want to be interacting with
+  const lostandfoundNFTContract = "lostandFoundContract3"; // update address of lostandFoundContract2 if redeploying an identical nft contract for testing purposes
+  const lostandfoundNFTContractAddress = "0x288FC01ACcf7E053cD594AA18eff3e2D549600b7"; // change this to the nft contract you want to be interacting with
 
   //======my custom additions
 
@@ -292,14 +292,15 @@ function App(props) {
 
       <div className="header">
         <Menu
-          style={{ textAlign: "start", backgroundColor: "transparent", borderBottom: "none" }} selectedKeys={[location.pathname]} mode="horizontal"
+          style={{ textAlign: "start", backgroundColor: "transparent", borderBottom: "none"/* , border: "2px red solid" */ }} selectedKeys={[location.pathname]} mode="horizontal"
           className="headerMenu"
         >
           <Menu.Item
-            /* style={{border: "none"}} */
+            style={{ /* border: "2px solid purple", */ width: "39%", margin: 0, padding: 0 }}
             key="/"
           >
-            <Link to="/">
+            <Link 
+            to="/">
               <button className="marketplaceButton" id="marketplaceButtonID" >
                 MARKETPLACE
               </button>
@@ -307,10 +308,10 @@ function App(props) {
           </Menu.Item>
 
           <Menu.Item 
-            /* style={{border: "none"}} */
+            style={{ /* border: "2px solid purple", */ width: "29%", margin: 0, padding: 0 }}         
             key="/mint"
           >
-            <Link to="/mint">
+            <Link to="/mint">                
               <button className="mintButton" >
                 MINT
               </button>
@@ -318,7 +319,7 @@ function App(props) {
           </Menu.Item>
 
           <Menu.Item
-            /* style={{border: "none"}} */
+            style={{ /* border: "2px solid purple", */ width: "29%", margin: 0, padding: 0 }}
             key="/about"
           >
             <Link to="/about">
@@ -329,27 +330,29 @@ function App(props) {
           </Menu.Item>
         </Menu>
         
-        <NetworkDisplay
-          className="headerNewtorkDisplay"
-          style={{ }}        
-          NETWORKCHECK={NETWORKCHECK}
-          localChainId={localChainId}
-          selectedChainId={selectedChainId}
-          targetNetwork={targetNetwork}
-          logoutOfWeb3Modal={logoutOfWeb3Modal}
-        />
-        <Account
-          className="headerAccount"
-          address={address}
-          localProvider={localProvider}
-          userSigner={userSigner}
-          mainnetProvider={mainnetProvider}
-          price={price}
-          web3Modal={web3Modal}
-          loadWeb3Modal={loadWeb3Modal}
-          logoutOfWeb3Modal={logoutOfWeb3Modal}
-          blockExplorer={blockExplorer}
-        />       
+        <div className="networkAndAccountWrapper">
+          <NetworkDisplay
+            className="headerNewtorkDisplay"
+                    
+            NETWORKCHECK={NETWORKCHECK}
+            localChainId={localChainId}
+            selectedChainId={selectedChainId}
+            targetNetwork={targetNetwork}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+          />
+          <Account
+            className="headerAccount"
+            address={address}
+            localProvider={localProvider}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            price={price}
+            web3Modal={web3Modal}
+            loadWeb3Modal={loadWeb3Modal}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+            blockExplorer={blockExplorer}
+          />
+        </div>       
       </div>      
 
       <Switch>

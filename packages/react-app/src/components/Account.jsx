@@ -62,7 +62,7 @@ export default function Account({
   return (
     <div
     style={{
-      /* border: "1px solid orange", */ 
+/*       border: "2px solid orange", */
       display: "flex",
       flexDirection: "row",
       justifyContent: "end",
@@ -101,7 +101,7 @@ export default function Account({
         (web3Modal?.cachedProvider ? (
           <Button
             key="logoutbutton"
-            style={{ fontSize: "1.5rem", marginLeft: 8, paddingBottom: 0, paddingTop: 0, color: "#3e190f", border: "4px solid #3e190f", display: "flex", flexDirection: "row", alignItems: "center", alignSelf: "center" }}
+            style={{ fontSize: "1.5rem", marginLeft: 8, paddingBottom: 0, paddingTop: 0, color: "#3e190f", border: "3px solid #3e190f", display: "flex", flexDirection: "row", alignItems: "center", alignSelf: "center" }}
             shape="round"
             size="large"
             onClick={logoutOfWeb3Modal}

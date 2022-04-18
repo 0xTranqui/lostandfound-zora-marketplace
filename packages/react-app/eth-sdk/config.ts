@@ -8,6 +8,7 @@ export default defineConfig({
          zoraAsksV1_1Module: '0xA98D3729265C88c5b3f861a0c501622750fF4806',
          lostandFoundContract: '0x0E0e37De35471924F50598d55F7b69f93703fA01',
          lostandFoundContract2: '0x47686F3CE340bcb8609a5D65016d99B1299835e8',
+         lostandFoundContract3: '0x288FC01ACcf7E053cD594AA18eff3e2D549600b7',
       },
    },
 })

@@ -527,8 +527,8 @@ function OldEnglish({
   return (
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
-        <div style={{ marginBottom: 15}} >
-            <img width="50%" src={LF_Logo_V2_5}></img>
+        <div >
+            <img width="60%" src={LF_Logo_V2_5}></img>
         </div>
         <div className="ownershipFilterWrapper">
           <div className="ownershipFilterOptions">
@@ -537,7 +537,7 @@ function OldEnglish({
           <Switch
           className="ownershipFilterSwitch"
             disabled={loadingOldEnglish}
-            style={{ height: "50%", width: "5%", border: "4px #3e190f solid" }}
+            style={{ height: "50%", width: "5%", border: "4px #3e190f solid", backgroundColor: "#c1a79f" }}
             value={mine}
             onChange={() => {
               setMine(!mine);
@@ -596,7 +596,7 @@ function OldEnglish({
                       <div
                         className="cardHeaders"
                       >
-                        {item.name ? /* `LF #${id}` + "   -   " + */ item.name : `LF #${id}`}
+                        {item.name ? `LF #${id}` + " - " + item.name : `LF #${id}`}
                       </div>
                     }
                   >
@@ -608,7 +608,7 @@ function OldEnglish({
                     >
                       <img className="nftImage" src={imageWithGateway && imageWithGateway} alt={"LF #" + id} width="100%" />
                     </a>
-                    <div className="cardFooters"> {/* LMAO THIS LINE IS HOLDING EVERYTHING/*/}                                  
+                    <div className="cardFooters">                                  
                       { item.nftOwner == address.toLowerCase() ? ( /// logic asking if you are the owner
                           <>
                             {item.askSeller.seller == "0x0000000000000000000000000000000000000000" ? ( /// logic asking what to do if you are the owner and ask does NOT exist
