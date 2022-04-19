@@ -1,12 +1,12 @@
-# 🍺 Optimistic Ethereum 40s
+# Lost & Found marketplace powered by ZORA
 
-> A starter kit for deploying SVG NFTs to Optimism with 🏗 Scaffold-ETH!
+> A starter kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols
 
-Follow this guide to deploy an 8 pack of OΞ 40s on Optimism with a frontend for your friends!
+Follow this guide to learn how to deploy your own NFT collection and custom marketplace. Opensea who???
 
 ---
 
-![eo40.me title](https://oe40.me/title.png)
+![eo40.me title](https://lostfound.world/LF_NFT_Mobile_Link_Image.png)
 
 ---
 
@@ -14,67 +14,142 @@ Follow this guide to deploy an 8 pack of OΞ 40s on Optimism with a frontend for
 
 > clone the repo
 ```
-git clone -b sipping-oe https://github.com/scaffold-eth/scaffold-eth sipping-oe
+gh repo clone 0xTranqui/lostandfound-zora-marketplace
 ```
 
 > install
 ```
-cd sipping-oe
+cd lostandfound-zora-marketplace
 yarn install
 ```
 
-This 🏗 scaffold-eth is pointed at the **Optimism** network out of the box. (Instead of localhost like usual.)
+This 🏗 scaffold-eth fork is pointed at the **Ethereum Mainnet** out of the box (instead of localhost like usual).
 
-We will deploy directly to mainnet Optimism...
+Before we do anything, we will set up our environment variables which are needed to interact with both the frontend marketplace and 
+contract deployment functionality of this repo. We will be setting up two different .env files, one at the root level of packages/react-app
+and one at the root level of packages/hardhat
 
-> generate a deployer address
+> Open up your text editor (this guide assumes VSCode) to better navigate through your files:
 ```
-yarn generate
+cd lostandfound-zora-marketplace
+code . 
 ```
-
-> fund this deployer address with Optimistic Ethereum:
+> Expand the packages dropdown, and then right click on the react-app folder and create a new file. Name this file ".env"
+Add in the following 2 lines of code:
 ```
-yarn account
+REACT_APP_ALCHEMY_KEY = enter your key here (without quotes)
+REACT_APP_ETHERSCAN_KEY= enter your key here (without quotes)
 ```
-(You can get OE from [the Teleporter](https://portr.xyz/) or [the Gateway](https://gateway.optimism.io/).)
+This allows the constants.js file in the react-app/src directory to pull these keys into the react-app without needing to expose them publicly.
 
-
-> deploy your contract to Optimism:
+> Expand the packages dropdown, and then right click on the hardhat folder and create a new file. Name this file ".env"
+Add in the following 6 lines of code (the mainnet lines are optional) :
 ```
-yarn deploy
+RINKEBY_ALCHEMY_KEY = enter your key here (without quotes)
+RINKEBY_ETHERSCAN_API_KEY = enter your key here (without quotes)
+RINKEBY_DEPLOYER_PRIV_KEY = enter your key here (without quotes)
+
+MAINNET_ALCHEMY_KEY = enter your key here (without quotes)
+MAINNET_ETHERSCAN_API_KEY = enter your key here (without quotes)
+MAINNET_DEPLOYER_PRIV_KEY = enter your key here (without quotes)
 ```
-(Note: You can change your deploy network in `hardhat.config.js` in `packages/hardhat/`.)
+This allows the hardhat.config.js file in the packages/hardhat directory to use these keys for the smart contract deployment and 
+verification functionality we will be implementing without having to expose them publicly.
 
-(Note: If you change your deploy network, don't forget to change your `targetNetwork` in `App.jsx`!)
+Back to the front end...
 
-> You can run `yarn deploy` multiple times and it will cache deployed contracts and try again for failed ones.
-
----
-
-💵 Approx Deploy Costs:
-
-(0.0087 OE) **~$34** for the $BUZZ ERC20 Deployment ([example](https://optimistic.etherscan.io/tx/0xb6c601ddaa7a30d196abf9f33aeab4583e2a6d62fa75162346a9e727de95503d))
-
-(0.0413 OE) **~$162** for the OE40 NFT contract ([example](https://optimistic.etherscan.io/tx/0x3fa9328d46a424eb546469de5169e67b2ec55deb43f704495126ae340f3242e6))
-
-
-(0.0004 OE) **~$2** for a couple finishing transactions
-
-**Total: 0.0508 OE**
-
----
-
-> Bring up a local version of your frontend:
-
+From here, you can now run the following code to interact with your own local frontend that points at the existing Lost & Found marketplace located at   https://www.lostfound.world/. All you have to do is run the following from the root level of the project directory:
 ```
+cd lostandfound-zora-marketplace
 yarn start
 ```
 
-You can view your frontend at: http://localhost:3000
+You now have a direct window into the Lost & Found marketplace! You'll notice that the app points at mainnet ethereum if you look at the top
+right corner of the site, where the network the app is pointed at is listed. Both the NFT contract and ZORA marketplace protocols live on
+mainnet ethereum as well. You are "yarn-starting" into a production ready app!
 
-> Try purchasing, sipping, wrapping, passing:
+We'll come back to learning how to edit the front end, but first lets reconfigure the app so that it points at rinkeby which is a more 
+suitable environment for testing
 
-![image](https://user-images.githubusercontent.com/2653167/146652238-59c4a9e3-8b40-49d3-8926-b757228022e8.png)
+*** App.jsx Updates (packages/react-app/src/App.jsx) ***
+
+> Line 29: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
+> Line 59: Replace "mainnet" with "rinkeby"
+> Line 74: Replace "zoraTransferHelperMAINNET" with "zoraTransferHelper"
+> Line 75: Replace "zoraModuleManagerMAINNET" with "zoraModuleManager"
+> Line 76: Replace "zoraAsksV1_1ModuleMAINNET" with "zoraAsksV1_1Module"
+> Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"
+> Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"
+
+*** OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx) ***
+
+> Line 7: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
+
+When you press save (on both files) to run this code, you will get a pop up that alerts you that you are on the wrong network and you
+need to switch to rinkeby to continue using the app. Follow those instructions :)
+
+If you have completed all these steps, you should now be looking at a locally hosted + rinkeby version of https://www.lostfound.world/ !!!
+
+The ZORA contract protocols have been swapped for their rinkeby counterparts, and the Lost & Found, Vol. 1 NFT collection has been
+swapped with a rinkeby version of it with the same exact metadata (this was one of the test contracts I used during the creation of this project)
+
+You can now experiment with interacting with the ZORA marketplace protocol in a no-cost environment (you just need some rinkeby-ETH, which you can get here: https://rinkebyfaucet.com/). I encourage you to check out views/OldEnglish.jsx to look at how the interactions with the ZORA protocol are implemented. I relied heavily on great [documentation](https://docs.zora.co/docs/guides/sell-nft-fixed-price) from the ZORA Engineering team to build this out. 
+
+You can also experiment with changing the structure / style of the website (if yellow lined-paper isn't your thing) by playing with
+Marketplace.css (which styles OldEnglish.jsx), App.css, Mint.css, and About.css (among others). Build something crazy, and share it with me on twitter at https://twitter.com/0xTranqui !!!
+
+So now you know how to set up the front end of a ZORA marketplace that allows you to list/buy/sell NFTs in a completely on-chain + permisionless fashion. This is a huge first step, as most of the web3 universe still relies on broad market aggregators like Opensea to facilitate NFT marketplace interactions. Relying on platforms like Opensea, particularly ones who's underlying protocol is not fully on-chain (like Opensea) is not healthy for the long term health / stability of the greater web3 ecosystem. If you want to learn more about why, check out this thread I wrote on the subject:
+
+https://twitter.com/0xTranqui/status/1506722429208567819?s=20&t=pg7IclQBVNJbsTQM4nPOTQ
+
+Let's keep moving forward to creating your own NFT project with custom art and deploying it to rinkeby so you can start testing what it would be like
+to handle the full scope of work required in the deployment of an NFT project.
+
+To begin, here is a (lengthy) step-by-step guide to creating and storing your own metadata to IPFS:
+
+*** Metadata creation + IPFS file storage tutorial ***
+
+> Go to https://www.721.so/
+> Click on "create an NFT collection" Artiki flow
+> Create New Collection (we will be uploading our own art for this)
+> Click the nav burger in the top left corner
+> Click "tokens" -> "set collection size" -> set your collection size (if this is your first time, start with something small (5 - 15 pieces)
+> Uncheck the "File To Duplicate" Box, and click "Update Collection"
+> Click the arrow arrow next to the 2 x 2 box that sits underneath the nav burger we clicked previously
+> Click on the metadata folder to expand it
+> For each token.json file, fill in the name, description, and upload an image file (from your computer). If you don't have any art to use,
+use the free-to-use CC0 art from the Lost & Found, Vol. 1 collection! Here's a [link](https://bafybeid4o3j72f6bks2t6iwgjjymd3oucayinbna6bg3drjkvyisrucsw4.ipfs.dweb.link/) to the metadata folder holding the .png files (even better, download this art, remix it, and then tag [me](https://twitter.com/0xTranqui) and the [artist](https://twitter.com/dannydiamondss) in your final product when you finish!!!) 
+  - For example file sizes, the Lost & Found, Vol. 1 collection used .png files between 3-5 MB, all with 1:1 aspect ratios
+  - The "Animation URL" and "External URL" allow you to upload multimedia files / links to static HTML websites, howver you still need to provide
+    an image file to act as a thumbnail if you are planning to link to an animation/external URL
+  - You can also add in attributes for each NFT below the main data section
+  - Obviously repeating this process for large collections could be very time consuming, so luckily there is some nice UI that allows you to shift click    on multiple tokens at once to apply edits to multiple files at the same time
+> Once complete, click on the urger again and go to file -> save as. This will save a .zip copy of your metadata, which you shold store locally for record keeping
+> Now that youre metadata is set + saved, go to the burger again and click publish -> upload to IPFS
+> You will then get prompted to get an API key from nft.storage (IPFS pinning service). Go and do this -> https://nft.storage/ -> login (make an account) -> API keys -> New key -> copy key and paste back into the API key input we left off on at https://www.721.so/
+> "Click Publish to IPFS!"
+> Wait for the files to be pinned, and you'll eventually see two checkmarks that tell you the process is complete. One is for uploading of the assets (.png files), the other is for uploading the metadata (.json files that include a key called "image" who's value-pair is a link to the corresponding .png file for that token).
+> You will be prompted with two different things to copy. Save them both for later, we will need them !!! Also follow the links to the assets folder and metadata folder provided at the bottom of the popup and save those links for easy nagivation later as well.
+
+That's it! At this point, you could actually continue forward creating your own contract with the 721.so contract builder, and then creating your own minting page using the 721.so mint page builder. Both are amazing tools which I have used in the past. For our case, we are going to leave studio https://www.721.so/ to deploy our own smart contract already configured in our packages/hardhat directory of this repo, which we can then mint from using the minting page that is also set up in the website template as well
+
+
+
+
+You can deploy directly to mainnet Ethereum by loading in your private key's and RPC endpoint provider API in 
+a .env file at the root level of the packages/hardhat directory.
+
+> To deploy your contract from the wallet whose private keys you entered, run the following script at the
+root of the entire project directory
+
+```
+cd lost-and-found
+yarn deploy
+```
+
+If you don't want to deploy directly to mainnet (because you are a sane person), follow these steps for adjusting the
+configuration to Rinkeby (which will be deprecated sometime following the successful completion of the Merge).
+
 
 
 ---
