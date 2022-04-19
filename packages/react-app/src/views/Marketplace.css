@@ -1,6 +1,6 @@
 :root {
    --logo-width: 60%;
-   
+
 }
 
 @media (max-width: 750px) {
@@ -184,8 +184,8 @@
 /*    border: 1px white solid; */
    grid-template-rows: 1fr 1fr;
    grid-template-columns: 1fr 1fr;
-   margin-left: 10%;
-   margin-right: 10%;
+   margin-left: 5%;
+   margin-right: 5%;
 }
 
 .pleaseApprovePopover {

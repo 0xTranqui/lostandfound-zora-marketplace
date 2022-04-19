@@ -1,10 +1,14 @@
 :root {
    --logo-width: 60%;
+   --placeholder-singleNFT-width: 40%;
+   --singleNFT-width: 40%;
 }
 
 @media (max-width: 750px) {
    :root {
       --logo-width: 90%;
+      --placeholder-singleNFT-width: 70%;
+      --singleNFT-width: 70%;
    }
 }
 
@@ -59,6 +63,7 @@
    justify-content: center;
    align-items: center;
    gap: 10px;
+   width: 100%;
 }
 
 .mintRenderWrapper {
@@ -99,7 +104,7 @@
    display: grid;
    grid-row: 2 / 3;
    grid-column: 1 / 2;
-   width: 40%;
+   width: var(--singleNFT-width);
 /*    border: 1px red solid; */
    margin-bottom: 10px
 }
@@ -156,4 +161,14 @@
    width: 80%;
 /*    border: 1px green solid; */
 }
+
+.placeholderPreMintNFTRender {
+   display: grid;
+   grid-row: 2 / 3;
+   grid-column: 1 / 2;
+   width: var(--placeholder-singleNFT-width);
+/*    border: 1px red solid; */
+   margin-bottom: 10px
+}
+
 

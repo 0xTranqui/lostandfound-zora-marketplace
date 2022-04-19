@@ -3,6 +3,7 @@
   --header-menu-grid-row: 1 / 3;
   --networkAndAccountWrapper-grid-row: 1 / 3;
   --networkAndAccountWrapper-grid-column: 2 / 3;
+  --networkAndAccountWrapper-margin-bottom: 0;
 
   
 }
@@ -13,6 +14,7 @@
   --header-menu-grid-row: 2 / 3;
   --networkAndAccountWrapper-grid-row: 1 / 2;
   --networkAndAccountWrapper-grid-column: 1 / 2;
+  --networkAndAccountWrapper-margin-bottom: 5px;
 
 
   }
@@ -83,6 +85,8 @@ html {
     grid-column: var(--networkAndAccountWrapper-grid-column);
     display: grid;
     grid-template: 1fr 1fr / 1fr;
+    margin-bottom: var(--networkAndAccountWrapper-margin-bottom);
+    text-align: end;
 /*     border: 2px green solid;
     @media (max-width: 800px) {
       border: 3px red solid;

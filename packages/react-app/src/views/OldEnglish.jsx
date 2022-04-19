@@ -447,7 +447,7 @@ function OldEnglish({
     return (
       <div className="approvalPopOverManager">
         <div className="pleaseApprovePopover">
-        Lost & Found Marketplace is built on the ZORA Protocol. Please sign the following approvals to allow the protocol to interact with your assets : {/* ↓ ↓ */}
+        Lost & Found is built on the ZORA marketplace protocol. Please sign the following approvals to allow the protocol to interact with your assets : {/* ↓ ↓ */}
         </div>
 
         {/* commenting out refresh button 

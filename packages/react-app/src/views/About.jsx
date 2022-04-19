@@ -1,38 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Input, notification, Switch, Typography } from "antd";
-import { RedoOutlined } from "@ant-design/icons";
-import { Address, AddressInput } from "../components";
-import { ethers } from "ethers";
-import { useDebounce } from "../hooks";
-import { useEventListener } from "eth-hooks/events/useEventListener";
-
-//==========my custom import
-import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
 import "./About.css";
-//==========my custom import
 
-var count = 0; ///this saves count that is used to determine what state setting is used when picking up mints
-
-function OldEnglish({
-   readContracts,
-   mainnetProvider,
-   blockExplorer,
-   totalSupply,
-   DEBUG,
-   writeContracts,
-   tx,
-   address,
-   localProvider,
-   oldEnglishContract,
-   startBlock,
-   //===my custom imports
-   lostandfoundNFTContract,
-   priceOfMint,
-   maxSupply,
-   remainingMints
-}) {
-
+function OldEnglish({}) {
 
    return (
       <div className="aboutPageWrapper">

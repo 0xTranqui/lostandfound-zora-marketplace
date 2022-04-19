@@ -211,7 +211,7 @@ function OldEnglish({
                      },
                   ]}
                   >
-                     <Select placeholder="Q" size="large" style={{ marginTop: 0, marginBottom: 0, padding: 0, color: "white", fontSize: "1.2rem", backgroundColor: "#9b8deb", border: "2px #3d3280 solid", borderRadius: 10, width: "auto"}} >
+                     <Select size="large" style={{ marginTop: 0, marginBottom: 0, padding: 0, color: "white", fontSize: "1.2rem", backgroundColor: "#9b8deb", border: "2px #3d3280 solid", borderRadius: 10, width: "auto"}} >
                         <Select.Option value="1">1</Select.Option>
                         <Select.Option value="2">2</Select.Option>
                      </Select>  
@@ -294,7 +294,7 @@ function OldEnglish({
                      ) : (
                      <div className="mintRenderOneNFT">
                         <div className="oneMintedNFTRenderTitle">LF #? - Mint to Find Out</div>
-                        <div className="oneMintedNFTRender" style={{width: "40%"}}>
+                        <div className="placeholderPreMintNFTRender" >
                            <img src={Premint_Artwork} width="100%" />
                         </div>
 {/*                         <div className="oneMintedNFTRenderTitle" style={{color: "#F0F66E"}}>WAITING FOR MINT</div>
