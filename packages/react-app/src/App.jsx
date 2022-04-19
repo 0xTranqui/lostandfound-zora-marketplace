@@ -76,7 +76,6 @@ function App(props) {
   const zoraAsksContract = "zoraAsksV1_1ModuleMAINNET";
   const lostandfoundNFTContract = "lostandfoundContractMAINNET"; 
   const lostandfoundNFTContractAddress = "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036"; // change this to the nft contract you want to be interacting with
-  //======my custom additions
 
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
