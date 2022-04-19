@@ -109,7 +109,7 @@ To begin, here is a (lengthy) step-by-step guide to creating and storing your ow
 > Click on "create an NFT collection" Artiki flow\
 > Create New Collection (we will be uploading our own art for this)\
 > Click the nav burger in the top left corner\
-> Click "tokens" -> "set collection size" -> set your collection size (if this is your first time, start with something small (5 - 15 pieces)\
+> Click "tokens" -> "set collection size" -> set your collection size (set it to 12 if you want it to match with the template NFT smart contract in this repo)\
 > Uncheck the "File To Duplicate" Box, and click "Update Collection"\
 > Click the arrow arrow next to the 2 x 2 box that sits underneath the nav burger we clicked previously\
 > Click on the metadata folder to expand it\
@@ -129,54 +129,63 @@ use the free-to-use CC0 art from the Lost & Found, Vol. 1 collection! Here's a [
 
 That's it! At this point, you could actually continue forward creating your own contract with the 721.so contract builder, and then creating your own minting page using the 721.so mint page builder. Both are amazing tools which I have used in the past. For our case, we are going to leave studio https://www.721.so/ to deploy our own smart contract already configured in our packages/hardhat directory of this repo, which we can then mint from using the minting page that is also set up in the website template as well\
 
+*** SMART CONTRACT DEPLOYMENT + FRONT END INTEGRATION PROCESS ***
 
+We are going to skip a lot of things so that you use what's already in this repo to deploy your own NFT contract as simply as possible. Here is a step by step process for what to do:
 
-
-You can deploy directly to mainnet Ethereum by loading in your private key's and RPC endpoint provider API in 
-a .env file at the root level of the packages/hardhat directory.
-
-> To deploy your contract from the wallet whose private keys you entered, run the following script at the
-root of the entire project directory
-
+- Navigate to packages/hardhat directory
+- Double check that your .env at the root level of this directory is set up correctly (look back earlier in this guide if unsure)
+- Open hardhat/config.js
+- Line 29: Change "mainnet" to "rinkeby"
+- Line 76-79: Un-comment these 4 lines that relate to the rinkeby configuration. If you are unsure how to do this, just mirror the formatting of the mainnet configuration that is not commented out in line 84-87. You won't be able to deploy successfully if you do this incorrectly
+- Line 84-87: Comment out the 4 lines that relate to the mainnet configuration.
+- Open hardhat/contracts/lostandfound_vol_1.sol
+- On line 93 of the contract, replace the contract URI you see here with the contract URI you created during the artkit process! Told you we were going to need this later. Mimic the out-of-the-box formatting of this line exactly
+- In your terminal, run:
 ```
-cd lost-and-found
+cd packages/hardhat
+npx hardhat clean
+npx hardhat compile
+```
+
+Your contract is almost ready to be deployed. More steps:
+- Open hardhat/deploy/deploy_LF_ERC721.js
+- On line 12 args, replace the contractURI with the contract URI you saved earlier! (I acknowledge this is repetivive, but I beleive these two inputs are serving slightly different purposes. Or I'm wrong and this is a redundant unncessary step. But if you don't know what you're doing, do this just to be safe)
+- We will know deploy the contract. In your terminal, run:
+```
+cd lostandfound-zora-marketplace
 yarn deploy
 ```
-
-If you don't want to deploy directly to mainnet (because you are a sane person), follow these steps for adjusting the
-configuration to Rinkeby (which will be deprecated sometime following the successful completion of the Merge).
-
-
-
----
-
-> Build the static version of your site:
-
+- Contract deployed to rinkeby! Copy the address your contract was deployed to and save it for the next step.
+- We will know verify the contract. In your terminal, run:
 ```
+cd packages/hardhat
+npx hardhat verify --network rinkeby "insert contract address here w/o quotes" "insert the constructor argument you entered in line 12 of deploy_LF_ERC721.js EXACTLY how you entered it (in quotes_)"
+```
+Your contract is now verified on etherscan! This means other people can see into the innerworkings on your contract now on etherscan (which is great for transparency + having trustworthy code)
+
+Here are the final steps to link your now published NFT contract into your front end (replacing the template project that was included in this repo):
+- Navigate back to packages/react-app/src/contracts/external_contracts.js
+- Replace the addresss for lostandFoundContract4 on line 4171 with your newly deployed contract. No need to touch the ABI because it is the exact same contract from a structural standpoint
+- Navigate to packages/react-app/src/views/App.jsx and replace the contract address on line 78 with your newly deployed contract address
+- Save files (I hope you've been saving your files everytime I've been giving you step by step directions lol).
+- That's it, you can now run the following code to restart your front end and it will open up the site with your own NFT contract installed:
+```
+cd lostandfound-zora-marketplace
+yarn start
+```
+
+You'll notice that know images load on the marketplace page. That is because you have to mint some NFTs first before they populate. Head on over to the mint page to mint your pieces (max 2 per wallet with this contract), and then check them out in the marketplace.
+
+DONE !!!!
+
+* Last optional step if you want to deploy a rough website that your friends can mess around with. Run:
+```
+cd lostandfound-zora-marketpalce
 yarn build
-```
-
-You can upload the assets in the /build/ folder anywhere, but there are also handy scripts to help:
-
-```
 yarn surge
 ```
 
-(See my example deployed to https://exampleoe40s.surge.sh)
+Save the URL and share with your friends. You now have your very own custom NFT project + ZORA powered marketplace live on rinkeby !!!
 
-OR
-
-```
-yarn s3
-```
-
-OR
-
-```
-yarn ipfs
-```
-
-👩‍❤️‍💋‍👩 Share your deployed frontend with your friends and have them mint!!!
-
-
-🍾 That's it! You've deployed a decentralized application on Optimism!!! 🚀
+Fin
