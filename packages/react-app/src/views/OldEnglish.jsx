@@ -4,7 +4,7 @@ import { Address } from "../components";
 import { ethers, BigNumber } from "ethers";
 
 //========== MY CUSTOM IMPORTS
-import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
+import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
 import "./Marketplace.css";
 import LF_Logo_V2_5 from "./LF_Logo_V2_5.png";
 //========== MY CUSTOM IMPORTS

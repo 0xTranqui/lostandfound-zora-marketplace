@@ -26,9 +26,9 @@ const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
 // Select the network you want to deploy to here:
 //
-const defaultNetwork = "rinkeby";
+const defaultNetwork = "mainnet";
 
-const mainnetGwei = 21;
+const mainnetGwei = 60;
 
 function mnemonic() {
   try {
@@ -73,18 +73,18 @@ module.exports = {
       */
     },
 
-    rinkeby: {
+/*     rinkeby: {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.RINKEBY_ALCHEMY_KEY}`,
-      accounts: [`${process.env.RINKEBY_DEPLOYER_PRIV_KEY}`],
-    },
+      accounts: [`${process.env.RINKEBY_DEPLOYER_PRIV_KEY2}`],
+    }, */
     // kovan: {
     //   url: `https://rinkeby.infura.io/v3/${process.env.KOVAN_INFURA_KEY}`,
     //   accounts: [`${process.env.KOVAN_DEPLOYER_PRIV_KEY}`],
     // },
-    // mainnet: {
-    //   url: `https://mainnet.infura.io/v3/${process.env.MAINNET_INFURA_KEY}`,
-    //   accounts: [`${process.env.MAINNET_DEPLOYER_PRIV_KEY}`],
-    // },
+    mainnet: {
+      url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.MAINNET_ALCHEMY_KEY}`,
+      accounts: [`${process.env.MAINNET_DEPLOYER_PRIV_KEY}`],
+    },
     // ropsten: {
     //   url: `https://ropsten.infura.io/v3/${process.env.ROPSTEN_INFURA_KEY}`,
     //   accounts: [`${process.env.ROPSTEN_DEPLOYER_PRIV_KEY}`],
@@ -125,7 +125,7 @@ module.exports = {
         mnemonic: mnemonic(),
       },
     },
-    mainnet: {
+/*     mainnet: {
       url: "https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
 
       //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/mainnet", // <---- YOUR MORALIS ID! (not limited to infura)
@@ -134,7 +134,7 @@ module.exports = {
       accounts: {
         mnemonic: mnemonic(),
       },
-    },
+    }, */
     ropsten: {
       url: "https://ropsten.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
 

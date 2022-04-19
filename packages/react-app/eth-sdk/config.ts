@@ -9,6 +9,7 @@ export default defineConfig({
          lostandFoundContract: '0x0E0e37De35471924F50598d55F7b69f93703fA01',
          lostandFoundContract2: '0x47686F3CE340bcb8609a5D65016d99B1299835e8',
          lostandFoundContract3: '0x288FC01ACcf7E053cD594AA18eff3e2D549600b7',
+         lostandFoundContract4: '0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06',
       },
    },
 })

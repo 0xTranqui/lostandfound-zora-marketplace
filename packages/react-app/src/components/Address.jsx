@@ -42,7 +42,7 @@ export default function Address(props) {
   const etherscanLink = blockExplorerLink(address, props.blockExplorer);
   let displayAddress = address?.substr(0, 4) + "..." + address?.substr(-4);
 
-  if (validEnsCheck) {
+  if (validEnsCheck == true & ens.length <= 13) {
     displayAddress = ens;
   } else if (props.size === "short") {
     displayAddress += "..." + address.substr(-4);

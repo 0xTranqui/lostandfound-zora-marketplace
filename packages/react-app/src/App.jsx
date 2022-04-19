@@ -26,7 +26,7 @@ import { OldEnglish, Mint, About } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 //====MY CUSTOM IMPORTS
-import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json";
+import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json";
 import linedPaperBackground from "./Lined_Paper_Background_For_Site.png";
 //====MY CUSTOM IMPORTS
 
@@ -56,7 +56,7 @@ const { ethers } = require("ethers");
 const DEBUG = true;
 const NETWORKCHECK = true;
 
-const targetNetworkString = "rinkeby" // <------ change this as you deploy do other networks
+const targetNetworkString = "mainnet" // <------ change this as you deploy do other networks
 
 const web3Modal = Web3ModalSetup();
 
@@ -71,11 +71,11 @@ function App(props) {
   const oldEnglishContract = "EightPack";
 
   //======my custom additions
-  const zoraTransferHelperContract = "zoraTransferHelper"; //change this in external_contracts.js to convert to rinkeby/mainnet
-  const zmmContract = "zoraModuleManager"; //change this in external_contracts.js to convert to rinkeby/mainnet
-  const zoraAsksContract = "zoraAsksV1_1Module"; //change this in external_contracts.js to convert to rinkeby/mainnet
-  const lostandfoundNFTContract = "lostandFoundContract3"; // update address of lostandFoundContract2 if redeploying an identical nft contract for testing purposes
-  const lostandfoundNFTContractAddress = "0x288FC01ACcf7E053cD594AA18eff3e2D549600b7"; // change this to the nft contract you want to be interacting with
+  const zoraTransferHelperContract = "zoraTransferHelperMAINNET"; //change this in external_contracts.js to convert to rinkeby/mainnet
+  const zmmContract = "zoraModuleManagerMAINNET"; //change this in external_contracts.js to convert to rinkeby/mainnet
+  const zoraAsksContract = "zoraAsksV1_1ModuleMAINNET"; //change this in external_contracts.js to convert to rinkeby/mainnet
+  const lostandfoundNFTContract = "lostandfoundContractMAINNET"; // update address of lostandFoundContract2 if redeploying an identical nft contract for testing purposes
+  const lostandfoundNFTContractAddress = "0xcAbE0e9e97b5d278c9496657658E2E53e1F18372"; // change this to the nft contract you want to be interacting with
   //======my custom additions
 
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
