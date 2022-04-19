@@ -1,6 +1,7 @@
 import { Alert, Button } from "antd";
 import React from "react";
 import { NETWORK } from "../constants";
+import "./networkDisplay.css";
 
 
 function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNetwork, logoutOfWeb3Modal }) {
@@ -85,14 +86,14 @@ function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNet
   } else {
     networkDisplay = (
       <div
+      className="headerNetworkDisplay"
       style={{
   /*       border: "2px solid black", */
         color: "#3e190f",
         display: "flex",
         flexDirection: "row",
         justifyContent: "end", 
-        alignItems: "end",
-        fontSize: "1.25rem"
+        alignItems: "end"
       }}>
         NETWORK : {targetNetwork.name.toUpperCase()}
       </div>

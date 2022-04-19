@@ -1,3 +1,14 @@
+:root {
+   --logo-width: 60%;
+   
+}
+
+@media (max-width: 750px) {
+   :root {
+      --logo-width: 90%;
+   }
+}
+
 .OldEnglish {
    display: flex;
    flex-wrap: wrap;
@@ -16,6 +27,11 @@
    flex-wrap: wrap;
    justify-content: center;
    width: 100%;
+}
+
+.logoWidth {
+   /* width: 60%; */
+   width: var(--logo-width);
 }
 
 .ownershipFilterWrapper {
@@ -325,7 +341,7 @@
 }
 
 .marketplaceActionButtons {
-   border: 1px solid blue;
+   border: 1px solid #0000ff;
    font-size: 1.2rem;
    display: flex;
    flex-direction: row;

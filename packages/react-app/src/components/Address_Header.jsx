@@ -3,6 +3,7 @@ import React from "react";
 import Blockies from "react-blockies";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import { useLookupAddress } from "eth-hooks/dapps/ens";
+import "./addressHeader.css"
 
 // changed value={address} to address={address}
 
@@ -75,10 +76,14 @@ export default function Address_Header(props) {
 
   return (
     <span>
-      <span style={{ color: "#3e190f", fontSize: "1.5rem" }}>
+      <span 
+      className="headerWalletText"
+      style={{ color: "#3e190f" }}>
         WALLET : 
       </span>
-      <span style={{ paddingLeft: 5, fontSize: props.fontSize ? props.fontSize : 28 }}>
+      <span
+      className="hexcodeText"
+      style={{ paddingLeft: 5 }}>
         {props.onChange ? (
           <Text editable={{ onChange: props.onChange }} copyable={{ text: address }}>
             <a
@@ -93,7 +98,7 @@ export default function Address_Header(props) {
         ) : (
           <Text copyable={{ text: address }}>
             <a
-              style={{ color: currentTheme === "light" ? "#222222" : "#3e190f", fontSize: "1.5rem" }}
+              style={{ color: currentTheme === "light" ? "#222222" : "#3e190f" }}
               target="_blank"
               href={etherscanLink}
               rel="noopener noreferrer"

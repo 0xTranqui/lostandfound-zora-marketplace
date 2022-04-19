@@ -132,7 +132,7 @@ function OldEnglish({
       <div className="mint">
          <div className="beforeMintRender">
             <div className="mintPageExplanation">
-               <img width="50%"  src={LF_Logo_V2_5}></img>
+               <img className="logoWidth" src={LF_Logo_V2_5}></img>
                <br /> 
                <div className="mintPageExplanationBody" >
                {"" + maxSupply - totalSupply} / {"" + maxSupply} PIECES REMAIN

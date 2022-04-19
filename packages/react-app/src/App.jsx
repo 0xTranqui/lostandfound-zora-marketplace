@@ -285,11 +285,6 @@ function App(props) {
     style={{background: `url(${linedPaperBackground})`, backgroundSize: "cover"  }}
     className="App"
     >
-      {/* ✏️ Edit the header and change the title to your project name */}
-      
-
-{/*       <Header /> */}
-
       <div className="header">
         <Menu
           style={{ textAlign: "start", backgroundColor: "transparent", borderBottom: "none"/* , border: "2px red solid" */ }} selectedKeys={[location.pathname]} mode="horizontal"

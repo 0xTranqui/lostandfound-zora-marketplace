@@ -528,7 +528,7 @@ function OldEnglish({
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
         <div >
-            <img width="60%" src={LF_Logo_V2_5}></img>
+            <img className="logoWidth" src={LF_Logo_V2_5}></img>
         </div>
         <div className="ownershipFilterWrapper">
           <div className="ownershipFilterOptions">
@@ -609,7 +609,7 @@ function OldEnglish({
                     style={{ border: "4px solid black", borderRadius: 2 }}
                     title={
                       <Popover                      
-                        overlayInnerStyle={{backgroundColor: "black", width: "100%", fontFamily: "oliver-regular"}}
+                        overlayInnerStyle={{backgroundColor: "#130020", width: "100%", fontFamily: "oliver-regular"}}
                         arrowPointAtCenter="false"
                         placement="top"
                         content={() => {
