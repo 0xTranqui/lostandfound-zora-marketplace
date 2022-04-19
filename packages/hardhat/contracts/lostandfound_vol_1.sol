@@ -31,7 +31,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 contract lostandfound_vol_1 is ERC721, IERC2981, ReentrancyGuard, Ownable {
    using Counters for Counters.Counter;
    
-   constructor(string memory customBaseURI_) ERC721("lostandfound_vol_1", "LF") {
+   constructor(string memory customBaseURI_) ERC721("Lost & Found, Vol. 1", "LF") {
       customBaseURI = customBaseURI_;
    }
 
