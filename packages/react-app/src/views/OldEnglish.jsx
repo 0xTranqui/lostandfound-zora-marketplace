@@ -589,7 +589,7 @@ function OldEnglish({
                     style={{ border: "4px solid black", borderRadius: 2 }}
                     title={
                       <Popover                      
-                        overlayInnerStyle={{backgroundColor: "#130020", width: "100%", fontFamily: "oliver-regular"}}
+                        overlayInnerStyle={{backgroundColor: "black", width: "100%", fontFamily: "oliver-regular"}}
                         arrowPointAtCenter="false"
                         placement="top"
                         content={() => {
