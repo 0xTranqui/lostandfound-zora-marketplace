@@ -1,14 +1,12 @@
-import { Alert, Button, Col, Menu, Row, Input, notification } from "antd";
+import {  Menu } from "antd";
 import "antd/dist/antd.css";
 import {
   useBalance,
   useContractLoader,
   useContractReader,
   useGasPrice,
-  useOnBlock,
   useUserProviderAndSigner
 } from "eth-hooks";
-import { useResolveEnsName} from "eth-hooks/dapps/ens/";
 import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
@@ -16,30 +14,20 @@ import "./App.css";
 import {
   Account,
   Contract,
-  Faucet,
-  GasGauge,
-  Header,
-  Ramp,
   ThemeSwitch,
   NetworkDisplay,
-  FaucetHint,
   NetworkSwitch,
 } from "./components";
 import { NETWORKS, ALCHEMY_KEY } from "./constants";
 import externalContracts from "./contracts/external_contracts";
-// contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, ExampleUI, Hints, Subgraph } from "./views";
-import { OldEnglish, Drinks, Mint, About } from "./views";
+import { OldEnglish, Mint, About } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
-import linedPaperBackground from "./Lined_Paper_Background_For_Site.png";
-
-
 //====MY CUSTOM IMPORTS
-//import { Price } from "@uniswap/sdk";
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json";
+import linedPaperBackground from "./Lined_Paper_Background_For_Site.png";
 //====MY CUSTOM IMPORTS
 
 const { ethers } = require("ethers");
@@ -88,12 +76,10 @@ function App(props) {
   const zoraAsksContract = "zoraAsksV1_1Module"; //change this in external_contracts.js to convert to rinkeby/mainnet
   const lostandfoundNFTContract = "lostandFoundContract3"; // update address of lostandFoundContract2 if redeploying an identical nft contract for testing purposes
   const lostandfoundNFTContractAddress = "0x288FC01ACcf7E053cD594AA18eff3e2D549600b7"; // change this to the nft contract you want to be interacting with
-
   //======my custom additions
 
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
-
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
@@ -164,16 +150,7 @@ function App(props) {
   // If you want to make 🔐 write transactions to your contracts, use the userSigner:
   const writeContracts = useContractLoader(userSigner, contractConfig, localChainId);
 
-  // EXTERNAL CONTRACT EXAMPLE:
-  //
-  // If you want to bring in the mainnet DAI contract it would look like:
-  const mainnetContracts = useContractLoader(mainnetProvider, contractConfig);
-
-  const priceToMint = useContractReader(readContracts, oldEnglishContract, "price");
-  
-  const limit = useContractReader(readContracts, oldEnglishContract, "limit");
-
-  // ****** my custom functionality
+  //======= CUSTOM FUNCTIONALITY
   const priceOfMint = useContractReader(readContracts, lostandfoundNFTContract, "PRICE");
   const totalSupply = useContractReader(readContracts, lostandfoundNFTContract, "totalSupply");
   const maxSupply =  useContractReader(readContracts, lostandfoundNFTContract, "MAX_SUPPLY");
@@ -191,9 +168,9 @@ function App(props) {
     lostandfoundNFTContract,
     "contractURI"
   );
+ //^this contract retreives the contractURI from the NFT contract
 
-  //======= bringing in external ZORA contracts
-  
+  //=======ZORA Protocol Approval Checks
   const erc721TransferHelperApproved = useContractReader(
     readContracts,
     lostandfoundNFTContract, //====***needs to be changed to eventual contract address
@@ -216,31 +193,10 @@ function App(props) {
 
   // keep track of a variable from the contract in the local React state:
   const balance = useContractReader(readContracts, oldEnglishContract, "balanceOf", [address]);
-
-  const buzzBalance = useContractReader(readContracts, "Buzz", "balanceOf", [address]);
-
-  //
-  // 🧠 This effect will update OldEnglishs by polling when your balance changes
-  //
-  const yourBalance = balance && balance.toNumber && balance.toNumber();
-
-  const [minting, setMinting] = useState(false);
-  const [startBlock, setStartBlock] = useState();
-
-  useEffect(() => {
-    if (startBlock == undefined && localProvider) {
-      const updateStartBlock = async () => {
-        let latestBlock = await localProvider.getBlock();
-        setStartBlock(latestBlock.number);
-      };
-      updateStartBlock();
-    }
-  }, [localProvider]);
-
   
 /*   const addressFromENS = useResolveEnsName(mainnetProvider, "austingriffith.eth");
   console.log("🏷 Resolved austingriffith.eth as:", addressFromENS) */
- 
+
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
@@ -271,15 +227,6 @@ function App(props) {
 
   const faucetAvailable = localProvider && localProvider.connection && targetNetwork.name.indexOf("local") !== -1;
 
-  //****** ERC721 Minting Functionality ********* 
-  /*
-  const [mintForm] = Form.useForm();
-  const mint = () => {
-    const [mintQuantity, setMintQuantity] = useState(0);
-  }
-  */
-
-
   return (
     <div
     style={{background: `url(${linedPaperBackground})`, backgroundSize: "cover"  }}
@@ -291,19 +238,19 @@ function App(props) {
           className="headerMenu"
         >
           <Menu.Item
-            style={{ /* border: "2px solid purple", */ width: "39%", margin: 0, padding: 0 }}
+            style={{ width: "39%", margin: 0, padding: 0 }}
             key="/"
           >
             <Link 
             to="/">
-              <button className="marketplaceButton" id="marketplaceButtonID" >
+              <button className="marketplaceButton">
                 MARKETPLACE
               </button>
             </Link>
           </Menu.Item>
 
           <Menu.Item 
-            style={{ /* border: "2px solid purple", */ width: "29%", margin: 0, padding: 0 }}         
+            style={{ width: "29%", margin: 0, padding: 0 }}         
             key="/mint"
           >
             <Link to="/mint">                
@@ -314,7 +261,7 @@ function App(props) {
           </Menu.Item>
 
           <Menu.Item
-            style={{ /* border: "2px solid purple", */ width: "29%", margin: 0, padding: 0 }}
+            style={{width: "29%", margin: 0, padding: 0 }}
             key="/about"
           >
             <Link to="/about">
@@ -374,53 +321,8 @@ function App(props) {
               priceOfMint={priceOfMint}
               maxSupply={maxSupply}
               balance={balance}
-              startBlock={startBlock}
             />
           </div>
-        </Route>
-        <Route exact path="/activity">
-          <div style={{ fontSize: 16, marginTop: 32 }}>
-            <Drinks
-              readContracts={readContracts}
-              mainnetProvider={mainnetProvider}
-              blockExplorer={blockExplorer}
-              totalSupply={totalSupply}
-              writeContracts={writeContracts}
-              localProvider={localProvider}
-              tx={tx}
-              address={address}
-              DEBUG={DEBUG}
-              oldEnglishContract={oldEnglishContract}
-              startBlock={startBlock}
-            />
-          </div>
-        </Route>
-        <Route exact path="/debug">
-          {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-
-          <Contract
-            name="Buzz"
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
-
-          <Contract
-            name={oldEnglishContract}
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
         </Route>
         <Route exact path="/mint">
           <div style={{  }}>
@@ -438,7 +340,6 @@ function App(props) {
               address={address}
               DEBUG={DEBUG}
               oldEnglishContract={oldEnglishContract}
-              startBlock={startBlock}
               priceOfMint={priceOfMint}              
               lostandfoundNFTContract={lostandfoundNFTContract}
             />
@@ -458,16 +359,15 @@ function App(props) {
               address={address}
               DEBUG={DEBUG}
               oldEnglishContract={oldEnglishContract}
-              startBlock={startBlock}
             />
           </div>
         </Route>               
       </Switch>
 
-{/*       <ThemeSwitch /> commenting out theme switch, always dark mode */}
+{/* COMMENTING OUT HELPFUL SCAFFOLD-ETH TOOLS NOT USED IN THIS PROJECT
+
+<ThemeSwitch /> commenting out theme switch, always dark mode */}
 {/*
-
-
       // 👨‍💼 Your account is in the top right with a wallet at connect options 
       <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 0 }}>
         <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
@@ -490,13 +390,9 @@ function App(props) {
             blockExplorer={blockExplorer}
           />
         </div>
-
-        
         <FaucetHint localProvider={localProvider} targetNetwork={targetNetwork} address={address} />
-        
       </div>
 */}
-
       {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
 {/*       <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
         <Row align="middle" gutter={[4, 4]}>
@@ -536,6 +432,9 @@ function App(props) {
           </Col>
         </Row>
       </div> */}
+
+
+
     </div>
   );
 }

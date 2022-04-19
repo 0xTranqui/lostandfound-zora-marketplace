@@ -2,6 +2,7 @@
    --logo-width: 60%;
    --placeholder-singleNFT-width: 40%;
    --singleNFT-width: 40%;
+   --mobile-padding-bottom: 0;
 }
 
 @media (max-width: 750px) {
@@ -9,6 +10,7 @@
       --logo-width: 90%;
       --placeholder-singleNFT-width: 70%;
       --singleNFT-width: 70%;
+      --mobile-padding-bottom: 120px;
    }
 }
 
@@ -17,12 +19,10 @@
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
-/*    background-color: red; */
    width: 100%;
    margin: 0;
    padding: 0;
    height: 100%;
-
 }
 
 .mintPageExplanation {
@@ -30,7 +30,6 @@
    flex-direction: column;
    align-items: center;
    color: #3e190f;
-/*    border: 1px red solid; */
 }
 
 .logoWidth {
@@ -39,12 +38,10 @@
 
 .mintPageExplanationHead {
    font-size: 2rem
-
 }
 
 .mintPageExplanationSubhead {
    font-size: 1.5rem
-
 }
 
 .mintPageExplanationBody {
@@ -67,13 +64,11 @@
 }
 
 .mintRenderWrapper {
-/*    border: 2px solid magenta; */
    display: flex;
    justify-content: center;
    justify-items: center;
    margin: 2% 4% 2% 4%;
    min-height: 40vh;
-/*    border: 2px red solid; */
 }
 
 .mintRenderOneNFT {
@@ -81,19 +76,17 @@
    grid-template-rows: .1fr 1fr;
    grid-template-columns: 1fr;
    height: 100%;
-/*    border: 1px white solid; */
    justify-items: center;
    align-items: center;
    margin: 0;
    padding: 0;
-/*    overflow: auto; */
+   padding-bottom: var(--mobile-padding-bottom);
 }
 
 .oneMintedNFTRenderTitle {
    display: grid;
    grid-row: 1 / 2;
    grid-column: 1 / 2;
-/*    border: 1px yellow solid; */
    margin-top: 10px;
    margin-bottom: 10px;
    font-size: 2rem;
@@ -105,7 +98,6 @@
    grid-row: 2 / 3;
    grid-column: 1 / 2;
    width: var(--singleNFT-width);
-/*    border: 1px red solid; */
    margin-bottom: 10px
 }
 
@@ -118,7 +110,6 @@
    align-items: center;
    margin: 0;
    padding: 0;
-/*    border: 2px white solid; */
    font-size: 2rem;
 }
 
@@ -128,7 +119,6 @@
    grid-column: 1 / 2;
    margin-top: 10px;
    margin-bottom: 10px;
-/*    border: 1px solid red; */
    font-size: 2rem;
    color: #3e190f;
 }
@@ -139,7 +129,6 @@
    grid-column: 2 / 3;
    margin-top: 10px;
    margin-bottom: 10px;
-/*    border: 1px solid yellow; */
    font-size: 2rem;
    color: #3e190f;
    
@@ -150,8 +139,6 @@
    grid-row: 2 / 3;
    grid-column: 1 / 2;
    width: 80%;
-
-/*    border: 1px turquoise solid; */
 }
 
 .twoMintedNFTRender2 {
@@ -159,7 +146,6 @@
    grid-row: 2 / 3;
    grid-column: 2 / 3;
    width: 80%;
-/*    border: 1px green solid; */
 }
 
 .placeholderPreMintNFTRender {
@@ -167,8 +153,8 @@
    grid-row: 2 / 3;
    grid-column: 1 / 2;
    width: var(--placeholder-singleNFT-width);
-/*    border: 1px red solid; */
-   margin-bottom: 10px
+   margin-bottom: 10px;
+
 }
 
 

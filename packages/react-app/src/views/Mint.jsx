@@ -1,22 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Input, notification, Switch, Typography, Menu, Dropdown, Select, Row } from "antd";
-import { RedoOutlined } from "@ant-design/icons";
-import { Address, AddressInput } from "../components";
-import { ethers } from "ethers";
-import { useDebounce } from "../hooks";
-import { useEventListener } from "eth-hooks/events/useEventListener";
+import { Button, Form, notification, Select } from "antd";
 
-//==========my custom import
-import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
+//========== my custom import
 import "./Mint.css";
 import LF_Logo_V2_5 from "./LF_Logo_V2_5.png";
 import Premint_Artwork from "./Untitled_Artwork.png";
 import Confetti from 'react-confetti';
-import { useWindowSize, useWindowWidth, useWindowHeight } from '@react-hook/window-size';
-//==========my custom import
+import { useWindowWidth, useWindowHeight } from '@react-hook/window-size';
+//========== my custom import
 
-var count = 0; ///this saves count that is used to determine what state setting is used when picking up mints
+var count = 0; // this saves count that is used to determine what state setting is used when tracking active user mints
 
 function OldEnglish({
    readContracts,
@@ -68,12 +62,6 @@ function OldEnglish({
          const mintedTokenId1 = tokenId;
          const metadataURL1 = "https://ipfs.io/ipfs/" + nftContractURI.substring(7) + "/" + mintedTokenId1 + ".token.json"; 
          const mintMetadataFetch1 = await fetch(metadataURL1);
-
-         console.log("mintedTokenId1 = ", mintedTokenId1);
-         console.log("metadataURL1 = ", metadataURL1);
-         console.log("mintMetadataFetch1 = ", mintMetadataFetch1);
-/*          console.log("tokenURI1", tokenURI1); */
-/*          console.log("v2_metadataURl1", v2_metadataURl1); */
          
          try {
             const metadataObject1 = await mintMetadataFetch1.json();
@@ -82,10 +70,6 @@ function OldEnglish({
             setMintImageURL1(imageURL1);
             setMintName1(nftName1);
 
-            console.log("metadataObject1 = ", metadataObject1);
-            console.log("imageURL1 = ", imageURL1);
-            console.log("mintImageURL1 = ", mintImageURL1);
-            console.log("mintName1 = ", mintName1);
          } catch(e) {
             console.log(e);
          }
@@ -99,10 +83,6 @@ function OldEnglish({
          const mintedTokenId2 = tokenId;
          const metadataURL2 = "https://ipfs.io/ipfs/" + nftContractURI.substring(7) + "/" + mintedTokenId2 + ".token.json";
          const mintMetadataFetch2 = await fetch(metadataURL2);
-
-         console.log("mintedTokenId2 = ", mintedTokenId2);
-         console.log("metadataURL2 = ", metadataURL2);
-         console.log("mintMetadataFetch2 = ", mintMetadataFetch2);
          
          try {
             const metadataObject2 = await mintMetadataFetch2.json();
@@ -111,10 +91,6 @@ function OldEnglish({
             setMintImageURL2(imageURL2);
             setMintName2(nftName2);
 
-            console.log("metadataObject2 = ", metadataObject2);
-            console.log("imageURL2 = ", imageURL2);
-            console.log("mintImageURL2 = ", mintImageURL2);
-            console.log("mintName2 = ", mintName2);
          } catch(e) {
             console.log(e);
          }
@@ -122,11 +98,6 @@ function OldEnglish({
          console.log(e);
       }
    };
-
-
-/*    useEffect(() => {
-      fetchMetadataMint1(mintedTokenID);
-   }) */
 
    return (
       <div className="mint">
@@ -148,7 +119,6 @@ function OldEnglish({
             <div>
                <Form
                   className="mintFormStyling"
-                  /* style={{border: "1px solid yellow"}} */
                   form={mintForm}
                   layout={"inline"}
                   name="mint"
@@ -160,12 +130,11 @@ function OldEnglish({
                   try {
                      const txCur = await tx(writeContracts[lostandfoundNFTContract].mint(
                         values["numberOfTokens"],
-                        { value: (priceOfMint * values["numberOfTokens"]).toString() }//* values["numberOfTokens"] ) }
+                        { value: (priceOfMint * values["numberOfTokens"]).toString() }
                      ));                     
                      await txCur.wait();
-                     // functionality that tracks the state of user tokenId mints
-                     const receipt = await txCur.wait();
-/*                      let mintedTokenID = null;   */                   
+                     // functionality that tracks the state of active user tokenId mints
+                     const receipt = await txCur.wait();                
                      for (const event of receipt.events) {
                         if (event.event !== 'Transfer') {
                            continue
@@ -186,7 +155,6 @@ function OldEnglish({
                               console.log("Mint Image URL after else = " + mintImageURL2)  
                         }
                         count += 1;
-/*                         console.log("count after end of for loop = " + count);   */
                      } 
                      setMint(false);
                      notification.open({
@@ -271,7 +239,6 @@ function OldEnglish({
                         <Confetti
                            height={document.body.scrollHeight}
                            width={width * .99}
-/*                         width={width} */
                         />
                         <div className="oneMintedNFTRenderTitle">LF #{tokenIdMinted1 + " - " + mintName1}</div>
                         <a
@@ -296,9 +263,7 @@ function OldEnglish({
                         <div className="oneMintedNFTRenderTitle">LF #? - Mint to Find Out</div>
                         <div className="placeholderPreMintNFTRender" >
                            <img src={Premint_Artwork} width="100%" />
-                        </div>
-{/*                         <div className="oneMintedNFTRenderTitle" style={{color: "#F0F66E"}}>WAITING FOR MINT</div>
-                        <div className="oneMintedNFTRender"></div>   */}                      
+                        </div>                  
                      </div>
                      )}
                   </>  

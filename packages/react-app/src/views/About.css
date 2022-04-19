@@ -2,8 +2,6 @@
    background-color: transparent;
    display: flex;
    flex-wrap: wrap;
-/*    background-color: red; */
-/*    border: 1px solid red; */
    width: 100%;
    margin: 0;
    padding: 0;
@@ -15,7 +13,6 @@
    flex-direction: row;
    flex-wrap: wrap;
    color: #3e190f;
-/*    border: 1px blue solid; */
 }
 
 .sections {
@@ -24,7 +21,6 @@
    margin-right: 10%;
    text-align: start;
    margin-bottom: 2%;
-/*    bordeR: 1px red solid; */
 }
 
 .aboutPageHeaders {

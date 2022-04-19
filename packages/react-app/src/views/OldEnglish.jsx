@@ -1,18 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Card, List, Spin, Popover, Form, Switch, Input, InputNumber, Radio, Space, Select, Cascader, DatePicker, TreeSelect } from "antd";
-import { BorderBottomOutlined, PicCenterOutlined, RedoOutlined, SoundFilled } from "@ant-design/icons";
-import { Address, AddressInput } from "../components";
-import { useDebounce } from "../hooks";
+import React, { useEffect, useState } from "react";
+import { Button, Card, List, Spin, Popover, Form, Switch, Input, Radio  } from "antd";
+import { Address } from "../components";
 import { ethers, BigNumber } from "ethers";
-import { useEventListener } from "eth-hooks/events/useEventListener";
 
-//==========my custom import
+//========== MY CUSTOM IMPORTS
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/4.json"; // Rinkeby addresses, 1.json would be Rinkeby Testnet 
 import "./Marketplace.css";
 import LF_Logo_V2_5 from "./LF_Logo_V2_5.png";
-
-//==========my custom import
+//========== MY CUSTOM IMPORTS
 
 function OldEnglish({
   readContracts,
@@ -26,10 +21,8 @@ function OldEnglish({
   localProvider,
   oldEnglishContract,
   balance,
-  startBlock,
-  ///=======my custom imports
-/*   zoraTransferHelperContract,
-*/
+//========== MY CUSTOM IMPORTS
+/*   zoraTransferHelperContract, */
   zmmContract,
   zoraAsksContract,
   lostandfoundNFTContract,
@@ -37,14 +30,14 @@ function OldEnglish({
   erc721TransferHelperApproved,
   zoraModuleManagerApproved,
   maxSupply
-  ///=======my custom imports
+//========== MY CUSTOM IMPORTS
 }) {
   const [allOldEnglish, setAllOldEnglish] = useState({});
   const [loadingOldEnglish, setLoadingOldEnglish] = useState(true);
   const perPage = 12;
   const [page, setPage] = useState(0);
 
-  //===CUSTOM STATE SETTING TO HANDLE FINDERS FEE INPUT LOGIC
+  //===CUSTOM STATE SETTING TO HANDLE FINDERS FEE FORM INPUT LOGIC
   const [createFinderIsDisabled, setCreateFinderIsDisabled] = useState(true);
   
   const createHandleClickFalse = () => {
@@ -65,26 +58,26 @@ function OldEnglish({
     setFillFinderIsDisabled(true)
   };
 
-  //====my custom addition
+  //=====FUNCTIONALITY ADDITION
   const fetchMetadataAndUpdate = async id => {
     try {
       const tokenURI = await readContracts[lostandfoundNFTContract].tokenURI(id);
       const nftMetadataURL = "https://ipfs.io/ipfs/" + tokenURI.substring(7); 
       const nftMetadataFetch = await fetch(nftMetadataURL); 
 
-      //===CUSTOM UPDATE
+      //===== CUSTOM UPDATE
       const seller = await readContracts[zoraAsksContract].askForNFT(lostandfoundNFTContractAddress, id);
       const ownerAddress = await readContracts[lostandfoundNFTContract].ownerOf(id);
       const ownerAddressCleaned = ownerAddress.toString().toLowerCase();
-      //===CUSTOM UPDATE
+      //===== CUSTOM UPDATE
 
       try {
         const nftMetadataObject = await nftMetadataFetch.json();
         const collectibleUpdate = {};
 
-        //===CUSTOM UPDATE, added askSeller: seller and nftOwner: ownerAddress as key:value pairs
+        //===== CUSTOM UPDATE, added askSeller: seller and nftOwner: ownerAddress as key:value pairs
         collectibleUpdate[id] = { id: id, uri: tokenURI, askSeller: seller, nftOwner: ownerAddressCleaned, ...nftMetadataObject};
-        //====CUSTOM UPDATE
+        //====== CUSTOM UPDATE
 
         setAllOldEnglish(i => ({ ...i, ...collectibleUpdate }));
       } catch (e) {
@@ -94,7 +87,6 @@ function OldEnglish({
       console.log(e);
     }
   };
-
 
   const updateAllOldEnglish = async () => {
     if (readContracts[lostandfoundNFTContract] && totalSupply) {
@@ -151,9 +143,7 @@ function OldEnglish({
     });
   }
 
-  //========MY CUSTOM FUNCTIONALITY=======
-
-  //********* CREATE ASK FLOW ***********
+  //========== ZORA CREATE ASK FLOW ==========
   const [createAskForm] = Form.useForm();
   const createAsk = id => {
     const [listing, setListing] = useState(false);
@@ -161,7 +151,6 @@ function OldEnglish({
     return (
       <div >
         <Form
-/*           className="createAskFormPopoverManager" */ // not using actively
           layout={"horizontal"}
           form={createAskForm}
           name="create ask"
@@ -258,7 +247,7 @@ function OldEnglish({
     );
   };  
 
-  //********* Set Ask Price FLOW ***********
+  //========== ZORA CREATE ASK FLOW ==========
   const [setAskForm] = Form.useForm();
   const updateAskPrice = id => {
     const [set, setSet] = useState(false);
@@ -322,7 +311,7 @@ function OldEnglish({
     );
   };  
 
-  //********* Cancel Ask FLOW ***********
+  //========== ZORA CANCEL ASK FLOW ==========
   const [cancelAskForm] = Form.useForm();
   const cancelAsk = id => {
     const [cancel, setCancel] = useState(false);
@@ -368,7 +357,7 @@ function OldEnglish({
     );
   };  
 
-  //********* Fill Ask FLOW ***********
+  //========== ZORA FILL ASK FLOW ==========
   const [fillAskForm] = Form.useForm();
   const fillAsk = id => {
     const [fill, setFill] = useState(false);
@@ -378,7 +367,6 @@ function OldEnglish({
         <Form
           className="filllAskFormPopoverManager"      
           form={fillAskForm}
-/*           layout={"inline"} */
           name="fill ask "
           initialValues={{ 
             tokenId: id,
@@ -447,19 +435,8 @@ function OldEnglish({
     return (
       <div className="approvalPopOverManager">
         <div className="pleaseApprovePopover">
-        Lost & Found is built on the ZORA marketplace protocol. Please sign the following approvals to allow the protocol to interact with your assets : {/* ↓ ↓ */}
+          Lost & Found is built on the ZORA marketplace protocol. Please sign the following approvals to allow the protocol to interact with your assets : {/* ↓ ↓ */}
         </div>
-
-        {/* commenting out refresh button 
-        <Button
-          onClick={() => {
-            return updateAllOldEnglish();
-          }}              
-        >
-          Refresh              
-        </Button>
-        */}
-
         {erc721TransferHelperApproved == true ? (
           <div
             className="erc721ApprovedPopover"
@@ -528,16 +505,16 @@ function OldEnglish({
     <div className="OldEnglish">
       <div className="beforeTokenRender"> 
         <div >
-            <img className="logoWidth" src={LF_Logo_V2_5}></img>
+          <img className="logoWidth" src={LF_Logo_V2_5}></img>
         </div>
         <div className="ownershipFilterWrapper">
           <div className="ownershipFilterOptions">
             FULL COLLECTION
           </div>
           <Switch
-          className="ownershipFilterSwitch"
+            className="ownershipFilterSwitch"
             disabled={loadingOldEnglish}
-            style={{ height: "50%", width: "5%", border: "4px #3e190f solid", backgroundColor: "#c1a79f" }}
+            style={{ height: "60%", width: "5%", border: "4px #3e190f solid", backgroundColor: "#c1a79f" }}
             value={mine}
             onChange={() => {
               setMine(!mine);
@@ -568,7 +545,9 @@ function OldEnglish({
             align="center"
             locale={{ emptyText: `Fetching Markteplace Items...` }}
                         
-            /* commenting out pagination (having multiple pages of NFTs)
+            /*
+            commenting out pagination since its helpful but not used in this project (having multiple pages of NFTs)
+            
             pagination={{
               total: mine ? filteredOEs.length : totalSupply,
               defaultPageSize: perPage,
@@ -580,6 +559,7 @@ function OldEnglish({
               showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${mine ? filteredOEs.length : maxSupply} items`,
             }}
+
             */
             
             loading={loadingOldEnglish}
@@ -655,7 +635,7 @@ function OldEnglish({
                             FINDER'S FEE : N/A
                             </div>
                           </div>
-                          { erc721TransferHelperApproved == false || zoraModuleManagerApproved == false ? ( // listing inactive | marketplace protocols not approved
+                          { erc721TransferHelperApproved == false || zoraModuleManagerApproved == false ? ( // listing inactive  &  marketplace protocols not approved
                           <div className="approvals_and_functions_wrapper">
                             <Popover
                               className="popoverMaster"
@@ -682,7 +662,7 @@ function OldEnglish({
                           </div>
                           ) : (
                             <>
-                              { item.nftOwner == address.toLowerCase() ? ( // listing inactive | marketplace protocols approved | user is owner
+                              { item.nftOwner == address.toLowerCase() ? ( // listing inactive  &  marketplace protocols approved  &  app user is owner
                                 <div className="approvals_and_functions_wrapper">
                                   <Button
                                     className="marketplaceApprovalButton"
@@ -695,7 +675,6 @@ function OldEnglish({
                                   <div className="marketplaceManager">
                                   <Popover
                                     placement="top"
-                                    /* style={{ display: "flex", flexDirection: "column", jusitfyContent: "center" }} */
                                       content={() => {                                                        
                                         return createAsk(id);
                                       }}
@@ -707,7 +686,7 @@ function OldEnglish({
                                     <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>                              
                                   </div>  
                                 </div> 
-                                ) : ( // listing inactive | marketplace protocols approved | user not owner
+                                ) : ( // listing inactive  &  marketplace protocols approved  &  user not owner
                                 <div className="approvals_and_functions_wrapper">
                                   <Button
                                     className="marketplaceApprovalButton"
@@ -726,7 +705,7 @@ function OldEnglish({
                                 </div>
                               )} 
                             </>
-                          )} {/* END OF INACTIVE SALE LOG */}
+                          )} {/* END OF INACTIVE SALE LOGIC */}
                         </div>
                       ) : ( // listing active
                         <div className="activityWrapper">
@@ -750,7 +729,7 @@ function OldEnglish({
                             FINDER'S FEE : {item.askSeller.findersFeeBps / 100} % 
                             </div>
                           </div>
-                          { erc721TransferHelperApproved == false || zoraModuleManagerApproved == false ? ( // listing active | marketplace protocols not approved
+                          { erc721TransferHelperApproved == false || zoraModuleManagerApproved == false ? ( // listing active  &  marketplace protocols not approved
                           <div className="approvals_and_functions_wrapper">
                             <Popover
                               className="popoverMaster"
@@ -777,7 +756,7 @@ function OldEnglish({
                           </div>
                           ) : (     
                             <>
-                              { item.nftOwner == address.toLowerCase() ? ( // listing active | marketplace protocols approved | user is owner
+                              { item.nftOwner == address.toLowerCase() ? ( // listing active  &  marketplace protocols approved  &  app user is owner
                                 <div className="approvals_and_functions_wrapper">
                                   <Button
                                     className="marketplaceApprovalButton"
@@ -807,7 +786,7 @@ function OldEnglish({
                                     <Button disabled={true} style={{ borderRadius: 2, border: "1px solid black", fontSize: "1.4rem", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} type="primary">BUY</Button>
                                   </div>  
                                 </div> 
-                                ) : ( // listing active | marketplace protocols approved | user not owner
+                                ) : ( // listing active  &  marketplace protocols approved  &  app user is not owner
                                 <div className="approvals_and_functions_wrapper">
                                   <Button
                                     className="marketplaceApprovalButton"
