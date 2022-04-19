@@ -70,11 +70,11 @@ const providers = [
 function App(props) {
   const oldEnglishContract = "EightPack";
 
-  //======my custom additions
-  const zoraTransferHelperContract = "zoraTransferHelperMAINNET"; //change this in external_contracts.js to convert to rinkeby/mainnet
-  const zmmContract = "zoraModuleManagerMAINNET"; //change this in external_contracts.js to convert to rinkeby/mainnet
-  const zoraAsksContract = "zoraAsksV1_1ModuleMAINNET"; //change this in external_contracts.js to convert to rinkeby/mainnet
-  const lostandfoundNFTContract = "lostandfoundContractMAINNET"; // update address of lostandFoundContract2 if redeploying an identical nft contract for testing purposes
+  //======External Contract Pointers (points to contract ABIs stored in react-app/src/contracts/external_contracts.js )
+  const zoraTransferHelperContract = "zoraTransferHelperMAINNET"; 
+  const zmmContract = "zoraModuleManagerMAINNET";
+  const zoraAsksContract = "zoraAsksV1_1ModuleMAINNET";
+  const lostandfoundNFTContract = "lostandfoundContractMAINNET"; 
   const lostandfoundNFTContractAddress = "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036"; // change this to the nft contract you want to be interacting with
   //======my custom additions
 
