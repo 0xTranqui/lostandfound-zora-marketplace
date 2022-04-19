@@ -7,13 +7,13 @@ function OldEnglish({}) {
          <div className="aboutPage">
             <div className="sections">
                <div className="aboutPageHeaders">
-                  WHAT IS THIS SITE / PROJECT
+                  WHAT IS THIS PROJECT / SITE
                </div>
                <div className="aboutPageBody">
+                   - What you see here is Danny's first step into reclaiming the value and context of his art which has been been held for ransom from predatory third-parties in previous iterations of fan economies. Lost & Found, Vol. 1 is the first collection of the greater Lost & Found universe <br />
+                  - The next focus will be developing storylines and relationships between the characters through comic book strips and animated shorts. We’ll be adding new characters to the universe along with new color ways and different species in the same style as Vol. 1. Danny will create theme songs for specific characters. We’d also like to begin curating some of our favorite artwork in the Web3 world directly on this site. Eventually the hope is to inspire our favorite Web3 artists to create their own versions of these characters. Imagine a weekly reveal where the character is done in 5 different iterations by 5 different artists such as Defaced or CopyArt. All major decisions for this project will be influenced by owners + broader community.      
                   - This site serves as a direct link between Danny Diamonds and people looking to interact with his work <br/>
                   - The marketplace functionality is build on top of the <a href="https://zine.zora.co/zora-v3"><u>ZORA Protocol</u></a>, which is a public / permisssionesless / free-to-use marketplace protocol that enables creators to own their own marketplaces and curate custom experiences for their communities<br/>
-                  - What you see here is Danny's first step into reclaiming the value and context of his art which has been been held for ransom from predatory third-parties in previous iterations of fan economies<br />
-                  - Lost & Found, Vol. 1 is the first collection of the greater Lost & Found universe. Sit back and enjoy the show...
                </div>
             </div>
             <div className="sections">
@@ -21,8 +21,8 @@ function OldEnglish({}) {
                   WHO IS <a href="https://twitter.com/dannydiamondss"><u>DANNY DIAMONDS</u></a>
                </div>
                <div className="aboutPageBody">
-                  - Danny Diamonds is a multidisciplinary artist that is primarily known for his music. His songs have gotten over 8M streams across all major streaming platforms <br />
-                  - He’s also been an illustrator and visual artist his entire life. Up until 2021 his visual work manifested exclusively as cover art and merchandise. Since then he’s dived fully into Web3 with multiple successful NFT drops <br /> 
+                  - Daniel Levitov is a multidisciplinary artist who has immersed himself in both musical and visual arts since a young age. While he is predominately known for his musical career under the stage name Danny Diamonds, his graphic design abilities have always played an important role in every creative project he’s released<br />
+                  - Recently he’s seized web3 as an opportunity to strip away the intermediaries between his work and his fanbase<br />
                </div>
             </div>
             <div className="sections">
