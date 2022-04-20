@@ -2,7 +2,7 @@
 
 > A starter kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols
 
-Opensea who???
+Opensea who??? 😈 😈 😈
 
 ---
 
@@ -69,17 +69,17 @@ suitable environment for testing
 
 *** App.jsx Updates (packages/react-app/src/App.jsx) ***
 
-- Line 29: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"\
-- Line 59: Replace "mainnet" with "rinkeby"\
-- Line 74: Replace "zoraTransferHelperMAINNET" with "zoraTransferHelper"\
-- Line 75: Replace "zoraModuleManagerMAINNET" with "zoraModuleManager"\
-- Line 76: Replace "zoraAsksV1_1ModuleMAINNET" with "zoraAsksV1_1Module"\
-- Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"\
+- Line 29: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
+- Line 59: Replace "mainnet" with "rinkeby"
+- Line 74: Replace "zoraTransferHelperMAINNET" with "zoraTransferHelper"
+- Line 75: Replace "zoraModuleManagerMAINNET" with "zoraModuleManager"
+- Line 76: Replace "zoraAsksV1_1ModuleMAINNET" with "zoraAsksV1_1Module"
+- Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"
 - Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"
 
 *** OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx) ***
 
-> Line 7: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
+- Line 7: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
 
 When you press save (on both files) to run this code, you will get a pop up on the site that alerts you that you are on the wrong network and you
 need to switch to rinkeby to continue using the app. Follow those instructions :)
@@ -89,9 +89,9 @@ If you have completed all these steps, you should now be looking at a locally ho
 The ZORA contract protocols have been swapped for their rinkeby counterparts, and the Lost & Found, Vol. 1 NFT collection has been
 swapped with a rinkeby version of it with the same exact metadata (this was one of the test contracts I used during the creation of this project)
 
-You can now experiment with interacting with the ZORA marketplace protocol in a no-cost environment (you just need some rinkeby-ETH, which you can get here: https://rinkebyfaucet.com/). I encourage you to check out views/OldEnglish.jsx to look at how the interactions with the ZORA protocol are implemented. I relied heavily on great [documentation](https://docs.zora.co/docs/guides/sell-nft-fixed-price) from the ZORA Engineering team to build this out. 
+You can now experiment with interacting with the ZORA marketplace protocol in a no-cost environment (you just need some rinkeby-ETH, which you can get here: https://rinkebyfaucet.com/). I encourage you to check out react/app/src/views/OldEnglish.jsx to look at how the interactions with the ZORA protocol are implemented. I relied heavily on great [documentation](https://docs.zora.co/docs/guides/sell-nft-fixed-price) from the ZORA Engineering team to build this out. 
 
-You can also experiment with changing the structure / style of the website (if yellow lined-paper isn't your thing) by playing with
+You can also experiment with changing the structure + style of the website (if yellow lined-paper isn't your thing) by playing with
 Marketplace.css (which styles OldEnglish.jsx), App.css, Mint.css, and About.css (among others). Build something crazy, and share it with me on twitter at https://twitter.com/0xTranqui !!!
 
 So now you know how to set up the front end of a ZORA marketplace that allows you to list/buy/sell NFTs in a completely on-chain + permisionless fashion. This is a huge first step, as most of the web3 universe still relies on broad market aggregators like Opensea to facilitate NFT marketplace interactions. Relying on platforms like Opensea, particularly ones who's underlying protocol is not fully on-chain (like Opensea) is not healthy for the long term health / stability of the greater web3 ecosystem. If you want to learn more about why, check out this thread I wrote on the subject:
@@ -105,15 +105,15 @@ To begin, here is a (lengthy) step-by-step guide to creating and storing your ow
 
 *** Metadata creation + IPFS file storage tutorial ***
 
-> Go to https://www.721.so/\
-> Click on "create an NFT collection" Artiki flow\
-> Create New Collection (we will be uploading our own art for this)\
-> Click the nav burger in the top left corner\
-> Click "tokens" -> "set collection size" -> set your collection size (set it to 12 if you want it to match with the template NFT smart contract in this repo)\
-> Uncheck the "File To Duplicate" Box, and click "Update Collection"\
-> Click the arrow arrow next to the 2 x 2 box that sits underneath the nav burger we clicked previously\
-> Click on the metadata folder to expand it\
-> For each token.json file, fill in the name, description, and upload an image file (from your computer). If you don't have any art to use,
+- Go to https://www.721.so/
+- Click on "create an NFT collection" Artkit flow
+- Create New Collection (we will be uploading our own art for this)
+- Click the nav burger in the top left corner
+- Click "tokens" -> "set collection size" -> set your collection size (set it to 12 if you want it to match with the template NFT smart contract in this repo)
+- Uncheck the "File To Duplicate" Box, and click "Update Collection"\
+- Click the arrow arrow next to the 2 x 2 box that sits underneath the nav burger we clicked previously
+- Click on the metadata folder to expand it
+- For each token.json file, fill in the name, description, and upload an image file (from your computer). If you don't have any art to use,
 use the free-to-use CC0 art from the Lost & Found, Vol. 1 collection! Here's a [link](https://bafybeid4o3j72f6bks2t6iwgjjymd3oucayinbna6bg3drjkvyisrucsw4.ipfs.dweb.link/) to the metadata folder holding the .png files (even better, download this art, remix it, and then tag [me](https://twitter.com/0xTranqui) and the [artist](https://twitter.com/dannydiamondss) in your final product when you finish!!!) 
   - For example file sizes, the Lost & Found, Vol. 1 collection used .png files between 3-5 MB, all with 1:1 aspect ratios\
   - The "Animation URL" and "External URL" allow you to upload multimedia files / links to static HTML websites, howver you still need to provide\
