@@ -75,7 +75,7 @@ suitable environment for testing
 > Line 75: Replace "zoraModuleManagerMAINNET" with "zoraModuleManager"\
 > Line 76: Replace "zoraAsksV1_1ModuleMAINNET" with "zoraAsksV1_1Module"\
 > Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"\
-> Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"\
+> Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"
 
 *** OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx) ***
 
