@@ -188,4 +188,4 @@ yarn surge
 
 Save the URL and share with your friends. You now have your very own custom NFT project + ZORA powered marketplace live on rinkeby !!!
 
-Fin
+Fin 🏁🏁
