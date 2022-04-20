@@ -1,8 +1,8 @@
-# Lost & Found marketplace powered by ZORA
+# Lost & Found NFT Marketplace Powered by ZORA
 
 > A starter kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols
 
-Follow this guide to learn how to deploy your own NFT collection and custom marketplace. Opensea who???
+Opensea who???
 
 ---
 
@@ -30,7 +30,7 @@ and one at the root level of packages/hardhat
 cd lostandfound-zora-marketplace
 code . 
 ```
-> Expand the packages dropdown, and then right click on the react-app folder and create a new file. Name this file ".env"
+> Navigate to + expand the the packages directory, and then right click on the react-app folder and create a new file. Name this file ".env"
 Add in the following 2 lines of code:
 ```
 REACT_APP_ALCHEMY_KEY = enter your key here (without quotes)
@@ -38,7 +38,7 @@ REACT_APP_ETHERSCAN_KEY= enter your key here (without quotes)
 ```
 This allows the constants.js file in the react-app/src directory to pull these keys into the react-app without needing to expose them publicly.
 
-> Expand the packages dropdown, and then right click on the hardhat folder and create a new file. Name this file ".env"
+> Navigate to + expand the the packages directory, and then right click on the hardhat folder and create a new file. Name this file ".env"
 Add in the following 6 lines of code (the mainnet lines are optional) :
 ```
 RINKEBY_ALCHEMY_KEY = enter your key here (without quotes)
@@ -54,7 +54,7 @@ verification functionality we will be implementing without having to expose them
 
 Back to the front end...
 
-From here, you can now run the following code to interact with your own local frontend that points at the existing Lost & Found marketplace located at   https://www.lostfound.world/. All you have to do is run the following from the root level of the project directory:
+From here, you can now run the following code to interact with your own local frontend that points at the existing Lost & Found marketplace located at   https://www.lostfound.world/. Note: it won't work unless you have set up the .env in pacakges/react-app. All you have to do is run the following from the root level of the project directory:
 ```
 cd lostandfound-zora-marketplace
 yarn start
@@ -69,13 +69,13 @@ suitable environment for testing
 
 *** App.jsx Updates (packages/react-app/src/App.jsx) ***
 
-> Line 29: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"\
-> Line 59: Replace "mainnet" with "rinkeby"\
-> Line 74: Replace "zoraTransferHelperMAINNET" with "zoraTransferHelper"\
-> Line 75: Replace "zoraModuleManagerMAINNET" with "zoraModuleManager"\
-> Line 76: Replace "zoraAsksV1_1ModuleMAINNET" with "zoraAsksV1_1Module"\
-> Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"\
-> Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"
+- Line 29: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"\
+- Line 59: Replace "mainnet" with "rinkeby"\
+- Line 74: Replace "zoraTransferHelperMAINNET" with "zoraTransferHelper"\
+- Line 75: Replace "zoraModuleManagerMAINNET" with "zoraModuleManager"\
+- Line 76: Replace "zoraAsksV1_1ModuleMAINNET" with "zoraAsksV1_1Module"\
+- Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"\
+- Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"
 
 *** OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx) ***
 
