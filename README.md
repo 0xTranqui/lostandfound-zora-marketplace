@@ -81,7 +81,7 @@ suitable environment for testing
 
 > Line 7: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
 
-When you press save (on both files) to run this code, you will get a pop up that alerts you that you are on the wrong network and you
+When you press save (on both files) to run this code, you will get a pop up on the site that alerts you that you are on the wrong network and you
 need to switch to rinkeby to continue using the app. Follow those instructions :)
 
 If you have completed all these steps, you should now be looking at a locally hosted + rinkeby version of https://www.lostfound.world/ !!!
