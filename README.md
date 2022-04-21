@@ -85,7 +85,7 @@ suitable environment for testing
 
 When you press save (on both files) to run this code, you will get a pop up on the site that alerts you that you are on the wrong network and you
 need to switch to rinkeby to continue using the app. Follow those instructions :)
-[![Screen-Shot-2022-04-21-at-2-50-49-PM.png](https://i.postimg.cc/m2PxBpkM/Screen-Shot-2022-04-21-at-2-50-49-PM.png)](https://postimg.cc/SJb1GrWN)
+[![Screen-Shot-2022-04-21-at-2-53-39-PM.png](https://i.postimg.cc/CKLXrc3z/Screen-Shot-2022-04-21-at-2-53-39-PM.png)](https://postimg.cc/CRXczsLg)
 
 
 If you have completed all these steps, you should now be looking at a locally hosted + rinkeby version of https://www.lostfound.world/ !!!
