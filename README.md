@@ -7,15 +7,15 @@ This guide will walk you step-by-step through the process of deploying your own 
 I cannot emphasize enough how important it is to be able to build on top of a public marketplace protocol that is both immutable (code will never change) + permisonless (no one can prevent you from access the code). For context, most of the web3 universe still relies on broad market aggregators like Opensea to facilitate the buying/selling of NFTs. However, relying on platforms like Opensea who use protocols that move crucial marketplace functions off-chain (ex: final settlement of orders) creates an enormous level of risk to the long term health + stability of the web3 ecocystem by introducing blackboxes around market data and the need to trust a centralized party (ex: Opensea) to remain a "good actor" in perpetuity. 
 
 This repo gives you the tools to break the cycle, and claim full ownership/soveriengty over your digital assets and the marketplace where they are bought and sold. All made possible by the ZORA public marketplace protocol.
-___
+---
 ## 🏄‍♂️ Getting Started - IDE Setup + Environment Variables
 
-> clone the repo
+> Clone the repo
 ```
 gh repo clone 0xTranqui/lostandfound-zora-marketplace
 ```
 
-> install
+> Install
 ```
 cd lostandfound-zora-marketplace
 yarn install
@@ -26,13 +26,13 @@ This 🏗 scaffold-eth fork is pointed at the **Ethereum Mainnet** out of the bo
 Before we do anything, we will set up our environment variables which are needed to interact with both the frontend marketplace and 
 contract deployment functionality of this repo. We will be setting up two different .env files, one at the root level of packages/react-app
 and one at the root level of packages/hardhat
-
-> Open up your text editor (this guide assumes VSCode) to better navigate through your files:
+\
+Open up your text editor (this guide assumes VSCode) to better navigate through your files:
 ```
 cd lostandfound-zora-marketplace
 code . 
 ```
-> Navigate to + expand the the packages directory, and then right click on the react-app folder and create a new file. Name this file ".env"
+Navigate to + expand the the packages directory, and then right click on the react-app folder and create a new file. Name this file ".env"
 Add in the following 2 lines of code:
 ```
 REACT_APP_ALCHEMY_KEY = enter your key here (without quotes)
@@ -40,7 +40,7 @@ REACT_APP_ETHERSCAN_KEY= enter your key here (without quotes)
 ```
 This allows the constants.js file in the react-app/src directory to pull these keys into the react-app without needing to expose them publicly.
 
-> Navigate to + expand the the packages directory, and then right click on the hardhat folder and create a new file. Name this file ".env"
+Navigate to + expand the the packages directory, and then right click on the hardhat folder and create a new file. Name this file ".env"
 Add in the following 6 lines of code (the mainnet lines are optional) :
 ```
 RINKEBY_ALCHEMY_KEY = enter your key here (without quotes)
@@ -69,7 +69,7 @@ mainnet ethereum as well. You are "yarn-starting" into a production ready app!
 We'll come back to learning how to edit the front end, but first lets reconfigure the app so that it points at rinkeby which is a more 
 suitable environment for testing
 
-#### App.jsx Updates (packages/react-app/src/App.jsx)
+### App.jsx Updates (packages/react-app/src/App.jsx)
 
 - Line 29: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
 - Line 59: Replace "mainnet" with "rinkeby"
@@ -79,12 +79,14 @@ suitable environment for testing
 - Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"
 - Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"
 
-#### OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx)
+### OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx)
 
 - Line 7: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
 
 When you press save (on both files) to run this code, you will get a pop up on the site that alerts you that you are on the wrong network and you
 need to switch to rinkeby to continue using the app. Follow those instructions :)
+![Uploading Screen Shot 2022-04-21 at 2.45.52 PM.png…]()
+
 
 If you have completed all these steps, you should now be looking at a locally hosted + rinkeby version of https://www.lostfound.world/ !!!
 
