@@ -119,13 +119,13 @@ use the free-to-use CC0 art from the Lost & Found, Vol. 1 collection! Here's a [
   - The "Animation URL" and "External URL" allow you to upload multimedia files / links to static HTML websites, howver you still need to provide\
     an image file to act as a thumbnail if you are planning to link to an animation/external URL
   - You can also add in attributes for each NFT below the main data section
-  - Obviously repeating this process for large collections could be very time consuming, so luckily there is some nice UI that allows you to shift click    on multiple tokens at once to apply edits to multiple files at the same time\
-  - Once complete, click on the urger again and go to file -> save as. This will save a .zip copy of your metadata, which you shold store locally for record keeping
-  - Now that youre metadata is set + saved, go to the burger again and click publish -> upload to IPFS
-  - You will then get prompted to get an API key from nft.storage (IPFS pinning service). Go and do this -> https://nft.storage/ -> login (make an account) -> API keys -> New key -> copy key and paste back into the API key input we left off on at https://www.721.so/\
-  - "Click Publish to IPFS!"
-  - Wait for the files to be pinned, and you'll eventually see two checkmarks that tell you the process is complete. One is for uploading of the assets (.png files), the other is for uploading the metadata (.json files that include a key called "image" who's value-pair is a link to the corresponding .png file for that token).
-  - You will be prompted with two different things to copy. Save them both for later, we will need them !!! Also follow the links to the assets folder and metadata folder provided at the bottom of the popup and save those links for easy nagivation later as well.\
+- Obviously repeating this process for large collections could be very time consuming, so luckily there is some nice UI that allows you to shift click    on multiple tokens at once to apply edits to multiple files at the same time\
+- Once complete, click on the urger again and go to file -> save as. This will save a .zip copy of your metadata, which you shold store locally for record keeping
+- Now that youre metadata is set + saved, go to the burger again and click publish -> upload to IPFS
+- You will then get prompted to get an API key from nft.storage (IPFS pinning service). Go and do this -> https://nft.storage/ -> login (make an account) -> API keys -> New key -> copy key and paste back into the API key input we left off on at https://www.721.so/\
+- "Click Publish to IPFS!"
+- Wait for the files to be pinned, and you'll eventually see two checkmarks that tell you the process is complete. One is for uploading of the assets (.png files), the other is for uploading the metadata (.json files that include a key called "image" who's value-pair is a link to the corresponding .png file for that token).
+- You will be prompted with two different things to copy. Save them both for later, we will need them !!! Also follow the links to the assets folder and metadata folder provided at the bottom of the popup and save those links for easy nagivation later as well.\
 
 That's it! At this point, you could actually continue forward creating your own contract with the 721.so contract builder, and then creating your own minting page using the 721.so mint page builder. Both are amazing tools which I have used in the past. For our case, we are going to leave studio https://www.721.so/ to deploy our own smart contract already configured in our packages/hardhat directory of this repo, which we can then mint from using the minting page that is also set up in the website template as well\
 
