@@ -1,8 +1,14 @@
 # Lost & Found NFT Marketplace Powered by ZORA ☼☽
 
-### A starter kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols. OpeNsEa who ???
+### A starter-kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols. OpeNsEa who ???
 \
-🏄‍♂️ Quick Start
+
+## Introduction - What Are We Doing Here ?
+
+
+\
+
+## 🏄‍♂️ Getting Started - IDE Setup + Environment Variables
 
 > clone the repo
 ```
@@ -48,7 +54,7 @@ MAINNET_DEPLOYER_PRIV_KEY = enter your key here (without quotes)
 This allows the hardhat.config.js file in the packages/hardhat directory to use these keys for the smart contract deployment and 
 verification functionality we will be implementing without having to expose them publicly.
 
-Back to the front end...
+## Setting Up the Front End
 
 From here, you can now run the following code to interact with your own local frontend that points at the existing Lost & Found marketplace located at   https://www.lostfound.world/. Note: it won't work unless you have set up the .env in pacakges/react-app. All you have to do is run the following from the root level of the project directory:
 ```
@@ -63,7 +69,7 @@ mainnet ethereum as well. You are "yarn-starting" into a production ready app!
 We'll come back to learning how to edit the front end, but first lets reconfigure the app so that it points at rinkeby which is a more 
 suitable environment for testing
 
-*** App.jsx Updates (packages/react-app/src/App.jsx) ***
+#### App.jsx Updates (packages/react-app/src/App.jsx)
 
 - Line 29: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
 - Line 59: Replace "mainnet" with "rinkeby"
@@ -73,7 +79,7 @@ suitable environment for testing
 - Line 77: Replace "lostandfoundContractMAINNET" with "lostandFoundContract4"
 - Line 78: Replace "0x6C0845540C0b7B868C3a1739246fC99aDEDC8036" with "0xa4248aC1a4Fc557134802f39cddF830Fde6DdA06"
 
-*** OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx) ***
+#### OldEnglish.jsx Updates (packages/react-app/src/views/OldEnglish.jsx)
 
 - Line 7: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
 
@@ -97,9 +103,9 @@ https://twitter.com/0xTranqui/status/1506722429208567819?s=20&t=pg7IclQBVNJbsTQM
 Let's keep moving forward to creating your own NFT project with custom art and deploying it to rinkeby so you can start testing what it would be like
 to handle the full scope of work required in the deployment of an NFT project.
 
-To begin, here is a (lengthy) step-by-step guide to creating and storing your own metadata to IPFS:
+## NFT Metadata Creation + Decentralized File Storage on IPFS
 
-*** Metadata creation + IPFS file storage tutorial ***
+To begin, here is a (lengthy) step-by-step guide to creating and storing your own metadata to IPFS:
 
 - Go to https://www.721.so/
 - Click on "create an NFT collection" Artkit flow
@@ -125,9 +131,9 @@ use the free-to-use CC0 art from the Lost & Found, Vol. 1 collection! Here's a [
 
 That's it! At this point, you could actually continue forward creating your own contract with the 721.so contract builder, and then creating your own minting page using the 721.so mint page builder. Both are amazing tools which I have used in the past. For our case, we are going to leave studio https://www.721.so/ to deploy our own smart contract already configured in our packages/hardhat directory of this repo, which we can then mint from using the minting page that is also set up in the website template as well\
 
-*** SMART CONTRACT DEPLOYMENT + FRONT END INTEGRATION PROCESS ***
+## SMART CONTRACT DEPLOYMENT + FRONT END INTEGRATION
 
-We are going to skip a lot of things so that you use what's already in this repo to deploy your own NFT contract as simply as possible. Here is a step by step process for what to do:
+We are going to skip a lot of steps/background information so that you use what's already in this repo to deploy your own NFT contract as simply as possible. Here is a step by step process for what to do:
 
 - Navigate to packages/hardhat directory
 - Double check that your .env at the root level of this directory is set up correctly (look back earlier in this guide if unsure)
