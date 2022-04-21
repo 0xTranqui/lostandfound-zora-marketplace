@@ -84,9 +84,8 @@ suitable environment for testing
 - Line 7: Change the import from "@zoralabs/v3/dist/addresses/1.json" to "@zoralabs/v3/dist/addresses/4.json"
 
 When you press save (on both files) to run this code, you will get a pop up on the site that alerts you that you are on the wrong network and you
-need to switch to rinkeby to continue using the app. Follow those instructions :)
+need to switch to rinkeby to continue using the app. Follow those instructions :) (your screenshot will say rinkeby instead of mainnet)
 [![Screen-Shot-2022-04-21-at-2-53-39-PM.png](https://i.postimg.cc/CKLXrc3z/Screen-Shot-2022-04-21-at-2-53-39-PM.png)](https://postimg.cc/CRXczsLg)
-
 
 If you have completed all these steps, you should now be looking at a locally hosted + rinkeby version of https://www.lostfound.world/ !!!
 
@@ -98,11 +97,7 @@ You can now experiment with interacting with the ZORA marketplace protocol in a 
 You can also experiment with changing the structure + style of the website (if yellow lined-paper isn't your thing) by playing with
 Marketplace.css (which styles OldEnglish.jsx), App.css, Mint.css, and About.css (among others). Build something crazy, and share it with me on twitter at https://twitter.com/0xTranqui !!!
 
-So now you know how to set up the front end of a ZORA marketplace that allows you to list/buy/sell NFTs in a completely on-chain + permisionless fashion. This is a huge first step, as most of the web3 universe still relies on broad market aggregators like Opensea to facilitate NFT marketplace interactions. Relying on platforms like Opensea, particularly ones who's underlying protocol is not fully on-chain (like Opensea) is not healthy for the long term health / stability of the greater web3 ecosystem. If you want to learn more about why, check out this thread I wrote on the subject:
-
-https://twitter.com/0xTranqui/status/1506722429208567819?s=20&t=pg7IclQBVNJbsTQM4nPOTQ
-
-Let's keep moving forward to creating your own NFT project with custom art and deploying it to rinkeby so you can start testing what it would be like
+Let's keep moving forward to creating the metadata for your NFT project and deploying the smart contract to rinkeby so you can start testing what it would be like
 to handle the full scope of work required in the deployment of an NFT project.
 
 ## NFT Metadata Creation + Decentralized File Storage on IPFS
