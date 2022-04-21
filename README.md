@@ -1,12 +1,7 @@
 # Lost & Found NFT Marketplace Powered by ZORA ☼☽
-
-### A starter-kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols. OpeNsEa who ???
-\
+#### A starter-kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols. OpeNsEa who ???
 
 ## Introduction - What Are We Doing Here ?
-
-
-\
 
 ## 🏄‍♂️ Getting Started - IDE Setup + Environment Variables
 
