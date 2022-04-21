@@ -1,5 +1,5 @@
 # Lost & Found NFT Marketplace Powered by ZORA ☼☽
-##### A starter-kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols. OpeNsEa who ???
+##### A starter-kit for creating your own NFT collection + marketplace on top of ZORA public marketplace protocols. oPeNsEa who ???
 ---
 ## Introduction - What Are We Doing Here ?
 This guide will walk you step-by-step through the process of deploying your own NFT contract and creating a website that allows people to mint from you NFT contract and list/buy pieces from your collection on a marketplace. What is special about this guide is that it uses [ZORA V3 marketplace protocols](https://zine.zora.co/zora-v3) which enable anyone to buy/list/sell NFTs in a completely on-chain + permisonless + trustless fashion. If you want to learn more about the ZORA protocol, check out this [detailed thread](https://twitter.com/0xTranqui/status/1506722429208567819?s=20&t=yhPlg9n-hxi_tPGOouoqKw) I wrote about it. 
